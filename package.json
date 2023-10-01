@@ -2,6 +2,8 @@
   "name": "x-notes",
   "version": "0.1.0",
   "private": true,
+  "main": "electron.js",
+  "homepage": "./",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -20,10 +22,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start:web": "react-scripts start",
+    "build:web": "PUBLIC_URL=./ react-scripts build",
+    "build:desktop": "tsc -p electron/tsconfig.json",
+    "start:desktop": "npm run build:desktop && electron ./build/electron.js",
+
+    "electron:serve": "concurrently -k \"BROWSER=none npm start\" \"npm:electron:start\"",
+    "electron:build": "",
+    "electron:start": "wait-on tcp:3000 && electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@electron/remote": "^2.0.11",
     "concurrently": "^8.2.1",
     "electron": "^26.2.4",
     "electron-is-dev": "^2.0.0",

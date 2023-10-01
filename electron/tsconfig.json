@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../build",
+    "baseUrl": ".",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "paths": {
+      "*":["node_modules/*"]
+    }
+  },
+  "include": [
+    "**/*"
+  ]
+}
