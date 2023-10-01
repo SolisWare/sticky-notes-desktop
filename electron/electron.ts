@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
+import menubar from "./menu";
 
 function createWindow() {
   
@@ -22,13 +23,8 @@ function createWindow() {
   // Open DevTools
   win.webContents.openDevTools({mode: "detach"});
   
-  // Emitted when the window is closed.
-  win.on("closed", () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you sould delete the corresponding element.
-    //win = null;
-  });
+  // Load the menubar items
+  Menu.setApplicationMenu(menubar);
 }
 
 // This method will be called when Electron has finished
