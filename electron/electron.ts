@@ -17,10 +17,10 @@ function createWindow() {
   
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  win.loadURL(path.join(__dirname, "index.html"));
+  win.loadFile(path.join(__dirname, "index.html"));
   
   // Open DevTools
-  win.webContents.openDevTools();
+  win.webContents.openDevTools({mode: "detach"});
   
   // Emitted when the window is closed.
   win.on("closed", () => {
