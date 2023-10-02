@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
+import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
 
 function createWindow() {
@@ -18,7 +19,12 @@ function createWindow() {
   
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  win.loadFile(path.join(__dirname, "index.html"));
+  win.loadFile(
+    ...createFileRoute(
+      path.join(__dirname, "index.html"),
+      'main'
+    )
+  );
   
   // Open DevTools
   win.webContents.openDevTools({mode: "detach"});
