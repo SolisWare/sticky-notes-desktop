@@ -1,5 +1,6 @@
 {
   "name": "x-notes",
+  "productName": "X-NoTES",
   "version": "0.1.0",
   "private": true,
   "main": "electron.js",
