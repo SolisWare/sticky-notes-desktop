@@ -2,6 +2,7 @@ import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
+import * as isDev from "electron-is-dev"
 
 function createWindow() {
   
@@ -19,14 +20,12 @@ function createWindow() {
     },
   });
   
+  const dev = createURLRoute("http://localhost:3000", 'main');
+  const production = createFileRoute(path.join(__dirname, "index.html"), 'main');
+  
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  win.loadFile(
-    ...createFileRoute(
-      path.join(__dirname, "index.html"),
-      'main'
-    )
-  );
+  isDev ? win.loadURL(dev) : win.loadFile(...production);
   
   // Open DevTools
   win.webContents.openDevTools({mode: "detach"});

@@ -46,12 +46,11 @@
     "clean": "rm -rf build dist",
     
     "start:web": "react-scripts start",
-    "build:web": "PUBLIC_URL=./ react-scripts build",
+    "build:web": "react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
 
-    "electron:serve": "concurrently -k \"BROWSER=none npm start\" \"npm:electron:start\"",
-    "electron:start": "wait-on tcp:3000 && electron .",
+    "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build:desktop && electron ./build/electron.js\"",
     
     "dist-mac": "electron-builder -m"
   },
