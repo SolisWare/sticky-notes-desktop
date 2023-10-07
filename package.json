@@ -23,36 +23,15 @@
       "node_modules/**/*"
     ]
   },
-  "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.11",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.55",
-    "@types/react": "^18.2.23",
-    "@types/react-dom": "^18.2.8",
-    "electron-router-dom": "^1.0.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.16.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
-  },
   "scripts": {
     "clean": "rm -rf build dist",
-    
     "start:web": "react-scripts start",
-    "build:web": "react-scripts build",
+    "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
-
     "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build:desktop && electron ./build/electron.js\"",
-    
-    "dist-mac": "electron-builder -m"
+    "dist": "npm run build:web && npm run build:desktop",
+    "dist-mac": "npm run dist && electron-builder -m"
   },
   "eslintConfig": {
     "extends": [
@@ -72,12 +51,31 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.11",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.55",
+    "@types/react": "^18.2.23",
+    "@types/react-dom": "^18.2.8",
+    "electron-is-dev": "^2.0.0",
+    "electron-router-dom": "^1.0.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.5",
+    "web-vitals": "^2.1.4"
+  },
   "devDependencies": {
     "@electron/remote": "^2.0.11",
     "concurrently": "^8.2.1",
     "electron": "^26.2.4",
     "electron-builder": "^24.6.4",
-    "electron-is-dev": "^2.0.0",
     "wait-on": "^7.0.1"
   }
 }
