@@ -20,15 +20,21 @@ function createWindow() {
     },
   });
   
-  const dev = createURLRoute("http://localhost:3000", 'main');
-  const production = createFileRoute(path.join(__dirname, "index.html"), 'main');
+  // Load index.html as the app entry point for production
+  // and listen on "http://localhost:3000" in 'dev' mode.
+  const devConfig = createURLRoute("http://localhost:3000", 'main');
+  const productionConfig = createFileRoute(path.join(__dirname, "index.html"), 'main');
   
-  // and load the index.html of the app.
-  // win.loadFile("index.html");
-  isDev ? win.loadURL(dev) : win.loadFile(...production);
+  if (isDev) {
+    win.loadURL(devConfig);
+  } else {
+    win.loadFile(...productionConfig);
+  }
   
-  // Open DevTools
-  win.webContents.openDevTools({mode: "detach"});
+  // Open DevTools in 'dev' mode only
+  if (isDev) {
+    win.webContents.openDevTools({ mode: "detach" });
+  }
   
   // Load the menubar items
   Menu.setApplicationMenu(menubar);
