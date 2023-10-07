@@ -25,14 +25,17 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "clean": "rm -rf build dist",
+    
     "start:web": "react-scripts start",
     "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
 
     "electron:serve": "concurrently -k \"BROWSER=none npm start\" \"npm:electron:start\"",
-    "electron:build": "",
-    "electron:start": "wait-on tcp:3000 && electron ."
+    "electron:start": "wait-on tcp:3000 && electron .",
+    
+    "dist-mac": "electron-builder -m"
   },
   "eslintConfig": {
     "extends": [
@@ -56,6 +59,7 @@
     "@electron/remote": "^2.0.11",
     "concurrently": "^8.2.1",
     "electron": "^26.2.4",
+    "electron-builder": "^24.6.4",
     "electron-is-dev": "^2.0.0",
     "wait-on": "^7.0.1"
   }
