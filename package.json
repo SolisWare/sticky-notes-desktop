@@ -1,10 +1,28 @@
 {
   "name": "x-notes",
   "productName": "X-NoTES",
+  "description": "Cross platform X-NoTES desktop client written in ReactJS + Electron",
   "version": "0.1.0",
   "private": true,
+  "author": {
+    "name": "X-SiGMA Systems",
+    "email": "xsigmasystems@gmail.com",
+    "url": "https://xsigma.uk"
+  },
   "main": "electron.js",
   "homepage": "./",
+  "build": {
+    "appId": "uk.xsigma.xnotes",
+    "productName": "X-NoTES",
+    "copyright": "Copyright © 2023 ${author}",
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ]
+  },
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
