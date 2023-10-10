@@ -61,3 +61,15 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+// "About" dialog window customization
+// TODO: Move to a dedicated file and add more information.
+app.setAboutPanelOptions({
+  applicationName: "X-NoTES",
+  applicationVersion: "0.1.0",
+  version: "Unreleased Milestone",
+  authors: [
+    "X-SiGMA Systems"
+  ],
+  copyright: "Copyright © 2023 X-SiGMA Systems.\nAll rights reserved."
+});
