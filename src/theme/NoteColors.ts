@@ -4,12 +4,12 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
- export const NoteColors = {
-   YELLOW:  "#F7F0AD",
-   GREEN:   "#D0E6BB",
-   INDIGO:  "#D5DEFD",
-   RED:     "#FDE2E2",
-   TEAL:    "#C9EFE6",
-   LILAC:   "#E7CCF1"
+ export enum NoteColors {
+   YELLOW   = "#F7F0AD",
+   GREEN    = "#D0E6BB",
+   INDIGO   = "#D5DEFD",
+   RED      = "#FDE2E2",
+   TEAL     = "#C9EFE6",
+   LILAC    = "#E7CCF1"
  }
  
