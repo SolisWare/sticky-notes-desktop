@@ -15,7 +15,7 @@ type XToolbarProps = {
 function XToolbar(props: XToolbarProps) {
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar variant="dense">
         {/* TODO: Add app icon. */}
         <Typography fontWeight="bold">
           {props.title}
