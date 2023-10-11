@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   note: {
     width: "275px",
     height: "250px",
-    marginBottom: "20px",
+    marginBottom: "10px",
   },
   noteInnerContainer: {
     width: "100%",
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noteContentWrapper: {
     height: "100%",
-    padding: "20px 15px",
+    padding: "20px 10px 10px 10px",
     wordBreak: "keep-all",
     display: "flex",
     flexDirection: "column",
@@ -43,7 +43,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: "5px"
   },
   noteContent: {
-    
+    paddingLeft: "1px",
+    paddingRight: "1px"
   },
   noteFooter: {
     
@@ -53,7 +54,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: "center",
     justifyContent: "space-between",
     marginTop: "5px",
-    padding: "0 2px 0 2px"
+    padding: "0 5px"
   }
 }));
 
@@ -66,7 +67,7 @@ function Note(props: NoteProps) {
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
             <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>Hello world!</Typography>
-            <Typography variant="body1" className={classes.noteContent}>This is a test of an app X-NoTES. Over and out.</Typography>
+            <Typography variant="body2" className={classes.noteContent}>This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.</Typography>
           </div>
           <div className={classes.noteFooter}>
             <Divider />
