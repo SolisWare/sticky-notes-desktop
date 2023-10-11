@@ -21,6 +21,32 @@ export class AppTheme {
         main: AppColors.SECONDARY,
         dark: AppColors.SECONDARY_DARK
       }
+    },
+    typography: {
+      h1: {
+        fontSize: 86
+      },
+      h2: {
+        fontSize: 52
+      },
+      h3: {
+        fontSize: 42
+      },
+      h4: {
+        fontSize: 30
+      },
+      h5: {
+        fontSize: 22
+      },
+      h6: {
+        fontSize: 18
+      },
+      body1: {
+        fontSize: 13
+      },
+      body2: {
+        fontSize: 11
+      }
     }
   });
   
