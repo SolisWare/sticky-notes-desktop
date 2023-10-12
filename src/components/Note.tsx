@@ -9,8 +9,16 @@ import { makeStyles } from "@mui/styles";
 import { NoteColors } from "../theme/NoteColors";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 
+export type Note = {
+  id: string;
+  bgcolor: NoteColors;
+  title: string;
+  content: string;
+  date: Date;
+};
+
 type NoteProps = {
-  
+  note: Note;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,8 +33,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxWidth: "100%",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    backgroundColor: NoteColors.INDIGO
+    justifyContent: "space-between"
   },
   noteContentWrapper: {
     height: "100%",
@@ -63,16 +70,16 @@ function Note(props: NoteProps) {
   
   return (
     <Paper elevation={4} className={classes.note}>
-      <div className={classes.noteInnerContainer}>
+      <div className={classes.noteInnerContainer} style={{backgroundColor: props.note.bgcolor}}>
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
-            <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>Hello world!</Typography>
-            <Typography variant="body2" className={classes.noteContent}>This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.</Typography>
+            <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
+            <Typography variant="body2" className={classes.noteContent}>{props.note.content}</Typography>
           </div>
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
-              <small>10/11/2023</small>
+              <small>{props.note.date.getTime()}</small>
               <DeleteForeverOutlinedIcon />
             </div>
           </div>
