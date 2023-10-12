@@ -9,10 +9,12 @@ export const AppColors = {
   MAIN_LIGHT:      "#3CBBEB",
   MAIN:            "#138EC7",
   MAIN_DARK:       "#127DB3",
+  MAIN_TEXT:       "#FFF",
   // App's Secondary color palette.
-  SECONDARY_LIGHT: "#52BE8F",
+  SECONDARY_LIGHT:  "#52BE8F",
   SECONDARY:        "#00A362",
-  SECONDARY_DARK: "#009557",
+  SECONDARY_DARK:   "#009557",
+  SECONDARY_TEXT:   "#FFF",
   // App's accent color.
   ACCENT: "#F0F7FA"
 }
