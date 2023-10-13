@@ -8,6 +8,7 @@ import { Divider, Paper, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { NoteColors } from "../theme/NoteColors";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import { Formatter } from "../utils/dt-formatter/Formatter";
 
 export type Note = {
   id: string;
@@ -79,7 +80,7 @@ function Note(props: NoteProps) {
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
-              <small>{props.note.date.getTime()}</small>
+              <small>{Formatter.getFormattedDate(props.note.date)}</small>
               <DeleteForeverOutlinedIcon />
             </div>
           </div>
