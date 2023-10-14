@@ -6,8 +6,11 @@
  */
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import Note from "./components/Note";
+import NoteList from "./components/NoteList";
 import XToolbar from "./components/XToolbar";
 import { AppColors } from "./theme/AppColors";
+import { NoteColors } from "./theme/NoteColors";
 
 type HomeProps = {
   
@@ -31,7 +34,7 @@ function Home(props: HomeProps) {
   return (
     <div className={classes.root}>
       <XToolbar title="X-NoTES"/>
-      <p>Home</p>
+      <NoteList/>
     </div>
   );
 }
