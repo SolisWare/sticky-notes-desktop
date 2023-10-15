@@ -42,7 +42,7 @@ export class AppTheme {
         fontSize: 18
       },
       body1: {
-        fontSize: 13
+        fontSize: 14
       },
       body2: {
         fontSize: 11

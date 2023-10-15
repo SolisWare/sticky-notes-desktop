@@ -9,16 +9,25 @@ import { ThemeProvider } from "@mui/system";
 import XToolbar from "../../components/XToolbar";
 import { AppTheme } from "../../theme/AppTheme";
 import { makeStyles } from "@mui/styles";
+import { AppView } from "../../App";
+import Home from "./pages/Home";
+import { AppColors } from "../../theme/AppColors";
 
 const appTheme = AppTheme.Theme;
 
 type MainWindowProps = {
-  //view: AppView;
+  view: AppView;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
-    
+    minWidth: "100%",
+    minHeight: "100%",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    zIndex: 1,
+    backgroundColor: AppColors.ACCENT
   },
   app: {
     
@@ -31,6 +40,15 @@ const useStyles = makeStyles((theme: Theme) => ({
 function MainWindow(props: MainWindowProps) {
   const classes = useStyles();
   
+  let page = <></>;
+  switch (props.view) {
+    case AppView.home:
+      page = <Home />
+      break;
+    default:
+      page = <Home />
+  }
+  
   return (
     <ThemeProvider theme={appTheme}>
       <div className={classes.root}>
@@ -41,7 +59,7 @@ function MainWindow(props: MainWindowProps) {
         <div className={classes.app}>
           <XToolbar title="X-NoTES" />
           <main>
-            {/* Main content and views go here. */}
+            { page }
           </main>
         </div>
       </div>

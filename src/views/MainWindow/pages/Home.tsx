@@ -17,23 +17,14 @@ type HomeProps = {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    minWidth: "100%",
-    minHeight: "100%",
-    position: "fixed",
-    top: 0,
-    left: 0,
-    zIndex: 1,
-    backgroundColor: AppColors.ACCENT
-  }
+  
 }));
 
 function Home(props: HomeProps) {
   const classes = useStyles();
   
   return (
-    <div className={classes.root}>
-      <XToolbar title="X-NoTES"/>
+    <div>
       <NoteList/>
     </div>
   );
