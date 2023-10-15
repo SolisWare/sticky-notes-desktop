@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noteContentWrapper: {
     height: "100%",
-    padding: "20px 10px 10px 10px",
+    padding: "20px 10px 8px 10px",
     wordBreak: "keep-all",
     display: "flex",
     flexDirection: "column",
@@ -51,8 +51,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: "5px"
   },
   noteContent: {
-    paddingLeft: "1px",
-    paddingRight: "1px"
+    paddingLeft: "2px",
+    paddingRight: "2px"
   },
   noteFooter: {
     
@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between",
     marginTop: "5px",
     padding: "0 5px"
+  },
+  noteFooterUtilBarDate: {
+    paddingTop: "5px",
+    fontStyle: "italic"
   }
 }));
 
@@ -75,12 +79,17 @@ function Note(props: NoteProps) {
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
             <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
-            <Typography variant="body2" className={classes.noteContent}>{props.note.content}</Typography>
+            <Typography variant="body1" className={classes.noteContent}>{props.note.content}</Typography>
           </div>
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
-              <small>{Formatter.getFormattedDate(props.note.date)}</small>
+              <Typography className={classes.noteFooterUtilBarDate} variant="body2">
+                <span>Last modified:&#160;</span>
+                <span>{Formatter.getFormattedDate(props.note.date)}</span>
+                <span>&#160;@&#160;</span>
+                <span>{Formatter.getFormattedTimestamp(props.note.date)}</span>
+              </Typography>
               <DeleteForeverOutlinedIcon />
             </div>
           </div>
