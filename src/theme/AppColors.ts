@@ -16,5 +16,8 @@ export const AppColors = {
   SECONDARY_DARK:   "#009557",
   SECONDARY_TEXT:   "#FFF",
   // App's accent color.
-  ACCENT: "#F0F7FA"
+  ACCENT: "#F0F7FA",
+  // Add New note Tile
+  NEW_NOTE_BG: "#F2F7FF"
+  
 }
