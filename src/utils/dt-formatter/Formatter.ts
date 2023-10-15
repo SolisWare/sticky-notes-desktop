@@ -28,8 +28,8 @@ export class Formatter {
     return `${hours}:${minutes} ${period}`;
   }
   
-  private static leftpad(number: number): number {
-    return number < 10 ? parseInt(`0${number}`) : number;
+  private static leftpad(number: number): string {
+    return number < 10 ? `0${number}` : `${number}`;
   }
 }
  
