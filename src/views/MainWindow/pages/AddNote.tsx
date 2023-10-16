@@ -8,6 +8,7 @@ import { makeStyles } from "@mui/styles";
 import { Paper, Theme, Typography } from "@mui/material";
 import { AppColors } from "../../../theme/AppColors";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { Button } from "@mui/base";
 
 type AddNoteProps = {
    
@@ -15,10 +16,10 @@ type AddNoteProps = {
  
 const useStyles = makeStyles((theme: Theme) => ({
   addNote: {
-    width: "200px",
-    height: "200px",
-    marginLeft: "35px",
-    marginTop: "25px",
+    width: "125px",
+    height: "225px",
+    marginLeft: "25px",
+    marginTop: "12.5px",
     backgroundColor: "transparent"
   },
   addNoteInnerContainer: {
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: "auto",
     marginBottom: "auto",
     verticalAlign: "center"
+  },
+  addNoteBtn: {
+    width: "100%",
+    height: "50px"
   }
 }));
  
@@ -47,7 +52,9 @@ function AddNote(props: AddNoteProps) {
     <Paper elevation={3} className={classes.addNote}>
       <div className={classes.addNoteInnerContainer}>
         <div className={classes.addNoteActionContainer}>
-          <AddCircleOutlineIcon color="primary" fontSize="large" />
+          <Button className={classes.addNoteBtn} onClick={() => handleAddNote()}>
+            <AddCircleOutlineIcon color="primary" fontSize="large" />
+          </Button>         
           <Typography variant="overline">New Note</Typography>
         </div>
       </div>
