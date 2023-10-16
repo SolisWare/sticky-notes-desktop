@@ -6,9 +6,7 @@
  */
 import { makeStyles } from "@mui/styles";
 import { Paper, Theme, Typography } from "@mui/material";
-import { NoteColors } from "../../../theme/NoteColors";
 import { AppColors } from "../../../theme/AppColors";
-import { fontSize } from "@mui/system";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 type AddNoteProps = {
@@ -46,7 +44,7 @@ function AddNote(props: AddNoteProps) {
   const classes = useStyles();
   
   return (
-    <Paper elevation={2} className={classes.addNote}>
+    <Paper elevation={3} className={classes.addNote}>
       <div className={classes.addNoteInnerContainer}>
         <div className={classes.addNoteActionContainer}>
           <AddCircleOutlineIcon color="primary" fontSize="large" />
