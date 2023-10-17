@@ -5,21 +5,24 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { AppColors } from './AppColors';
-import { createTheme } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 
 export class AppTheme {
   
+  // Overrides default MUI styles.
   public static Theme = createTheme({
     palette: {
       primary: {
         light: AppColors.MAIN_LIGHT,
         main: AppColors.MAIN,
-        dark: AppColors.MAIN_DARK
+        dark: AppColors.MAIN_DARK,
+        contrastText: AppColors.MAIN_TEXT
       },
       secondary: {
         light: AppColors.SECONDARY_LIGHT,
         main: AppColors.SECONDARY,
-        dark: AppColors.SECONDARY_DARK
+        dark: AppColors.SECONDARY_DARK,
+        contrastText: AppColors.SECONDARY_TEXT
       }
     },
     typography: {
@@ -45,7 +48,27 @@ export class AppTheme {
         fontSize: 14
       },
       body2: {
-        fontSize: 11
+        fontSize: 12
+      }
+    },
+    components: {
+      MuiButton: {
+        variants: [
+          {
+            props: {
+              variant: "toolbar"
+            },
+            style: {
+              backgroundColor: AppColors.MAIN,
+              outline: "1px solid #FFFFFF",
+              boxShadow: "none",
+              '&:hover': {
+                backgroundColor: AppColors.SECONDARY,
+                outline: "1px solid " + AppColors.SECONDARY_LIGHT
+              }
+            }
+          }
+        ]
       }
     }
   });

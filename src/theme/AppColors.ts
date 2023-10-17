@@ -9,12 +9,12 @@ export const AppColors = {
   MAIN_LIGHT:      "#3CBBEB",
   MAIN:            "#138EC7",
   MAIN_DARK:       "#127DB3",
-  MAIN_TEXT:       "#FFF",
+  MAIN_TEXT:       "#FFFFFF",
   // App's Secondary color palette.
   SECONDARY_LIGHT:  "#52BE8F",
   SECONDARY:        "#00A362",
   SECONDARY_DARK:   "#009557",
-  SECONDARY_TEXT:   "#FFF",
+  SECONDARY_TEXT:   "#FFFFFF",
   // App's accent color.
   ACCENT: "#F0F7FA",
   // Add New note Tile
