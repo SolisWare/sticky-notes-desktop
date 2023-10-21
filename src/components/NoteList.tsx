@@ -10,7 +10,6 @@ import Note from "./Note";
 import { useState } from "react";
 import { NoteColors } from "../theme/NoteColors";
 import { nanoid } from "nanoid";
-import AddNote from "../views/MainWindow/pages/AddNote";
 
 type NoteListProps = {
   
@@ -70,7 +69,6 @@ function NoteList (props: NoteListProps) {
       {notes.map((note) => (
         <Note note={note}/>
       ))}
-      <AddNote/>
     </div>
   );
 }
