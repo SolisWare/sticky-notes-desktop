@@ -27,6 +27,19 @@ const template: any = [
       { type: 'separator' },
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
+  },
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      { role: 'selectAll' },
+      { role: 'delete' }
+    ]
   }
 ];
 
