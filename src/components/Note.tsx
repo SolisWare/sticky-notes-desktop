@@ -122,14 +122,11 @@ function Note(props: NoteProps) {
             <div className={classes.noteTitleWrapper}>
               {isTitleEditable ?
                 <div className={classes.noteTitleEditContainer}>
-                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder="  Add title..." onBlur={() => handleTitleFocus()} autoFocus />
+                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder=" Add title..." onBlur={() => handleTitleFocus()} autoFocus />
                 </div>
                 :
                 <div className={classes.noteTitleContainer}>
-                  <button className={classes.noteTitleEditBtn} onClick={() => handleTitleFocus()}>
-                    <EditIcon className={classes.noteTitleEditIcon} fontSize="small" />
-                  </button>
-                  <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
+                  <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle} onClick={() => handleTitleFocus()}>{props.note.title}</Typography>
                 </div>
               }
             </div>
