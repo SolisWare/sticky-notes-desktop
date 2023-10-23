@@ -4,11 +4,15 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { Divider, Paper, Theme, Typography } from "@mui/material";
+import { Divider, Paper, TextField, Theme, Typography, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { NoteColors } from "../theme/NoteColors";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
+import XTextarea from "./XTextarea";
+import { useState } from "react";
+import EditIcon from '@mui/icons-material/Edit';
+import { AppColors } from "../theme/AppColors";
 
 export type Note = {
   id: string;
@@ -38,17 +42,48 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noteContentWrapper: {
     height: "100%",
-    padding: "20px 10px 8px 10px",
+    padding: "15px 10px 8px 10px",
     wordBreak: "keep-all",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between"
   },
   noteBody: {
-    
+    height: "159px"
+  },
+  noteTitleWrapper: {
+    paddingBottom: "5px"
+  },
+  noteTitleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  noteTitleEditBtn: {
+    width: "28px",
+    height: "25px",
+    marginRight: "2px",
+    backgroundColor: "transparent",
+    outline: "none",
+    border: "none"
+  },
+  noteTitleEditIcon: {
+    color: AppColors.MAIN_LIGHT,
+    opacity: .4,
+    cursor: "pointer",
+    "&:hover": {
+      color: AppColors.SECONDARY_LIGHT,
+      opacity: .7
+    }
   },
   noteTitle: {
-    paddingBottom: "5px"
+    
+  },
+  noteTitleEditContainer: {
+    paddingBottom: "12px"
+  },
+  noteTitleEdit: {
+    width: "90%",
   },
   noteContent: {
     paddingLeft: "2px",
@@ -72,14 +107,32 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function Note(props: NoteProps) {
   const classes = useStyles();
+  const [isTitleEditable, setTitleEditable] = useState(false);
+  
+  const handleTitleFocus = () => {
+    setTitleEditable(!isTitleEditable);
+  }
   
   return (
     <Paper elevation={4} className={classes.note}>
       <div className={classes.noteInnerContainer} style={{backgroundColor: props.note.bgcolor}}>
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
-            <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
-            <Typography variant="body1" className={classes.noteContent}>{props.note.content}</Typography>
+            <div className={classes.noteTitleWrapper}>
+              {isTitleEditable ?
+                <div className={classes.noteTitleEditContainer}>
+                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder="  Add title..."></TextField>
+                </div>
+                :
+                <div className={classes.noteTitleContainer}>
+                  <button className={classes.noteTitleEditBtn}>
+                    <EditIcon className={classes.noteTitleEditIcon} fontSize="small" />
+                  </button>
+                  <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
+                </div>
+              }
+            </div>
+            <XTextarea placeholder="Type here..." content={props.note.content}/>
           </div>
           <div className={classes.noteFooter}>
             <Divider />
