@@ -10,6 +10,7 @@ import Note from "./Note";
 import { useState } from "react";
 import { NoteColors } from "../theme/NoteColors";
 import { nanoid } from "nanoid";
+import EmptyNoteList from "./EmptyNoteList";
 
 type NoteListProps = {
   
@@ -63,12 +64,22 @@ function NoteList (props: NoteListProps) {
       date: new Date()
     }
     ]);
+  const isNoteListEmpty = notes.length <= 0;
   
   return (
     <div className={classes.wrapper}>
-      {notes.map((note) => (
-        <Note note={note}/>
-      ))}
+      {isNoteListEmpty ?
+        <>
+          <EmptyNoteList />
+        </>
+        :
+        <>
+          {notes.map((note) => (
+              <Note note={note} />
+            ))
+          }
+        </>
+      }
     </div>
   );
 }

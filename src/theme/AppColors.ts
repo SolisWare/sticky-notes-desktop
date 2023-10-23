@@ -18,6 +18,7 @@ export const AppColors = {
   // App's accent color.
   ACCENT: "#F0F7FA",
   // Add New note Tile
-  NEW_NOTE_BG: "#F2F7FF"
-  
+  NEW_NOTE_BG: "#F2F7FF",
+  // MISC
+  DISABLED_TEXT: "#B0B0B0"
 }
