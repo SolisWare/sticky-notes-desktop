@@ -53,6 +53,11 @@ export class AppTheme {
     },
     components: {
       MuiButton: {
+        styleOverrides: {
+          root: {
+            minWidth: 0
+          }
+        },
         variants: [
           {
             props: {

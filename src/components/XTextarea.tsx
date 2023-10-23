@@ -20,7 +20,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: "transparent",
     outline: "none",
     border: "none",
-    resize: "none"
+    resize: "none",
+    fontSize: 14
   }
 }));
  
