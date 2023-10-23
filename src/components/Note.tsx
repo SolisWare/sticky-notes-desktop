@@ -4,14 +4,12 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { Divider, Paper, TextField, Theme, Typography, Button } from "@mui/material";
+import { Button, Divider, Paper, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { NoteColors } from "../theme/NoteColors";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
-import { useState } from "react";
-import EditIcon from '@mui/icons-material/Edit';
 import { AppColors } from "../theme/AppColors";
 
 export type Note = {
@@ -42,14 +40,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   noteContentWrapper: {
     height: "100%",
-    padding: "15px 10px 8px 10px",
+    padding: "15px 10px 5px 10px",
     wordBreak: "keep-all",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between"
   },
   noteBody: {
-    height: "159px"
+    height: "189px",
   },
   noteTitleWrapper: {
     
@@ -65,14 +63,26 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: "5px",
-    padding: "0 5px"
+    marginTop: "4px",
+    padding: "0 3px"
   },
   noteFooterUtilBarDate: {
     paddingTop: "5px",
     fontStyle: "italic"
+  },
+  noteFooterUtilBarDeleteBtn: {
+    width: 30,
+    height: 30,
+    color: AppColors.MAIN,
+    "&:hover": {
+      color: AppColors.SECONDARY
+    }
   }
 }));
+
+const handleDeleteNote = (noteId: string) => {
+  console.log("Clicked Note with Note-ID: " + noteId)
+}
 
 function Note(props: NoteProps) {
   const classes = useStyles();
@@ -96,7 +106,9 @@ function Note(props: NoteProps) {
                 <span>&#160;&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(props.note.date)}</span>
               </Typography>
-              <DeleteForeverOutlinedIcon />
+              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => handleDeleteNote(props.note.id)}>
+                <DeleteForeverOutlinedIcon />
+              </Button>
             </div>
           </div>
         </div>
