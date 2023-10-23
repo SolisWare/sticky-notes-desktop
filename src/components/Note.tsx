@@ -52,39 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: "159px"
   },
   noteTitleWrapper: {
-    paddingBottom: "5px"
-  },
-  noteTitleContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  noteTitleEditBtn: {
-    width: "25px",
-    height: "25px",
-    marginRight: "2px",
-    marginTop: 1,
-    backgroundColor: "transparent",
-    border: "none"
-  },
-  noteTitleEditIcon: {
-    color: AppColors.MAIN_LIGHT,
-    opacity: .4,
-    cursor: "pointer",
-    padding: 1,
-    "&:hover": {
-      color: AppColors.SECONDARY_LIGHT,
-      opacity: .7
-    }
-  },
-  noteTitle: {
     
-  },
-  noteTitleEditContainer: {
-    paddingBottom: "12px"
-  },
-  noteTitleEdit: {
-    width: "90%"
   },
   noteContent: {
     paddingLeft: "2px",
@@ -108,11 +76,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function Note(props: NoteProps) {
   const classes = useStyles();
-  const [isTitleEditable, setTitleEditable] = useState(false);
-  
-  const handleTitleFocus = () => {
-    setTitleEditable(!isTitleEditable);
-  }
   
   return (
     <Paper elevation={4} className={classes.note}>
@@ -120,15 +83,7 @@ function Note(props: NoteProps) {
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
             <div className={classes.noteTitleWrapper}>
-              {isTitleEditable ?
-                <div className={classes.noteTitleEditContainer}>
-                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder=" Add title..." onBlur={() => handleTitleFocus()} autoFocus />
-                </div>
-                :
-                <div className={classes.noteTitleContainer}>
-                  <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle} onClick={() => handleTitleFocus()}>{props.note.title}</Typography>
-                </div>
-              }
+              {/* TODO: Add editable title section */}
             </div>
             <XTextarea placeholder="Type here..." content={props.note.content}/>
           </div>
