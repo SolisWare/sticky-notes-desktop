@@ -60,17 +60,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "center",
   },
   noteTitleEditBtn: {
-    width: "28px",
+    width: "25px",
     height: "25px",
     marginRight: "2px",
+    marginTop: 1,
     backgroundColor: "transparent",
-    outline: "none",
     border: "none"
   },
   noteTitleEditIcon: {
     color: AppColors.MAIN_LIGHT,
     opacity: .4,
     cursor: "pointer",
+    padding: 1,
     "&:hover": {
       color: AppColors.SECONDARY_LIGHT,
       opacity: .7
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingBottom: "12px"
   },
   noteTitleEdit: {
-    width: "90%",
+    width: "90%"
   },
   noteContent: {
     paddingLeft: "2px",
@@ -121,11 +122,11 @@ function Note(props: NoteProps) {
             <div className={classes.noteTitleWrapper}>
               {isTitleEditable ?
                 <div className={classes.noteTitleEditContainer}>
-                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder="  Add title..."></TextField>
+                  <TextField className={classes.noteTitleEdit} size="small" variant="standard" placeholder="  Add title..." onBlur={() => handleTitleFocus()} autoFocus />
                 </div>
                 :
                 <div className={classes.noteTitleContainer}>
-                  <button className={classes.noteTitleEditBtn}>
+                  <button className={classes.noteTitleEditBtn} onClick={() => handleTitleFocus()}>
                     <EditIcon className={classes.noteTitleEditIcon} fontSize="small" />
                   </button>
                   <Typography variant="h6" fontWeight="bold" fontStyle="italic" className={classes.noteTitle}>{props.note.title}</Typography>
