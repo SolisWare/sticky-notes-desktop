@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     justifyContent: "space-between"
   },
   noteBody: {
-    height: "189px",
+    height: "192px",
   },
   noteTitleWrapper: {
     
