@@ -78,6 +78,7 @@
     "concurrently": "^8.2.1",
     "electron": "^26.2.4",
     "electron-builder": "^24.6.4",
+    "prisma": "^5.5.2",
     "wait-on": "^7.0.1"
   }
 }
