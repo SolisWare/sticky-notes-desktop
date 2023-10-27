@@ -11,17 +11,10 @@ import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined
 import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
 import { AppColors } from "../theme/AppColors";
-
-export type Note = {
-  id: string;
-  bgcolor: NoteColors;
-  title: string;
-  content: string;
-  date: Date;
-};
+import { NoteType } from "../models/NoteType";
 
 type NoteProps = {
-  note: Note;
+  note: NoteType;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
