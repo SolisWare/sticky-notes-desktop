@@ -103,7 +103,7 @@ function Note(props: NoteProps) {
               <Typography className={classes.noteFooterUtilBarDate} variant="body2">
                 <span>Last modified:&#160;</span>
                 <span>{Formatter.getFormattedDate(props.note.date)}</span>
-                <span>&#160;&#160;</span>
+                <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(props.note.date)}</span>
               </Typography>
               <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => handleDeleteNote(props.note.id)}>
