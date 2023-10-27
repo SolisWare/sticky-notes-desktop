@@ -16,6 +16,7 @@ const appTheme = AppTheme.Theme;
 
 type XToolbarProps = {
   title: string;
+  handleAddNoteButton: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -41,10 +42,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-const handleAddNote = () => {
-
-}
-
 function XToolbar(props: XToolbarProps) {
   const classes = useStyles();
   
@@ -56,7 +53,7 @@ function XToolbar(props: XToolbarProps) {
           {props.title}
         </Typography>
         <Box className={classes.toolbarBtnsContainer}>
-          <Button className={classes.toolbarBtn} variant="toolbar" color="primary" onClick={() => handleAddNote()}>
+          <Button className={classes.toolbarBtn} variant="toolbar" color="primary" onClick={props.handleAddNoteButton}>
             <div className={classes.toolbarIconBtnInnerContainer}>
               <AddCircleOutlineIcon fontSize="small" />
               <Typography className={classes.toolbarBtnText} variant="body2">New Note</Typography>

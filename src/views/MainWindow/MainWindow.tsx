@@ -12,6 +12,12 @@ import { makeStyles } from "@mui/styles";
 import { AppView } from "../../App";
 import Home from "./pages/Home";
 import { AppColors } from "../../theme/AppColors";
+import { useState } from "react";
+import { Notes } from "@mui/icons-material";
+import Note from "../../components/Note";
+import { NoteType } from "../../models/NoteType";
+import { NoteColors } from "../../theme/NoteColors";
+import { nanoid } from "nanoid";
 
 const appTheme = AppTheme.Theme;
 
@@ -39,14 +45,32 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function MainWindow(props: MainWindowProps) {
   const classes = useStyles();
+  const [notes, setNotes] = useState<NoteType[]>([]);
+  
+  function handleAddNote() {
+    console.log("LOG: New note");
+    
+    setNotes(
+      [...notes,
+        {
+          id: nanoid(),
+          bgcolor: NoteColors.INDIGO,
+          title: "Hello World #1",
+          content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
+          date: new Date()
+        },
+      ]
+    )
+
+  }
   
   let page = <></>;
   switch (props.view) {
     case AppView.home:
-      page = <Home />
+      page = <Home notes={notes} />
       break;
     default:
-      page = <Home />
+      page = <Home notes={notes} />
   }
   
   return (
@@ -57,7 +81,7 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <XToolbar title="X-NoTES" />
+          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} />
           <main>
             { page }
           </main>

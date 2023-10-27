@@ -6,14 +6,11 @@
  */
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import Note from "../../../components/Note";
 import NoteList from "../../../components/NoteList";
-import XToolbar from "../../../components/XToolbar";
-import { AppColors } from "../../../theme/AppColors";
-import { NoteColors } from "../../../theme/NoteColors";
+import { NoteType } from "../../../models/NoteType";
 
 type HomeProps = {
-  
+  notes: NoteType[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,7 +22,7 @@ function Home(props: HomeProps) {
   
   return (
     <div>
-      <NoteList/>
+      <NoteList notes={props.notes} />
     </div>
   );
 }
