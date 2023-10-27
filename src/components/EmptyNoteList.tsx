@@ -8,6 +8,7 @@ import { Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from 'clsx';
 import { AppColors } from "../theme/AppColors";
+import { Platform } from "../utils/Platform";
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
@@ -26,11 +27,12 @@ const useStyles = makeStyles((theme: Theme) => ({
  
 function EmptyNoteList() {
   const classes = useStyles();
+  const platform = Platform.isMac ? "Cmd" : "Ctrl";
   
   return (
     <div className={classes.wrapper}>
       <Typography className={classes.text} fontSize="large">You don't have any nothes yet!</Typography>
-      <Typography className={clsx(classes.text, classes.text2)}>Press Cmd+N to add your first note</Typography>
+      <Typography className={clsx(classes.text, classes.text2)}>Press {platform}+N to add your first note</Typography>
     </div>
   );
 }
