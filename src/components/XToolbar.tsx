@@ -46,7 +46,7 @@ function XToolbar(props: XToolbarProps) {
   const classes = useStyles();
   
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar className={classes.toolbar}>
         {/* TODO: Add app icon. */}
         <Typography variant="h6" fontWeight="bold">

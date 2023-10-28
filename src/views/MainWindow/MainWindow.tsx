@@ -29,9 +29,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: "100%",
     minHeight: "100%",
-    position: "fixed",
-    top: 0,
-    left: 0,
+    width: "100%",
+    height: "100%",
     zIndex: 1,
     backgroundColor: AppColors.ACCENT
   },
