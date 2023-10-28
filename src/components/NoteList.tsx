@@ -15,6 +15,7 @@ import { NoteType } from "../models/NoteType";
 
 type NoteListProps = {
   notes: NoteType[];
+  handleDeleteNoteButton: (noteId: string) => void;
 }
  
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,43 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 function NoteList (props: NoteListProps) {
   const classes = useStyles();
   const notes = props.notes;
-  // const [notes, setNotes] = useState([
-  //   {
-  //     id: nanoid(),
-  //     bgcolor: NoteColors.INDIGO,
-  //     title: "Hello World #1",
-  //     content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
-  //     date: new Date()
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     bgcolor: NoteColors.INDIGO,
-  //     title: "Hello World #2",
-  //     content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
-  //     date: new Date()
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     bgcolor: NoteColors.INDIGO,
-  //     title: "Hello World #3",
-  //     content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
-  //     date: new Date()
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     bgcolor: NoteColors.INDIGO,
-  //     title: "Hello World #4",
-  //     content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
-  //     date: new Date()
-  //   },
-  //   {
-  //     id: nanoid(),
-  //     bgcolor: NoteColors.INDIGO,
-  //     title: "Hello World #5",
-  //     content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
-  //     date: new Date()
-  //   }
-  //   ]);
   const isNoteListEmpty = notes.length <= 0;
   
   return (
@@ -77,7 +41,7 @@ function NoteList (props: NoteListProps) {
         :
         <>
           {notes.map((note) => (
-              <Note note={note} />
+            <Note note={note} handleDeleteNoteButton={props.handleDeleteNoteButton} />
             ))
           }
         </>

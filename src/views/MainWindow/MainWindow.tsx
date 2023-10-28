@@ -58,16 +58,21 @@ function MainWindow(props: MainWindowProps) {
         },
       ]
     )
-
+  }
+  
+  function handleDeleteNote(noteId: string) {
+    setNotes(
+      notes.filter(({ id }) => id !== noteId)
+    );
   }
   
   let page = <></>;
   switch (props.view) {
     case AppView.home:
-      page = <Home notes={notes} />
+      page = <Home notes={notes} handleDeleteNoteButton={handleDeleteNote} />
       break;
     default:
-      page = <Home notes={notes} />
+      page = <Home notes={notes} handleDeleteNoteButton={handleDeleteNote} />
   }
   
   return (

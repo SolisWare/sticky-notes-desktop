@@ -15,6 +15,7 @@ import { NoteType } from "../models/NoteType";
 
 type NoteProps = {
   note: NoteType;
+  handleDeleteNoteButton: (noteId: string) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -99,7 +100,7 @@ function Note(props: NoteProps) {
                 <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(props.note.date)}</span>
               </Typography>
-              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => handleDeleteNote(props.note.id)}>
+              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => props.handleDeleteNoteButton(props.note.id)}>
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>

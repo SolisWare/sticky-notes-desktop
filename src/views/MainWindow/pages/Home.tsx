@@ -11,6 +11,7 @@ import { NoteType } from "../../../models/NoteType";
 
 type HomeProps = {
   notes: NoteType[];
+  handleDeleteNoteButton: (noteId: string) => void;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -22,7 +23,7 @@ function Home(props: HomeProps) {
   
   return (
     <div>
-      <NoteList notes={props.notes} />
+      <NoteList notes={props.notes} handleDeleteNoteButton={props.handleDeleteNoteButton} />
     </div>
   );
 }
