@@ -66,6 +66,10 @@ function MainWindow(props: MainWindowProps) {
     );
   }
   
+  function handleDeleteAllNotes() {
+    setNotes([]);
+  }
+  
   let page = <></>;
   switch (props.view) {
     case AppView.home:
@@ -83,7 +87,7 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} />
+          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} handleDeleteAllNotesButton={handleDeleteAllNotes} />
           <main>
             { page }
           </main>

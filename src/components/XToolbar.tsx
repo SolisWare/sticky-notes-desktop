@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Toolbar from '@mui/material/Toolbar';
 import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { AppTheme } from "../theme/AppTheme";
 
 const appTheme = AppTheme.Theme;
@@ -17,6 +18,7 @@ const appTheme = AppTheme.Theme;
 type XToolbarProps = {
   title: string;
   handleAddNoteButton: (event: React.MouseEvent<HTMLElement>) => void;
+  handleDeleteAllNotesButton: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -25,11 +27,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   toolbarBtnsContainer: {
     padding: "5px",
-    marginLeft: "25px"
+    marginLeft: "25px",
   },
   toolbarBtn: {
-    width: 125,
-    height: 32
+    width: 130,
+    height: 32,
+    
+  },
+  toolbarBtnSpacer: {
+    marginRight: 15
   },
   toolbarIconBtnInnerContainer: {
     display: "flex",
@@ -59,7 +65,11 @@ function XToolbar(props: XToolbarProps) {
               <Typography className={classes.toolbarBtnText} variant="body2">New Note</Typography>
             </div>
           </Button>
-          
+          <span className={classes.toolbarBtnSpacer}/>
+          <Button className={classes.toolbarBtn} variant="toolbar" color="primary" onClick={props.handleDeleteAllNotesButton}>
+            <DeleteOutlineOutlinedIcon fontSize="small" />
+            <Typography className={classes.toolbarBtnText} variant="body2">Delete All</Typography>
+          </Button>
         </Box>
       </Toolbar>
     </AppBar>
