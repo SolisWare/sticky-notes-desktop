@@ -16,8 +16,9 @@ import { useState } from "react";
 import { Notes } from "@mui/icons-material";
 import Note from "../../components/Note";
 import { NoteType } from "../../models/NoteType";
-import { NoteColors } from "../../theme/NoteColors";
+import { getRandomNoteColor, NoteColors } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
+import { Platform } from "../../utils/Platform";
 
 const appTheme = AppTheme.Theme;
 
@@ -47,15 +48,12 @@ function MainWindow(props: MainWindowProps) {
   const [notes, setNotes] = useState<NoteType[]>([]);
   
   function handleAddNote() {
-    console.log("LOG: New note");
-    
     setNotes(
       [...notes,
         {
           id: nanoid(),
-          bgcolor: NoteColors.INDIGO,
-          title: "Hello World #1",
-          content: "This is a test of a new app called X-NoTES. This is the first note. Just some sample text here to check paddings and margins.",
+          bgcolor: getRandomNoteColor(),
+          content: "",
           date: new Date()
         },
       ]

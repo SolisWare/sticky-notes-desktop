@@ -13,3 +13,10 @@
    LILAC    = "#E7CCF1"
  }
  
+ export function getRandomNoteColor(): NoteColors {
+   const values = Object.values(NoteColors);
+   const index = Math.floor(Math.random() * values.length);
+   
+   return values[index];
+ }
+ 

@@ -9,7 +9,7 @@ import { NoteColors } from "../theme/NoteColors";
 export type NoteType = {
   id: string;
   bgcolor: NoteColors;
-  title: string;
+  title?: string;
   content: string;
   date: Date;
 };
