@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minWidth: "100%",
     minHeight: "100%",
     width: "100%",
-    height: "100%",
+    height: "100vh",
     zIndex: 1,
     backgroundColor: AppColors.ACCENT
   },
