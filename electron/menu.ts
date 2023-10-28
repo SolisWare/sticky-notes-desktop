@@ -1,7 +1,11 @@
+/**
+ * Copyright (c) 2023 X-SiGMA Systems.
+ * 
+ * All rights reserved. Licensed under the MIT license.
+ * See the LICENSE.txt file in the project root directory for details.
+ */
+import { Platform } from './../src/utils/Platform';
 import { app, Menu } from "electron";
-
-// Check if the app runs on macOS
-const isMac = process.platform === "darwin";
 
 const template: any = [
   {
@@ -25,7 +29,7 @@ const template: any = [
     submenu: [
       { label: 'New Note...', accelerator: 'CmdOrCtrl+N' },
       { type: 'separator' },
-      isMac ? { role: 'close' } : { role: 'quit' }
+      Platform.isMac ? { role: 'close' } : { role: 'quit' }
     ]
   },
   {

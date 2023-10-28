@@ -6,9 +6,11 @@
  */
 export class Platform {
   
-  public static isMac = process.platform === "darwin";
+  private static userAgent = window.navigator.userAgent.toLowerCase();
   
-  public static isLinux = process.platform === "linux";  
+  public static isElectron = Platform.userAgent.includes("electron");
   
-  public static isWindows = process.platform === "win32";
+  public static isMac = Platform.isElectron ?
+        process.platform === "darwin"
+        : (Platform.userAgent.includes("mac") || Platform.userAgent.includes("macintosh"));
 }

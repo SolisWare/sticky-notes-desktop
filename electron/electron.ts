@@ -1,3 +1,4 @@
+import { Platform } from './../src/utils/Platform';
 import { app, BrowserWindow, Menu } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
@@ -49,7 +50,7 @@ app.on("ready", createWindow);
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!Platform.isMac) {
     app.quit();
   }
 });
