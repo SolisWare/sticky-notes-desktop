@@ -17,6 +17,9 @@ export const AppColors = {
   SECONDARY_TEXT:   "#FFFFFF",
   // App's accent color.
   ACCENT: "#F0F7FA",
+  // App's error color.
+  ERROR: "#E60000",
+  ERROR_LIGHT: "#FF9999",
   // Add New note Tile
   NEW_NOTE_BG: "#F2F7FF",
   // MISC

@@ -6,7 +6,6 @@
  */
 import { Button, Divider, Paper, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { NoteColors } from "../theme/NoteColors";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
@@ -73,10 +72,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   }
 }));
-
-const handleDeleteNote = (noteId: string) => {
-  console.log("Clicked Note with Note-ID: " + noteId)
-}
 
 function Note(props: NoteProps) {
   const classes = useStyles();

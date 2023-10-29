@@ -13,12 +13,9 @@ import { AppView } from "../../App";
 import Home from "./pages/Home";
 import { AppColors } from "../../theme/AppColors";
 import { useState } from "react";
-import { Notes } from "@mui/icons-material";
-import Note from "../../components/Note";
 import { NoteType } from "../../models/NoteType";
-import { getRandomNoteColor, NoteColors } from "../../theme/NoteColors";
+import { getRandomNoteColor } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
-import { Platform } from "../../utils/Platform";
 
 const appTheme = AppTheme.Theme;
 

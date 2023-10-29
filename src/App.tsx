@@ -5,7 +5,7 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import './App.css';
-import { BrowserRouter, Navigate, Routes, Route as WebRoute } from "react-router-dom";
+import { BrowserRouter, Routes, Route as WebRoute } from "react-router-dom";
 import { Router, Route } from 'electron-router-dom'
 import MainWindow from './views/MainWindow/MainWindow';
 import { Platform } from './utils/Platform';

@@ -12,6 +12,8 @@ import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { AppTheme } from "../theme/AppTheme";
+import clsx from 'clsx';
+import { AppColors } from "../theme/AppColors";
 
 const appTheme = AppTheme.Theme;
 
@@ -32,7 +34,12 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbarBtn: {
     width: 130,
     height: 32,
-    
+  },
+  toolbarBtnDelete: {
+    '&:hover': {
+      backgroundColor: AppColors.ERROR + "!important",
+      outline: "1px solid " + AppColors.ERROR_LIGHT + "!important"
+    }
   },
   toolbarBtnSpacer: {
     marginRight: 15
@@ -66,7 +73,7 @@ function XToolbar(props: XToolbarProps) {
             </div>
           </Button>
           <span className={classes.toolbarBtnSpacer}/>
-          <Button className={classes.toolbarBtn} variant="toolbar" color="primary" onClick={props.handleDeleteAllNotesButton}>
+          <Button className={classes.toolbarBtnDelete} variant="toolbar" onClick={props.handleDeleteAllNotesButton}>
             <DeleteOutlineOutlinedIcon fontSize="small" />
             <Typography className={classes.toolbarBtnText} variant="body2">Delete All</Typography>
           </Button>
@@ -74,7 +81,6 @@ function XToolbar(props: XToolbarProps) {
       </Toolbar>
     </AppBar>
   );
-  
 }
 
 export default XToolbar;

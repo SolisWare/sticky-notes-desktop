@@ -7,9 +7,6 @@
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Note from "./Note";
-import { useState } from "react";
-import { NoteColors } from "../theme/NoteColors";
-import { nanoid } from "nanoid";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
 
