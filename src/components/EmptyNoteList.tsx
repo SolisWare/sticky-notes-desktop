@@ -13,11 +13,11 @@ import { Platform } from "../utils/Platform";
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     position: "fixed",
-    width: "95%",
+    width: "95%"
   },
   text: {
     paddingBottom: 7,
-    color: AppColors.DISABLED_TEXT,
+    color: AppColors.DISABLED_TEXT
     
   },
   text2: {

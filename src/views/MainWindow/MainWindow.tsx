@@ -26,9 +26,9 @@ type MainWindowProps = {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     minWidth: "100%",
-    minHeight: "100%",
+    minHeight: "100vh",
     width: "100%",
-    height: "100vh",
+    height: "100%",
     zIndex: 1,
     backgroundColor: AppColors.ACCENT
   },
