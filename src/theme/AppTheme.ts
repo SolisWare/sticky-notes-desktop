@@ -55,7 +55,11 @@ export class AppTheme {
       MuiButton: {
         styleOverrides: {
           root: {
-            minWidth: 0
+            minWidth: 0,
+            "&.MuiButton-toolbar.Mui-disabled": {
+              color: AppColors.DISABLED_TEXT,
+              outline: "1px solid " + AppColors.DISABLED_TEXT
+            }
           }
         },
         variants: [
