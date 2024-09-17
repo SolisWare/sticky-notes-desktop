@@ -44,6 +44,8 @@ function MainWindow(props: MainWindowProps) {
   const classes = useStyles();
   const [notes, setNotes] = useState<NoteType[]>([]);
   
+  const isDeleteAllButtonDisabled = notes.length === 0;
+  
   function handleAddNote() {
     setNotes(
       [...notes,
@@ -84,7 +86,8 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} handleDeleteAllNotesButton={handleDeleteAllNotes} />
+          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} isDeleteAllButtonDisabled={isDeleteAllButtonDisabled}
+                    handleDeleteAllNotesButton={handleDeleteAllNotes} />
           <main>
             { page }
           </main>

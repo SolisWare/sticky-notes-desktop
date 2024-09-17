@@ -13,7 +13,7 @@ import { Platform } from "../utils/Platform";
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
     position: "fixed",
-    width: "100%",
+    width: "95%",
   },
   text: {
     paddingBottom: 7,
@@ -31,7 +31,7 @@ function EmptyNoteList() {
   
   return (
     <div className={classes.wrapper}>
-      <Typography className={classes.text} fontSize="large">You don't have any nothes yet!</Typography>
+      <Typography className={classes.text} fontSize="large">You don't have any notes yet!</Typography>
       <Typography className={clsx(classes.text, classes.text2)}>Press {platform}+N to add your first note</Typography>
     </div>
   );

@@ -19,6 +19,7 @@ const appTheme = AppTheme.Theme;
 
 type XToolbarProps = {
   title: string;
+  isDeleteAllButtonDisabled: boolean;
   handleAddNoteButton: (event: React.MouseEvent<HTMLElement>) => void;
   handleDeleteAllNotesButton: (event: React.MouseEvent<HTMLElement>) => void;
 };
@@ -73,7 +74,7 @@ function XToolbar(props: XToolbarProps) {
             </div>
           </Button>
           <span className={classes.toolbarBtnSpacer}/>
-          <Button className={classes.toolbarBtnDelete} variant="toolbar" onClick={props.handleDeleteAllNotesButton}>
+          <Button className={classes.toolbarBtnDelete} variant="toolbar" disabled={props.isDeleteAllButtonDisabled} onClick={props.handleDeleteAllNotesButton}>
             <DeleteOutlineOutlinedIcon fontSize="small" />
             <Typography className={classes.toolbarBtnText} variant="body2">Delete All</Typography>
           </Button>
