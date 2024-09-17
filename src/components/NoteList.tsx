@@ -38,7 +38,7 @@ function NoteList (props: NoteListProps) {
         :
         <>
           {notes.map((note) => (
-            <Note note={note} handleDeleteNoteButton={props.handleDeleteNoteButton} />
+            <Note key={note.id} note={note} handleDeleteNoteButton={props.handleDeleteNoteButton} />
             ))
           }
         </>
