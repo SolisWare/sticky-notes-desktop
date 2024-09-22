@@ -11,10 +11,13 @@ import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
 import { AppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
+import { Autosave } from "react-autosave";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
 type NoteProps = {
   note: NoteType;
   handleDeleteNoteButton: (noteId: string) => void;
+  handleNoteSave: (note: NoteType) => void;
 };
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -76,26 +79,42 @@ const useStyles = makeStyles((theme: Theme) => ({
 function Note(props: NoteProps) {
   const classes = useStyles();
   
+  const [note, setNote] = useState<NoteType>(props.note);
+  
+  const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const updatedContent = event.target.value;
+    const updatedNote: NoteType = {
+      id: props.note.id,
+      bgcolor: props.note.bgcolor,
+      title: props.note.title,
+      content: updatedContent,
+      date: new Date()
+    };
+    
+    setNote(updatedNote);
+  };
+  
   return (
     <Paper elevation={4} className={classes.note}>
-      <div className={classes.noteInnerContainer} style={{backgroundColor: props.note.bgcolor}}>
+      <div className={classes.noteInnerContainer} style={{backgroundColor: note.bgcolor}}>
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
             <div className={classes.noteTitleWrapper}>
               {/* TODO: Add editable title section */}
             </div>
-            <XTextarea placeholder="Type here..." content={props.note.content}/>
+            <XTextarea placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
+            <Autosave data={note} onSave={props.handleNoteSave} />
           </div>
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
               <Typography className={classes.noteFooterUtilBarDate} variant="body2">
                 <span>Last modified:&#160;</span>
-                <span>{Formatter.getFormattedDate(props.note.date)}</span>
+                <span>{Formatter.getFormattedDate(note.date)}</span>
                 <span>&#160;at&#160;</span>
-                <span>{Formatter.getFormattedTimestamp(props.note.date)}</span>
+                <span>{Formatter.getFormattedTimestamp(note.date)}</span>
               </Typography>
-              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => props.handleDeleteNoteButton(props.note.id)}>
+              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => props.handleDeleteNoteButton(note.id)}>
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>

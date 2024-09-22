@@ -6,10 +6,13 @@
  */
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { ChangeEventHandler, FocusEventHandler } from "react";
+import { NoteType } from "../models/NoteType";
  
 type XTextareaProps = {
   placeholder: string;
   content: string;
+  onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
  
 const useStyles = makeStyles((theme: Theme) => ({
@@ -31,7 +34,8 @@ function XTextarea(props: XTextareaProps) {
   return (
     <textarea className={classes.xTextarea}
               placeholder={props.placeholder}
-              defaultValue={props.content} />
+              defaultValue={props.content}
+              onChange={props.onChange} />
   );
 }
  

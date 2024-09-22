@@ -9,6 +9,7 @@ import { makeStyles } from "@mui/styles";
 import Note from "./Note";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
+import { Autosave } from "react-autosave";
 
 type NoteListProps = {
   notes: NoteType[];
@@ -29,6 +30,11 @@ function NoteList (props: NoteListProps) {
   const notes = props.notes;
   const isNoteListEmpty = notes.length <= 0;
   
+  const handleSaveNote = (note: NoteType) => {
+    console.log("save: " + note.content);
+    
+  };
+  
   return (
     <div className={classes.wrapper}>
       {isNoteListEmpty ?
@@ -38,7 +44,7 @@ function NoteList (props: NoteListProps) {
         :
         <>
           {notes.map((note) => (
-            <Note key={note.id} note={note} handleDeleteNoteButton={props.handleDeleteNoteButton} />
+            <Note key={note.id} note={note} handleNoteSave={handleSaveNote} handleDeleteNoteButton={props.handleDeleteNoteButton} />
             ))
           }
         </>
