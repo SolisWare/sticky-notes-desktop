@@ -69,6 +69,7 @@
     "electron-router-dom": "^1.0.5",
     "electron-storage": "^1.0.7",
     "react": "^18.2.0",
+    "react-autosave": "^0.4.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
