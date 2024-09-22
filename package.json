@@ -26,8 +26,8 @@
   "scripts": {
     "clean": "rm -rf build dist",
     "build:types": "cd node_modules/electron-storage/dist && tsc *.js --declaration --emitDeclarationOnly --allowJs",
-    "start:web": "npm run build:types && react-scripts start",
-    "build:web": "npm run build:types && PUBLIC_URL=./ react-scripts build",
+    "start:web": "react-scripts start",
+    "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
     "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build:desktop && electron ./build/electron.js\"",
