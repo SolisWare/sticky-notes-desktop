@@ -46,7 +46,6 @@ const createMainWindow = () => {
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js")
-
     }
   });
   
@@ -68,6 +67,12 @@ Menu.setApplicationMenu(menubar);
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
   createMainWindow();
+  
+  ipcMain.handle('storage.getDataDir', async () => {
+    return app.getPath("userData");
+  });
+  
+  
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2023 X-SiGMA Systems.
+ * Copyright (c) 2023-2024 X-SiGMA Systems.
  * 
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
@@ -10,6 +10,7 @@ import Note from "./Note";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
+import { useState } from "react";
 
 type NoteListProps = {
   notes: NoteType[];
@@ -27,11 +28,29 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function NoteList (props: NoteListProps) {
   const classes = useStyles();
+  
+  const [userDataDir, setUserDataDir] = useState<string>('');
+  
   const notes = props.notes;
   const isNoteListEmpty = notes.length <= 0;
   
   const handleSaveNote = (note: NoteType) => {
-    console.log("save: " + note.content);
+    if (window.storage) {
+      window.storage.getDataDir().then((dataDirPath: string|undefined) => {
+        if (dataDirPath !== undefined) {
+          setUserDataDir(dataDirPath);
+        }
+        else {
+          // TODO: Throw an exception - filesystem not available.
+        }
+      });
+    }
+    else {
+      // TODO: Throw an exception:
+      //  - for electron: that stograge is not available
+      //  - for web: skip/use browser localStorage
+      console.error("Storage object not available!")
+    }
     
   };
   
