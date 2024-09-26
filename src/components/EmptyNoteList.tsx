@@ -8,7 +8,6 @@ import { Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from 'clsx';
 import { AppColors } from "../theme/AppColors";
-import { Platform } from "../utils/Platform";
 
 const useStyles = makeStyles((theme: Theme) => ({
   wrapper: {
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) => ({
  
 function EmptyNoteList() {
   const classes = useStyles();
-  const platform = Platform.isMac ? "Cmd" : "Ctrl";
+  const platform = window.os.isMac ? "Cmd" : "Ctrl";
   
   return (
     <div className={classes.wrapper}>

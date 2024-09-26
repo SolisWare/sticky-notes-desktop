@@ -1,11 +1,11 @@
 /**
- * Copyright (c) 2023 X-SiGMA Systems.
+ * Copyright (c) 2023-2024 X-SiGMA Systems.
  * 
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { Platform } from './../src/utils/Platform';
 import { app, Menu } from "electron";
+import { isMac } from "./utils/Platform";
 
 const template: any = [
   {
@@ -29,7 +29,7 @@ const template: any = [
     submenu: [
       { label: 'New Note...', accelerator: 'CmdOrCtrl+N' },
       { type: 'separator' },
-      Platform.isMac ? { role: 'close' } : { role: 'quit' }
+      isMac ? { role: 'close' } : { role: 'quit' }
     ]
   },
   {

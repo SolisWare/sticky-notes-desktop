@@ -4,12 +4,12 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { Platform } from './../src/utils/Platform';
-import { app, BrowserWindow, LoadFileOptions, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu, webContents } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
 import * as isDev from "electron-is-dev"
+import { isMac } from './utils/Platform';
 
 // Load index.html as the app entry point for production
 // and listen on "http://localhost:3000" in 'dev' mode.
@@ -67,7 +67,7 @@ app.on("ready", () => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
-  if (!Platform.isMac) {
+  if (!isMac) {
     app.quit();
   }
 });

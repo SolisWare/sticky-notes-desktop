@@ -8,7 +8,7 @@ import './App.css';
 import { BrowserRouter, Routes, Route as WebRoute } from "react-router-dom";
 import { Router, Route } from 'electron-router-dom'
 import MainWindow from './views/MainWindow/MainWindow';
-import { Platform } from './utils/Platform';
+import { UserAgent } from './utils/UserAgent';
 
 export enum AppView {
   home = "/home",
@@ -18,7 +18,7 @@ export enum AppView {
 function App() {
   return (
     <div className="App"> 
-      { Platform.isElectron ?
+      { UserAgent.isElectron ?
         /* Router for an Electron "native" app */
         <Router main={
           <>
