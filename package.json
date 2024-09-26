@@ -29,10 +29,10 @@
     "start:web": "react-scripts start",
     "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
+    "build": "npm run build:web && npm run build:desktop",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
-    "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build:desktop && electron ./build/electron.js\"",
-    "dist": "npm run build:web && npm run build:desktop",
-    "dist-mac": "npm run dist && electron-builder -m"
+    "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build && electron ./build/electron/electron.js\"",
+    "dist-mac": "npm run build && electron-builder -m"
   },
   "eslintConfig": {
     "extends": [
