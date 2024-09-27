@@ -35,8 +35,8 @@ function NoteList (props: NoteListProps) {
   const isNoteListEmpty = notes.length <= 0;
   
   const handleSaveNote = (note: NoteType) => {
-    if (window.storage) {
-      window.storage.getDataDir().then((dataDirPath: string|undefined) => {
+    if (window.api.storage) {
+      window.api.storage.getDataDir().then((dataDirPath: string|undefined) => {
         if (dataDirPath !== undefined) {
           setUserDataDir(dataDirPath);
         }

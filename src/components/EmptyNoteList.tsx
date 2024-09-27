@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
  
 function EmptyNoteList() {
   const classes = useStyles();
-  const isMac = UserAgent.isElectron ? window.os.isMac : UserAgent.isMac;
+  const isMac = UserAgent.isElectron ? window.api.os.isMac : UserAgent.isMac;
   const platform = isMac ? "Cmd" : "Ctrl";
   
   return (
