@@ -12,6 +12,8 @@ import * as isDev from "electron-is-dev"
 import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 
+const storage = require('electron-storage');
+
 // Load variables from ".env" file and merge with "process.env"
 // FOR DEV MODE ONLY!
 if (isDev) {
@@ -72,6 +74,20 @@ app.on("ready", () => {
     return app.getPath("userData");
   });
   
+  ipcMain.on('storage.setNote', (_, ...args: any[]) => {
+    const path = args[0][0];
+    const note = args[0][1];
+    
+    storage.set(path, note)
+      .then(() => {
+        console.log('The file was successfully written to the storage');
+        // TODO: Send callback to the renderer.
+      })
+      .catch((err: Error) => {
+        console.error(err);
+        // TODO: Throw an exception and send callback to the renderer.
+      });
+  });
   
 });
 

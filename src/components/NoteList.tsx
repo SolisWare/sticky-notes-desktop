@@ -34,7 +34,7 @@ function NoteList (props: NoteListProps) {
   const notes = props.notes;
   const isNoteListEmpty = notes.length <= 0;
   
-  const handleSaveNote = (note: NoteType) => {
+  const getUserDataDir = () => {
     if (window.api.storage) {
       window.api.storage.getDataDir().then((dataDirPath: string|undefined) => {
         if (dataDirPath !== undefined) {
@@ -51,7 +51,10 @@ function NoteList (props: NoteListProps) {
       //  - for web: skip/use browser localStorage
       console.error("Storage object not available!")
     }
-    
+  };
+  
+  const handleSaveNote = (note: NoteType) => {
+    window.api.storage.setNote(note);
   };
   
   return (

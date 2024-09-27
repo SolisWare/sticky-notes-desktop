@@ -5,12 +5,14 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { contextBridge, ipcRenderer } from "electron";
+import { join } from "path";
+import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 
-const send = (channel: string, data: any): void => {
+const send = (channel: string, ...data: any[]): void => {
   ipcRenderer.send(channel, data);
 };
 
@@ -30,6 +32,13 @@ contextBridge.exposeInMainWorld('api', {
             reject(undefined);
           });
       });
+    },
+    setNote: (note: NoteType) => {
+      const noteId = note.id;
+      const filePath = join("data", noteId);
+      const serializedNote = JSON.stringify(note);
+      
+      send('storage.setNote', filePath, serializedNote);
     }
   },
   os: {

@@ -11,7 +11,7 @@ interface IElectronAPI {
     getDataDir: () => Promise<string>;
     getNote: () => NoteType;
     getNotes: () => NoteType[];
-    setNote: () => void;
+    setNote: (note: NoteType) => void;
   },
   os: {
     isMac: boolean;
