@@ -11,6 +11,7 @@ import menubar from "./menu";
 import * as isDev from "electron-is-dev"
 import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
+import * as fs from 'node:fs';
 
 const storage = require('electron-storage');
 
@@ -89,6 +90,15 @@ app.on("ready", () => {
       });
   });
   
+  ipcMain.handle('storage.getNotes', async () => {
+    const notesDir= path.join(app.getPath("userData"), 'data');
+    try {
+      const files = fs.readdirSync(notesDir);
+      console.log("fs: " + files);
+    } catch (err) {
+      return [];
+    }
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

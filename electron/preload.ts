@@ -5,9 +5,10 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { contextBridge, ipcRenderer } from "electron";
-import { join } from "path";
+import { join, resolve } from "path";
 import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
+import { rejects } from "assert";
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -39,6 +40,17 @@ contextBridge.exposeInMainWorld('api', {
       const serializedNote = JSON.stringify(note);
       
       send('storage.setNote', filePath, serializedNote);
+    },
+    getNotes: () => {
+      return new Promise<NoteType[]>((resolve, reject) => {
+        receive('storage.getNotes')
+          .then((notes: NoteType[]) => {
+            resolve(notes);
+          })
+          .catch(_ => {
+            reject([]);
+          });
+      });
     }
   },
   os: {
