@@ -110,7 +110,9 @@ app.on("ready", () => {
         }
       })
     );
-    return notes.filter((note): note is NoteType => note !== null);
+    return notes
+      .filter((note): note is NoteType => note !== null)
+      .sort((oldestNote, latestNote) => new Date(oldestNote.date).getTime() - new Date(latestNote.date).getTime());
   });
 
   ipcMain.on('storage.deleteNote', (_, ...args: any[]) => {
