@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { NoteType } from "../../models/NoteType";
 import { getRandomNoteColor } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const appTheme = AppTheme.Theme;
 
@@ -42,7 +43,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 function MainWindow(props: MainWindowProps) {
   const classes = useStyles();
+
   const [notes, setNotes] = useState<NoteType[]>([]);
+  const [isDeleteAllNotesDialogOpen, setDeleteAllNotesDialogOpen] = useState(false);
   
   const isDeleteAllButtonDisabled = notes.length === 0;
 
@@ -77,7 +80,9 @@ function MainWindow(props: MainWindowProps) {
   }
   
   function handleDeleteAllNotes() {
+    // TODO: Add processing/loading dialog while deleting notes.
     setNotes([]);
+    setDeleteAllNotesDialogOpen(false);
   }
   
   let page = <></>;
@@ -93,6 +98,13 @@ function MainWindow(props: MainWindowProps) {
     <ThemeProvider theme={appTheme}>
       <div className={classes.root}>
         <CssBaseline/>
+        <ConfirmationDialog
+          open={isDeleteAllNotesDialogOpen}
+          title="Delete All Notes"
+          message="Are you sure you want to delete all notes? This action cannot be undone."
+          confirmLabel="Delete All"
+          onConfirm={handleDeleteAllNotes}
+          onCancel={() => setDeleteAllNotesDialogOpen(false)} />
         <nav className={classes.menu}>
           {/* In-app menu goes here. */}
         </nav>
