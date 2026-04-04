@@ -12,6 +12,7 @@ import * as isDev from "electron-is-dev"
 import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
+import { NoteType } from "../src/models/NoteType";
 
 const storage = require('electron-storage');
 
@@ -91,13 +92,27 @@ app.on("ready", () => {
   });
   
   ipcMain.handle('storage.getNotes', async () => {
-    const notesDir= path.join(app.getPath("userData"), 'data');
-    try {
-      const files = fs.readdirSync(notesDir);
-      console.log("fs: " + files);
-    } catch (err) {
-      return [];
-    }
+    const notesDir = path.join(app.getPath("userData"), 'data');
+    const files = await fs.promises.readdir(notesDir);
+    const notes = await Promise.all(
+      files.map(async (file): Promise<NoteType | null> => {
+        try {
+          const filePath = path.join(notesDir, file);
+          const content = await fs.promises.readFile(filePath, 'utf-8');
+          const parsed = JSON.parse(content) as NoteType;
+
+          return {
+            ...parsed,
+            date: new Date(parsed.date)
+          };
+        } catch (err) {
+          console.warn(`Skipping corrupt note file: ${file}`);
+          // TODO: We might want to consider an exception so a warning can be displayed.
+          return null;
+        }
+      })
+    );
+    return notes.filter((note): note is NoteType => note !== null);
   });
 });
 

@@ -42,15 +42,15 @@ contextBridge.exposeInMainWorld('api', {
       send('storage.setNote', filePath, serializedNote);
     },
     getNotes: () => {
-      return new Promise<NoteType[]>((resolve, reject) => {
-        receive('storage.getNotes')
-          .then((notes: NoteType[]) => {
-            resolve(notes);
-          })
-          .catch(_ => {
-            reject([]);
-          });
-      });
+      return receive('storage.getNotes')
+        .then((notes: NoteType[]) => {
+          console.log(`Loaded ${notes.length} notes`);
+          return notes;
+        })
+        .catch((err: Error) => {
+          console.error('Failed to load notes:', err.message);
+          return [] as NoteType[];
+        });
     }
   },
   os: {

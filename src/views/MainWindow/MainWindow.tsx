@@ -12,7 +12,7 @@ import { makeStyles } from "@mui/styles";
 import { AppView } from "../../App";
 import Home from "./pages/Home";
 import { AppColors } from "../../theme/AppColors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NoteType } from "../../models/NoteType";
 import { getRandomNoteColor } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
@@ -45,6 +45,16 @@ function MainWindow(props: MainWindowProps) {
   const [notes, setNotes] = useState<NoteType[]>([]);
   
   const isDeleteAllButtonDisabled = notes.length === 0;
+
+  useEffect(() => {
+    window.api.storage.getNotes()
+      .then((notes: NoteType[]) => {
+        setNotes(notes);
+      })
+      .catch((err: Error) => {
+        console.error('Unexpected error loading notes:', err.message);
+      });
+  }, []);
   
   function handleAddNote() {
     setNotes(

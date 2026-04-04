@@ -10,7 +10,7 @@ interface IElectronAPI {
   storage: {
     getDataDir: () => Promise<string>;
     getNote: () => NoteType;
-    getNotes: () => NoteType[];
+    getNotes: () => Promise<NoteType[]>;
     setNote: (note: NoteType) => void;
   },
   os: {
