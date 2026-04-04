@@ -114,6 +114,19 @@ app.on("ready", () => {
     );
     return notes.filter((note): note is NoteType => note !== null);
   });
+
+  ipcMain.on('storage.deleteNote', (_, ...args: any[]) => {
+    const noteId = args[0][0];
+    const filePath = path.join(appDataDir, `${noteId}.json`);
+
+    console.log('Deleting:', filePath);
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.log(err);
+        // TODO: Error handling
+      }
+    });
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
