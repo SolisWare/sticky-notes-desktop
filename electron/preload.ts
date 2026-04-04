@@ -51,6 +51,9 @@ contextBridge.exposeInMainWorld('api', {
           console.error('Failed to load notes:', err.message);
           return [] as NoteType[];
         });
+    },
+    deleteNote: (noteId: string) => {
+      send('storage.deleteNote', noteId);
     }
   },
   os: {

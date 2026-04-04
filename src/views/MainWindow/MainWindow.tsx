@@ -70,6 +70,7 @@ function MainWindow(props: MainWindowProps) {
   }
   
   function handleDeleteNote(noteId: string) {
+    window.api.storage.deleteNote(noteId);
     setNotes(
       notes.filter(({ id }) => id !== noteId)
     );

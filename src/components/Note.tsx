@@ -12,7 +12,7 @@ import XTextarea from "./XTextarea";
 import { AppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
 
 type NoteProps = {
   note: NoteType;
@@ -80,6 +80,8 @@ function Note(props: NoteProps) {
   const classes = useStyles();
   
   const [note, setNote] = useState<NoteType>(props.note);
+
+  const isDeleting = useRef(false);
   
   const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const updatedContent = event.target.value;
@@ -93,6 +95,11 @@ function Note(props: NoteProps) {
     
     setNote(updatedNote);
   };
+
+  const handleDeleteNote = () => {
+    isDeleting.current = true;
+    props.handleDeleteNoteButton(note.id);
+  };
   
   return (
     <Paper elevation={4} className={classes.note}>
@@ -103,7 +110,11 @@ function Note(props: NoteProps) {
               {/* TODO: Add editable title section */}
             </div>
             <XTextarea placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
-            <Autosave data={note} onSave={props.handleNoteSave} />
+            <Autosave data={note} onSave={(note) => {
+              if (!isDeleting.current) {
+                props.handleNoteSave(note);
+              }
+            }} />
           </div>
           <div className={classes.noteFooter}>
             <Divider />
@@ -114,7 +125,7 @@ function Note(props: NoteProps) {
                 <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(note.date)}</span>
               </Typography>
-              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={() => props.handleDeleteNoteButton(note.id)}>
+              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>
