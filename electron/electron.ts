@@ -14,7 +14,8 @@ import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
 
-const storage = require('electron-storage');
+const appDir = path.join(app.getPath("userData"));
+const appDataDir = path.join(appDir, 'data');
 
 // Load variables from ".env" file and merge with "process.env"
 // FOR DEV MODE ONLY!
@@ -77,27 +78,24 @@ app.on("ready", () => {
   });
   
   ipcMain.on('storage.setNote', (_, ...args: any[]) => {
-    const path = args[0][0];
-    const note = args[0][1];
-    
-    storage.set(path, note)
-      .then(() => {
-        console.log('The file was successfully written to the storage');
-        // TODO: Send callback to the renderer.
-      })
-      .catch((err: Error) => {
+    const note = args[0][0] as NoteType;
+    const filePath = path.join(appDataDir, `${note.id}.json`);
+    const serializedNote = JSON.stringify(note);
+
+    fs.writeFile(filePath, serializedNote, (err) => {
+      if (err) {
         console.error(err);
         // TODO: Throw an exception and send callback to the renderer.
-      });
+      }
+    });
   });
   
   ipcMain.handle('storage.getNotes', async () => {
-    const notesDir = path.join(app.getPath("userData"), 'data');
-    const files = await fs.promises.readdir(notesDir);
+    const files = await fs.promises.readdir(appDataDir);
     const notes = await Promise.all(
       files.map(async (file): Promise<NoteType | null> => {
         try {
-          const filePath = path.join(notesDir, file);
+          const filePath = path.join(appDataDir, file);
           const content = await fs.promises.readFile(filePath, 'utf-8');
           const parsed = JSON.parse(content) as NoteType;
 

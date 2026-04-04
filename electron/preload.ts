@@ -35,11 +35,7 @@ contextBridge.exposeInMainWorld('api', {
       });
     },
     setNote: (note: NoteType) => {
-      const noteId = note.id;
-      const filePath = join("data", noteId);
-      const serializedNote = JSON.stringify(note);
-      
-      send('storage.setNote', filePath, serializedNote);
+      send('storage.setNote', note);
     },
     getNotes: () => {
       return receive('storage.getNotes')

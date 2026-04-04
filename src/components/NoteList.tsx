@@ -9,7 +9,6 @@ import { makeStyles } from "@mui/styles";
 import Note from "./Note";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
-import { Autosave } from "react-autosave";
 import { useState } from "react";
 
 type NoteListProps = {

@@ -9,7 +9,6 @@ import { NoteType } from '../../src/models/NoteType';
 interface IElectronAPI {
   storage: {
     getDataDir: () => Promise<string>;
-    getNote: () => NoteType;
     getNotes: () => Promise<NoteType[]>;
     setNote: (note: NoteType) => void;
     deleteNote: (noteId: string) => void;
