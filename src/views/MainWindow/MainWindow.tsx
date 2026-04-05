@@ -80,9 +80,11 @@ function MainWindow(props: MainWindowProps) {
   }
   
   function handleDeleteAllNotes() {
-    // TODO: Add processing/loading dialog while deleting notes.
     setNotes([]);
     setDeleteAllNotesDialogOpen(false);
+    setTimeout(() => {
+      window.api.storage.deleteAllNotes();
+    }, 500);
   }
   
   let page = <></>;
@@ -98,19 +100,18 @@ function MainWindow(props: MainWindowProps) {
     <ThemeProvider theme={appTheme}>
       <div className={classes.root}>
         <CssBaseline/>
-        <ConfirmationDialog
-          open={isDeleteAllNotesDialogOpen}
-          title="Delete All Notes"
-          message="Are you sure you want to delete all notes? This action cannot be undone."
-          confirmLabel="Delete All"
-          onConfirm={handleDeleteAllNotes}
-          onCancel={() => setDeleteAllNotesDialogOpen(false)} />
+        <ConfirmationDialog open={isDeleteAllNotesDialogOpen}
+                            title="Delete All Notes"
+                            message="Are you sure you want to delete all notes? This action cannot be undone."
+                            confirmLabel="Delete All"
+                            onConfirm={handleDeleteAllNotes}
+                            onCancel={() => setDeleteAllNotesDialogOpen(false)} />
         <nav className={classes.menu}>
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
           <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} isDeleteAllButtonDisabled={isDeleteAllButtonDisabled}
-                    handleDeleteAllNotesButton={handleDeleteAllNotes} />
+                    handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
           <main>
             { page }
           </main>

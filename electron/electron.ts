@@ -127,6 +127,19 @@ app.on("ready", () => {
       }
     });
   });
+
+  ipcMain.on('storage.deleteAllNotes', (_, ...args: any[]) => {
+    console.log('Deleting all files in :', appDataDir);
+    fs.promises.readdir(appDataDir)
+      .then((files) => Promise.all(
+        files
+          .map((file) => fs.promises.unlink(path.join(appDataDir, file)))
+      ))
+      .catch((err) => {
+        console.log(err);
+        // TODO: Error handling
+      });
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

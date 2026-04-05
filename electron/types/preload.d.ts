@@ -12,6 +12,7 @@ interface IElectronAPI {
     getNotes: () => Promise<NoteType[]>;
     setNote: (note: NoteType) => void;
     deleteNote: (noteId: string) => void;
+    deleteAllNotes: () => void;
   },
   os: {
     isMac: boolean;

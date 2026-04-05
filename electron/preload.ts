@@ -50,6 +50,9 @@ contextBridge.exposeInMainWorld('api', {
     },
     deleteNote: (noteId: string) => {
       send('storage.deleteNote', noteId);
+    },
+    deleteAllNotes: () => {
+      send('storage.deleteAllNotes');
     }
   },
   os: {
