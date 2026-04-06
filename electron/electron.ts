@@ -175,7 +175,7 @@ app.setAboutPanelOptions({
   applicationVersion: "0.1.0",
   version: "Unreleased Milestone",
   authors: [
-    "X-SiGMA Systems"
+    "SolisWare"
   ],
-  copyright: "Copyright © 2023-2024 X-SiGMA Systems.\nAll rights reserved."
+  copyright: "Copyright © 2023-2026 SolisWare.\nAll rights reserved."
 });
