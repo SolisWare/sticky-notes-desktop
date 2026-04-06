@@ -18,6 +18,17 @@
     "mac": {
       "category": "public.app-category.productivity"
     },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "license": "LICENSE.txt",
+      "shortcutName": "X-NoTES",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
     "extraMetadata": {
       "main": "build/electron/electron.js"
     },
@@ -36,7 +47,8 @@
     "build": "npm run build:web && npm run build:desktop",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
     "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build && electron ./build/electron/electron.js\"",
-    "dist-mac": "npm run build && electron-builder -m"
+    "dist-mac": "npm run build && electron-builder -m",
+    "dist-windows": "npm run build && electron-builder -w"
   },
   "eslintConfig": {
     "extends": [
