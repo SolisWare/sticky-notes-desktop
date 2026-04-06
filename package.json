@@ -5,20 +5,24 @@
   "version": "0.1.0",
   "private": true,
   "author": {
-    "name": "X-SiGMA Systems",
-    "email": "xsigmasystems@gmail.com",
-    "url": "https://xsigma.uk"
+    "name": "SolisWare",
+    "email": "solisware@mail.com",
+    "url": "https://solisware.com"
   },
-  "main": "electron.js",
+  "main": "build/electron/electron.js",
   "homepage": "./",
   "build": {
-    "appId": "uk.xsigma.xnotes",
+    "appId": "com.solisware.xnotes",
     "productName": "X-NoTES",
-    "copyright": "Copyright © 2023 ${author}",
+    "copyright": "Copyright © 2023-2026 ${author}",
     "mac": {
       "category": "public.app-category.productivity"
     },
+    "extraMetadata": {
+      "main": "build/electron/electron.js"
+    },
     "files": [
+      "package.json",
       "build/**/*",
       "node_modules/**/*"
     ]

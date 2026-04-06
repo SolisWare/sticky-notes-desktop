@@ -17,6 +17,11 @@ import { NoteType } from "../src/models/NoteType";
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
 
+// Create the 'data' directory if it doesn't exist.
+if (!fs.existsSync(appDataDir)) {
+  fs.mkdirSync(appDataDir, { recursive: true });
+}
+
 // Load variables from ".env" file and merge with "process.env"
 // FOR DEV MODE ONLY!
 if (isDev) {
