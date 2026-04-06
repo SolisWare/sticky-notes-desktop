@@ -57,19 +57,21 @@ function MainWindow(props: MainWindowProps) {
       .catch((err: Error) => {
         console.error('Unexpected error loading notes:', err.message);
       });
+
+    // menu
+    window.api.menu.onMenuNewNote(handleAddNote);
   }, []);
   
   function handleAddNote() {
-    setNotes(
-      [...notes,
-        {
-          id: nanoid(),
-          bgcolor: getRandomNoteColor(),
-          content: "",
-          date: new Date()
-        },
-      ]
-    )
+    setNotes((prevNotes) => [
+      ...prevNotes,
+      {
+        id: nanoid(),
+        bgcolor: getRandomNoteColor(),
+        content: "",
+        date: new Date()
+      },
+    ]);
   }
   
   function handleDeleteNote(noteId: string) {

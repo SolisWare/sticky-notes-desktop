@@ -21,6 +21,14 @@ const receive = async (channel: string): Promise<any> => {
   return ipcRenderer.invoke(channel);
 };
 
+const on = (channel: string, callback: (...args: any[]) => void): void => {
+  ipcRenderer.on(channel, callback);
+};
+
+const off = (channel: string, callback: (...args: any[]) => void): void => {
+  ipcRenderer.removeListener(channel, callback);
+};
+
 contextBridge.exposeInMainWorld('api', {
   storage: {
     getDataDir: () => {
@@ -53,6 +61,11 @@ contextBridge.exposeInMainWorld('api', {
     },
     deleteAllNotes: () => {
       send('storage.deleteAllNotes');
+    }
+  },
+  menu: {
+    onMenuNewNote: (callback: () => void) => {
+      on('menu.newNote', callback);
     }
   },
   os: {

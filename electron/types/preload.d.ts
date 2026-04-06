@@ -14,6 +14,9 @@ interface IElectronAPI {
     deleteNote: (noteId: string) => void;
     deleteAllNotes: () => void;
   },
+  menu: {
+    onMenuNewNote: (callback: () => void) => void;
+  },
   os: {
     isMac: boolean;
     isWindows: boolean;

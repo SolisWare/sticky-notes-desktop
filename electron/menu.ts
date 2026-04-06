@@ -6,6 +6,7 @@
  */
 import { app, Menu } from "electron";
 import { isMac } from "./utils/Platform";
+import { BrowserWindow } from "electron";
 
 const template: any = [
   {
@@ -27,7 +28,13 @@ const template: any = [
   {
     label: 'File',
     submenu: [
-      { label: 'New Note...', accelerator: 'CmdOrCtrl+N' },
+      { 
+        label: 'New Note...',
+        accelerator: 'CmdOrCtrl+N',
+        click: () => {
+          BrowserWindow.getFocusedWindow()?.webContents.send('menu.newNote');
+        }
+      },
       { type: 'separator' },
       isMac ? { role: 'close' } : { role: 'quit' }
     ]
