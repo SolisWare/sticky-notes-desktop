@@ -51,12 +51,17 @@ const createMainWindow = () => {
     height: 800,
     minWidth: 335,
     minHeight: 250,
+    show: false,
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js")
     }
+  });
+
+  win.once('ready-to-show', () => {
+    win.show();
   });
   
   if (isDev) {
