@@ -1,46 +1,79 @@
-# Getting Started with Create React App
+# X-NoTES
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Last Modified](https://img.shields.io/badge/last%20modified-April%202026-blue)
+![Version](https://img.shields.io/badge/version-0.1-green)
+![License](https://img.shields.io/badge/license-MIT-yellow)
+![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgray)
 
-## Available Scripts
+A cross-platform sticky notes desktop app built with ReactJS and Electron.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Getting Started
+ 
+### Prerequisites
+- [Node.js](https://nodejs.org/) v18 or higher
+- npm v9 or higher
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Clone the Repository
+```bash
+git clone https://github.com/solisware/x-notes.git
+cd x-notes
+npm install
+```
+> **Note:** `--legacy-peer-deps` is required due to peer dependency conflicts between some packages and React 18. This is a known compatibility issue and does not affect the app's functionality.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Run in Development Mode
+```bash
+npm run electron:dev
+```
 
-### `npm test`
+This starts the React dev server and Electron concurrently. The app will reload automatically on code changes.
+> **Note:** Changes to `electron/electron.ts` or `electron/preload.ts` require a full restart of the dev process to take effect.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Building for Production
+ 
+Build the app:
+```bash
+npm run build
+```
+> **Note:** This step will trigger automatically when running any of the `dist` targets.
+ 
+### Distribute for macOS
+```bash
+npm run dist-mac
+```
+Output: `dist/` — produces a `.dmg` installer.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Distribute for Windows
+```bash
+npm run dist-win
+```
+Output: `dist/` — produces an NSIS `.exe` installer.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
+ 
+## Project Structure
+```
+x-notes/
+├── electron/          # Electron main process, preload, and menu
+├── src/               # React renderer (components, pages, theme, models)
+├── assets/            # App icons and installer assets
+├── build/             # Compiled output (generated, do not edit or commit)
+├── dist/              # Distribution packages (generated, do not edit or commit)
+└── public/            # Static assets for the React app
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
+ 
+## Contributing
+Contributions are welcome — whether that's bug fixes, new features, documentation improvements, or raising issues and feature requests.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## License
+X-NoTES is open source software licensed under the [MIT License](LICENSE.txt).
+ 
+You are free to use, modify, and distribute this software. Attribution is not required but is greatly appreciated — if you use our code in your project, a mention or a link back to this repository means a lot to us.
