@@ -5,19 +5,54 @@
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgray)
 
-A cross-platform sticky notes desktop app built with ReactJS and Electron.
+A cross-platform sticky notes desktop app built with ReactJS and Electron by SolisWare.
 
 ---
 
 ## Getting Started
+
+### Download & Install
  
+Download the latest prebuilt release for your platform from the [Releases](https://github.com/solisware/sticky-notes-desktop/releases) page.
+ 
+> **macOS users:** If you see a *"X-NoTES is damaged and can't be opened"* warning after downloading, this is macOS Gatekeeper blocking the app because it is not yet signed with an Apple Developer certificate. The app itself is fine. Run the following command in Terminal to fix it:
+> ```bash
+> xattr -cr /Applications/X-NoTES.app
+> ```
+
+---
+
+## Contributing
+Contributions are welcome — whether that's bug fixes, new features, documentation improvements, or raising issues and feature requests.
+
+### Raising Issues & Feature Requests
+Found a bug or have an idea? [Open an issue](https://github.com/SolisWare/sticky-notes-desktop/issues) and describe it clearly. For feature requests, explain the use case and why it would be valuable.
+
+### Submitting a Pull Request
+1. Fork the repository
+2. Create a feature branch from `develop`:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Make your changes and commit with clear, descriptive messages
+4. Push your branch and open a Pull Request against `develop` branch
+
+### PR Review Policy
+All pull requests must be reviewed and approved by the **SolisWare team** before merging. We aim to review PRs promptly. Please be patient — we appreciate your effort.
+
+---
+
+## Development
+
 ### Prerequisites
+> These are required for development only. The distributed app bundles its own runtime — end users do not need Node.js installed.
+
 - [Node.js](https://nodejs.org/) v18 or higher
 - npm v9 or higher
 
 ### Clone the Repository
 ```bash
-git clone https://github.com/solisware/x-notes.git
+git clone https://github.com/solisware/sticky-notes-desktop.git
 cd x-notes
 npm install
 ```
@@ -30,6 +65,17 @@ npm run electron:dev
 
 This starts the React dev server and Electron concurrently. The app will reload automatically on code changes.
 > **Note:** Changes to `electron/electron.ts` or `electron/preload.ts` require a full restart of the dev process to take effect.
+
+### Project Structure
+```
+x-notes/
+├── electron/          # Electron main process, preload, and menu
+├── src/               # React renderer (components, pages, theme, models)
+├── assets/            # App icons and installer assets
+├── build/             # Compiled output (generated, do not edit or commit)
+├── dist/              # Distribution packages (generated, do not edit or commit)
+└── public/            # Static assets for the React app
+```
 
 ---
 
@@ -52,39 +98,6 @@ Output: `dist/` — produces a `.dmg` installer.
 npm run dist-win
 ```
 Output: `dist/` — produces an NSIS `.exe` installer.
-
----
- 
-## Project Structure
-```
-x-notes/
-├── electron/          # Electron main process, preload, and menu
-├── src/               # React renderer (components, pages, theme, models)
-├── assets/            # App icons and installer assets
-├── build/             # Compiled output (generated, do not edit or commit)
-├── dist/              # Distribution packages (generated, do not edit or commit)
-└── public/            # Static assets for the React app
-```
-
----
- 
-## Contributing
-Contributions are welcome — whether that's bug fixes, new features, documentation improvements, or raising issues and feature requests.
-
-### Raising Issues & Feature Requests
-Found a bug or have an idea? [Open an issue](https://github.com/SolisWare/sticky-notes-desktop/issues) and describe it clearly. For feature requests, explain the use case and why it would be valuable.
-
-### Submitting a Pull Request
-1. Fork the repository
-2. Create a feature branch from `develop`:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Make your changes and commit with clear, descriptive messages
-4. Push your branch and open a Pull Request against `develop` branch
-
-### PR Review Policy
-All pull requests must be reviewed and approved by the **SolisWare team** before merging. We aim to review PRs promptly. Please be patient — we appreciate your effort.
 
 ---
 
