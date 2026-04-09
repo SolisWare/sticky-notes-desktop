@@ -2,7 +2,7 @@
  # 
  # All rights reserved. Licensed under the MIT license.
  # See the LICENSE.txt file in the project root directory for details.
-name: Build
+name: X-NoTES Build Workflow
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -11,10 +11,8 @@ on:
   push:
     branches:
       - main
-      - develop
   pull_request:
     branches:
-      - main
       - develop
 
 jobs:
