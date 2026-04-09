@@ -1,2 +1,2 @@
 # Changelog
-All changes to the X-SiGMA X-NoTES will be documented in this file.
+All changes to the SolisWare X-NoTES will be documented in this file.

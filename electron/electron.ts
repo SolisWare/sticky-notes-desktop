@@ -4,7 +4,7 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu, webContents } from "electron";
+import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
