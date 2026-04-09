@@ -71,6 +71,21 @@ x-notes/
 ## Contributing
 Contributions are welcome — whether that's bug fixes, new features, documentation improvements, or raising issues and feature requests.
 
+### Raising Issues & Feature Requests
+Found a bug or have an idea? [Open an issue](https://github.com/SolisWare/sticky-notes-desktop/issues) and describe it clearly. For feature requests, explain the use case and why it would be valuable.
+
+### Submitting a Pull Request
+1. Fork the repository
+2. Create a feature branch from `develop`:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+3. Make your changes and commit with clear, descriptive messages
+4. Push your branch and open a Pull Request against `develop` branch
+
+### PR Review Policy
+All pull requests must be reviewed and approved by the **SolisWare team** before merging. We aim to review PRs promptly. Please be patient — we appreciate your effort.
+
 ---
 
 ## License
