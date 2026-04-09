@@ -4,6 +4,9 @@
  # See the LICENSE.txt file in the project root directory for details.
 name: Build
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
@@ -65,7 +68,7 @@ jobs:
           path: build/
 
       - name: Distribute macOS
-        run: npm run dist-mac
+        run: npm run dist-mac -- --publish never
 
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
@@ -97,7 +100,7 @@ jobs:
           path: build/
 
       - name: Distribute Windows
-        run: npm run dist-windows
+        run: npm run dist-windows -- --publish never
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
