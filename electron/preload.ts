@@ -8,7 +8,6 @@ import { contextBridge, ipcRenderer } from "electron";
 import { join, resolve } from "path";
 import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
-import { rejects } from "assert";
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
