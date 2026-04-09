@@ -40,15 +40,14 @@
   },
   "scripts": {
     "clean": "rm -rf build dist",
-    "build:types": "cd node_modules/electron-storage/dist && tsc *.js --declaration --emitDeclarationOnly --allowJs",
     "start:web": "react-scripts start",
     "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
     "build": "npm run build:web && npm run build:desktop",
     "start:desktop": "npm run build:desktop && electron ./build/electron.js",
     "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build && electron ./build/electron/electron.js\"",
-    "dist-mac": "npm run build && electron-builder -m",
-    "dist-windows": "npm run build && electron-builder -w"
+    "dist-mac": "electron-builder -m",
+    "dist-windows": "electron-builder -w"
   },
   "eslintConfig": {
     "extends": [
