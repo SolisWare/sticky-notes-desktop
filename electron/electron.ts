@@ -83,10 +83,6 @@ Menu.setApplicationMenu(menubar);
 app.on("ready", () => {
   createMainWindow();
   
-  ipcMain.handle('storage.getDataDir', async () => {
-    return app.getPath("userData");
-  });
-  
   ipcMain.on('storage.setNote', (_, ...args: any[]) => {
     const note = args[0][0] as NoteType;
     const filePath = path.join(appDataDir, `${note.id}.json`);

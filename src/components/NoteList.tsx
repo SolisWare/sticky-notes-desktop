@@ -9,7 +9,6 @@ import { makeStyles } from "@mui/styles";
 import Note from "./Note";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
-import { useState } from "react";
 
 type NoteListProps = {
   notes: NoteType[];
@@ -28,29 +27,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 function NoteList (props: NoteListProps) {
   const classes = useStyles();
   
-  const [userDataDir, setUserDataDir] = useState<string>('');
-  
   const notes = props.notes;
   const isNoteListEmpty = notes.length <= 0;
-  
-  const getUserDataDir = () => {
-    if (window.api.storage) {
-      window.api.storage.getDataDir().then((dataDirPath: string|undefined) => {
-        if (dataDirPath !== undefined) {
-          setUserDataDir(dataDirPath);
-        }
-        else {
-          // TODO: Throw an exception - filesystem not available.
-        }
-      });
-    }
-    else {
-      // TODO: Throw an exception:
-      //  - for electron: that stograge is not available
-      //  - for web: skip/use browser localStorage
-      console.error("Storage object not available!")
-    }
-  };
   
   const handleSaveNote = (note: NoteType) => {
     window.api.storage.setNote(note);

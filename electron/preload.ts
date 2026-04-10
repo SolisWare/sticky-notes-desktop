@@ -5,7 +5,6 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { contextBridge, ipcRenderer } from "electron";
-import { join, resolve } from "path";
 import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
 
@@ -30,17 +29,6 @@ const off = (channel: string, callback: (...args: any[]) => void): void => {
 
 contextBridge.exposeInMainWorld('api', {
   storage: {
-    getDataDir: () => {
-      return new Promise<string>((resolve, reject) => {
-        receive('storage.getDataDir')
-          .then((path: string) => {
-            resolve(path);
-          })
-          .catch(_ => {
-            reject(undefined);
-          });
-      });
-    },
     setNote: (note: NoteType) => {
       send('storage.setNote', note);
     },
