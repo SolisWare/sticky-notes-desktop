@@ -12,7 +12,7 @@ import XTextarea from "./XTextarea";
 import { AppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
-import { ChangeEvent, ChangeEventHandler, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 type NoteProps = {
   note: NoteType;
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 30,
     color: AppColors.MAIN,
     "&:hover": {
-      color: AppColors.SECONDARY
+      color: AppColors.ERROR
     }
   }
 }));
@@ -137,4 +137,3 @@ function Note(props: NoteProps) {
 }
 
 export default Note;
- 
