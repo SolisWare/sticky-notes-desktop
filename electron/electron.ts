@@ -172,7 +172,7 @@ app.on('activate', () => {
 // "About" dialog window customization
 app.setAboutPanelOptions({
   applicationName: "X-NoTES",
-  applicationVersion: "0.1.0",
+  applicationVersion: "0.1.0-beta.1",
   version: "Unreleased Milestone",
   authors: [
     "SolisWare"
