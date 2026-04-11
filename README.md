@@ -77,6 +77,44 @@ x-notes/
 └── public/            # Static assets for the React app
 ```
 
+### Version Numbers
+Version metadata is managed in `config/app-version-config.json`.
+
+After changing any release value, run:
+```bash
+npm run version-numbers
+```
+
+This updates:
+- `package.json`
+- `package-lock.json`
+- the version badge in `README.md`
+
+Accepted `config/app-version-config.json` values:
+
+| Value | Type | Description |
+| --- | --- | --- |
+| `majorVersion` | `number` | Required major version number. Example: `1` in `1.2.0`. |
+| `minorVersion` | `number` | Required minor version number. Example: `2` in `1.2.0`. |
+| `patchVersion` | `number` | Required patch version number. Example: `0` in `1.2.0`. |
+| `preReleaseVersion` | `string` | Optional prerelease suffix appended as `-<value>`. Example: `beta.1` -> `0.1.0-beta.1`. |
+| `buildVersion` | `string` | Optional build suffix appended as `-b<value>`. Example: `123` -> `0.1.0-b123`. |
+| `aboutVersionLabel` | `string` | Optional label shown in the app About dialog. This does not change the package version number. |
+
+Example:
+```json
+{
+  "majorVersion": 0,
+  "minorVersion": 1,
+  "patchVersion": 0,
+  "preReleaseVersion": "beta.1",
+  "buildVersion": "123",
+  "aboutVersionLabel": "Unreleased Milestone"
+}
+```
+
+With the example above, the generated app version becomes `0.1.0-beta.1-b123`.
+
 ---
 
 ## Building for Production

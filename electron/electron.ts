@@ -13,6 +13,8 @@ import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
+import appVersionConfig from "../config/app-version-config.json";
+import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
@@ -168,8 +170,8 @@ app.on('activate', () => {
 // "About" dialog window customization
 app.setAboutPanelOptions({
   applicationName: "X-NoTES",
-  applicationVersion: "0.1.0-beta.1",
-  version: "Unreleased Milestone",
+  applicationVersion: AppVersionResolver.getCombinedVersion(appVersionConfig),
+  ...(AppVersionResolver.getAboutVersion(appVersionConfig) ? { version: AppVersionResolver.getAboutVersion(appVersionConfig) } : {}),
   authors: [
     "SolisWare"
   ],
