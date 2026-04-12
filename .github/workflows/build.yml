@@ -66,8 +66,11 @@ jobs:
           name: build
           path: build/
 
-      - name: Distribute macOS
-        run: npm run dist-mac -- --publish never
+      - name: Distribute macOS arm64
+        run: npm run dist-mac-arm64 -- --publish never
+
+      - name: Distribute macOS x64
+        run: npm run dist-mac-x64 -- --publish never
 
       - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
