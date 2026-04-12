@@ -150,7 +150,7 @@ jobs:
           path: dist/*.dmg
           retention-days: 30
 
-  dist-windows:
+  dist-windows-x64:
     needs: [metadata, build]
     runs-on: windows-latest
     steps:
@@ -179,12 +179,51 @@ jobs:
           name: build
           path: build/
 
-      - name: Distribute Windows
-        run: npm run dist-windows -- --publish never
+      - name: Distribute Windows x64
+        run: npm run dist-windows-x64 -- --publish never
 
-      - name: Upload Windows artifact
+      - name: Upload Windows x64 artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ needs.metadata.outputs.artifact_name_prefix }}-windows-x64
+          path: dist/*.exe
+          retention-days: 30
+
+  dist-windows-x86:
+    needs: [metadata, build]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build/
+
+      - name: Distribute Windows x86
+        run: npm run dist-windows-x86 -- --publish never
+
+      - name: Upload Windows x86 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ needs.metadata.outputs.artifact_name_prefix }}-windows-x86
           path: dist/*.exe
           retention-days: 30

@@ -142,9 +142,15 @@ npm run dist-mac-x64
 ```
 Output: `dist/` — produces a `.dmg` installer.
 
-### Distribute for Windows
+### Distribute for Windows (64-bit)
 ```bash
-npm run dist-windows
+npm run dist-windows-x64
+```
+Output: `dist/` — produces an NSIS `.exe` installer.
+
+### Distribute for Windows (32-bit)
+```bash
+npm run dist-windows-x86
 ```
 Output: `dist/` — produces an NSIS `.exe` installer.
 

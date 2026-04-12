@@ -48,7 +48,8 @@
     "electron:dev": "concurrently \"BROWSER=none npm run start:web\" \"wait-on http://localhost:3000 && npm run build && electron ./build/electron/electron.js\"",
     "dist-mac-arm64": "electron-builder -m --arm64",
     "dist-mac-x64": "electron-builder -m --x64",
-    "dist-windows": "electron-builder -w"
+    "dist-windows-x64": "electron-builder -w --x64",
+    "dist-windows-x86": "electron-builder -w --ia32"
   },
   "eslintConfig": {
     "extends": [
