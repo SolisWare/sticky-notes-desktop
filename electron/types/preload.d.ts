@@ -17,6 +17,9 @@ interface IElectronAPI {
   menu: {
     onMenuNewNote: (callback: () => void) => void;
   },
+  version: {
+    getShortDisplayVersion: () => string;
+  },
   os: {
     isMac: boolean;
     isWindows: boolean;

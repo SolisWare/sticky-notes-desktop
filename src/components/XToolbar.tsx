@@ -19,6 +19,7 @@ const appTheme = AppTheme.Theme;
 
 type XToolbarProps = {
   title: string;
+  versionLabel: string;
   isDeleteAllButtonDisabled: boolean;
   handleAddNoteButton: (event: React.MouseEvent<HTMLElement>) => void;
   handleDeleteAllNotesButton: (event: React.MouseEvent<HTMLElement>) => void;
@@ -31,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbarBtnsContainer: {
     padding: "5px",
     marginLeft: "25px",
+  },
+  toolbarGrow: {
+    flexGrow: 1
   },
   toolbarBtn: {
     width: 130,
@@ -53,6 +57,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   toolbarBtnText: {
     paddingTop: "3px",
     paddingLeft: "5px"
+  },
+  toolbarVersionText: {
+    color: AppColors.MAIN_TEXT,
+    opacity: 0.95
   }
 }));
 
@@ -79,6 +87,10 @@ function XToolbar(props: XToolbarProps) {
             <Typography className={classes.toolbarBtnText} variant="body2">Delete All</Typography>
           </Button>
         </Box>
+        <div className={classes.toolbarGrow} />
+        <Typography className={classes.toolbarVersionText} variant="body1" fontWeight={500}>
+          {props.versionLabel}
+        </Typography>
       </Toolbar>
     </AppBar>
   );

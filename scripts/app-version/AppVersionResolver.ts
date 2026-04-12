@@ -40,6 +40,25 @@ export class AppVersionResolver {
     return aboutVersionLabel;
   }
 
+  public static getShortDisplayVersion(appVersionConfig: AppVersionConfig): string {
+    const { majorVersion, minorVersion, patchVersion, preReleaseVersion } = appVersionConfig;
+
+    if (![majorVersion, minorVersion, patchVersion].every((value) => Number.isInteger(value) && value >= 0)) {
+      throw new Error("majorVersion, minorVersion, and patchVersion must be non-negative integers.");
+    }
+
+    if (preReleaseVersion !== undefined && (typeof preReleaseVersion !== "string" || preReleaseVersion.trim() === "")) {
+      throw new Error("preReleaseVersion must be a non-empty string when provided.");
+    }
+
+    const shortVersion = patchVersion === 0
+      ? `v${majorVersion}.${minorVersion}`
+      : `v${majorVersion}.${minorVersion}.${patchVersion}`;
+    const releaseLabel = AppVersionResolver.getPreReleaseDisplayLabel(preReleaseVersion);
+
+    return releaseLabel ? `${shortVersion} (${releaseLabel})` : shortVersion;
+  }
+
   private static getResolvedBuildVersion(appVersionConfig: AppVersionConfig): number | undefined {
     const githubRunNumber = process.env.GITHUB_RUN_NUMBER;
 
@@ -60,6 +79,23 @@ export class AppVersionResolver {
     }
 
     return buildVersion;
+  }
+
+  private static getPreReleaseDisplayLabel(preReleaseVersion?: string): string | undefined {
+    if (!preReleaseVersion) {
+      return undefined;
+    }
+
+    const [keyword, suffix] = preReleaseVersion.split(".", 2);
+    const releaseLabelMap: Record<string, string> = {
+      alpha: "Alpha",
+      beta: "Beta",
+      rc: "RC"
+    };
+    const normalizedKeyword = keyword.toLowerCase();
+    const mappedKeyword = releaseLabelMap[normalizedKeyword] ?? keyword;
+
+    return suffix ? `${mappedKeyword} ${suffix}` : mappedKeyword;
   }
 
 }

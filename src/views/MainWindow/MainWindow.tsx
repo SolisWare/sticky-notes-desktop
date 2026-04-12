@@ -46,6 +46,7 @@ function MainWindow(props: MainWindowProps) {
 
   const [notes, setNotes] = useState<NoteType[]>([]);
   const [isDeleteAllNotesDialogOpen, setDeleteAllNotesDialogOpen] = useState(false);
+  const [versionLabel, setVersionLabel] = useState("");
   
   const isDeleteAllButtonDisabled = notes.length === 0;
 
@@ -57,6 +58,8 @@ function MainWindow(props: MainWindowProps) {
       .catch((err: Error) => {
         console.error('Unexpected error loading notes:', err.message);
       });
+
+    setVersionLabel(window.api.version.getShortDisplayVersion());
 
     // menu
     window.api.menu.onMenuNewNote(handleAddNote);
@@ -112,7 +115,7 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <XToolbar title="X-NoTES" handleAddNoteButton={handleAddNote} isDeleteAllButtonDisabled={isDeleteAllButtonDisabled}
+          <XToolbar title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote} isDeleteAllButtonDisabled={isDeleteAllButtonDisabled}
                     handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
           <main>
             { page }

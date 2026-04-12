@@ -7,6 +7,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
+import appVersionConfig from "../app-version-config.json";
+import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -53,6 +55,11 @@ contextBridge.exposeInMainWorld('api', {
   menu: {
     onMenuNewNote: (callback: () => void) => {
       on('menu.newNote', callback);
+    }
+  },
+  version: {
+    getShortDisplayVersion: () => {
+      return AppVersionResolver.getShortDisplayVersion(appVersionConfig);
     }
   },
   os: {
