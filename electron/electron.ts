@@ -13,7 +13,7 @@ import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
-import appVersionConfig from "../config/app-version-config.json";
+import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 
 const appDir = path.join(app.getPath("userData"));

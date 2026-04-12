@@ -12,7 +12,7 @@ import { AppVersionResolver } from "./AppVersionResolver";
 export class AppVersionUpdater {
   
   private readonly rootDir = process.cwd();
-  private readonly appVersionConfigPath = path.join(this.rootDir, "config", "app-version-config.json");
+  private readonly appVersionConfigPath = path.join(this.rootDir, "app-version-config.json");
   private readonly packageJsonPath = path.join(this.rootDir, "package.json");
   private readonly packageLockPath = path.join(this.rootDir, "package-lock.json");
   private readonly readmePath = path.join(this.rootDir, "README.md");

@@ -78,7 +78,7 @@ x-notes/
 ```
 
 ### Version Numbers
-Version metadata is managed in `config/app-version-config.json`.
+Version metadata is managed in `app-version-config.json`.
 
 After changing any release value, run:
 ```bash
@@ -90,7 +90,7 @@ This updates:
 - `package-lock.json`
 - the version badge in `README.md`
 
-Accepted `config/app-version-config.json` values:
+Accepted `app-version-config.json` values:
 
 | Value | Type | Description |
 | --- | --- | --- |
@@ -117,7 +117,7 @@ With the example above, the generated app version becomes `0.1.0-beta.1-b123`.
 
 Build version precedence:
 - `GITHUB_RUN_NUMBER` environment variable if present
-- `buildVersion` from `config/app-version-config.json`
+- `buildVersion` from `app-version-config.json`
 - no build suffix if neither is present
 
 ---
