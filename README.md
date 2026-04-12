@@ -115,6 +115,11 @@ Example:
 
 With the example above, the generated app version becomes `0.1.0-beta.1-b123`.
 
+Build version precedence:
+- `GITHUB_RUN_NUMBER` environment variable if present
+- `buildVersion` from `config/app-version-config.json`
+- no build suffix if neither is present
+
 ---
 
 ## Building for Production

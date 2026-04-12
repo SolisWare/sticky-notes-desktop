@@ -9,7 +9,8 @@ import { AppVersionConfig } from "./AppVersionConfig";
 export class AppVersionResolver {
 
   public static getCombinedVersion(appVersionConfig: AppVersionConfig): string {
-    const { majorVersion, minorVersion, patchVersion, preReleaseVersion, buildVersion } = appVersionConfig;
+    const { majorVersion, minorVersion, patchVersion, preReleaseVersion } = appVersionConfig;
+    const buildVersion = AppVersionResolver.getResolvedBuildVersion(appVersionConfig);
 
     if (![majorVersion, minorVersion, patchVersion].every((value) => Number.isInteger(value) && value >= 0)) {
       throw new Error("majorVersion, minorVersion, and patchVersion must be non-negative integers.");
@@ -29,16 +30,6 @@ export class AppVersionResolver {
     return `${majorVersion}.${minorVersion}.${patchVersion}${preReleaseSuffix}${buildSuffix}`;
   }
 
-  public static getBuildVersion(appVersionConfig: AppVersionConfig): string | undefined {
-    const { buildVersion } = appVersionConfig;
-
-    if (buildVersion !== undefined && (!Number.isInteger(buildVersion) || buildVersion < 0)) {
-      throw new Error("buildVersion must be a non-negative integer when provided.");
-    }
-
-    return buildVersion !== undefined ? `${buildVersion}` : undefined;
-  }
-
   public static getAboutVersion(appVersionConfig: AppVersionConfig): string | undefined {
     const { aboutVersionLabel } = appVersionConfig;
 
@@ -47,6 +38,28 @@ export class AppVersionResolver {
     }
 
     return aboutVersionLabel;
+  }
+
+  private static getResolvedBuildVersion(appVersionConfig: AppVersionConfig): number | undefined {
+    const githubRunNumber = process.env.GITHUB_RUN_NUMBER;
+
+    if (githubRunNumber !== undefined && githubRunNumber.trim() !== "") {
+      const parsedGithubRunNumber = Number.parseInt(githubRunNumber, 10);
+
+      if (!Number.isInteger(parsedGithubRunNumber) || parsedGithubRunNumber < 0) {
+        throw new Error("GITHUB_RUN_NUMBER must be a non-negative integer when provided.");
+      }
+
+      return parsedGithubRunNumber;
+    }
+
+    const { buildVersion } = appVersionConfig;
+
+    if (buildVersion !== undefined && (!Number.isInteger(buildVersion) || buildVersion < 0)) {
+      throw new Error("buildVersion must be a non-negative integer when provided.");
+    }
+
+    return buildVersion;
   }
 
 }
