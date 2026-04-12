@@ -10,5 +10,5 @@ export type AppVersionConfig = {
   patchVersion: number;
   preReleaseVersion?: string;
   buildVersion?: number;
-  aboutVersionLabel?: string;
+  releaseCodename?: string;
 };

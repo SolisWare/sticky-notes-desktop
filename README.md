@@ -99,7 +99,7 @@ Accepted `app-version-config.json` values:
 | `patchVersion` | `number` | Required patch version number. Example: `0` in `1.2.0`. |
 | `preReleaseVersion` | `string` | Optional prerelease suffix appended as `-<value>`. Example: `beta.1` -> `0.1.0-beta.1`. |
 | `buildVersion` | `string` | Optional build suffix appended as `-b<value>`. Example: `123` -> `0.1.0-b123`. |
-| `aboutVersionLabel` | `string` | Optional label shown in the app About dialog. This does not change the package version number. |
+| `releaseCodename` | `string` | Optional label shown in the app About dialog. This does not change the package version number. |
 
 Example:
 ```json
@@ -109,7 +109,7 @@ Example:
   "patchVersion": 0,
   "preReleaseVersion": "beta.1",
   "buildVersion": "123",
-  "aboutVersionLabel": "Unreleased Milestone"
+  "releaseCodename": "Unreleased Milestone"
 }
 ```
 

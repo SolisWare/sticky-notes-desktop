@@ -31,13 +31,13 @@ export class AppVersionResolver {
   }
 
   public static getAboutVersion(appVersionConfig: AppVersionConfig): string | undefined {
-    const { aboutVersionLabel } = appVersionConfig;
+    const { releaseCodename } = appVersionConfig;
 
-    if (aboutVersionLabel !== undefined && (typeof aboutVersionLabel !== "string" || aboutVersionLabel.trim() === "")) {
-      throw new Error("aboutVersionLabel must be a non-empty string when provided.");
+    if (releaseCodename !== undefined && (typeof releaseCodename !== "string" || releaseCodename.trim() === "")) {
+      throw new Error("releaseCodename must be a non-empty string when provided.");
     }
 
-    return aboutVersionLabel;
+    return releaseCodename;
   }
 
   public static getShortDisplayVersion(appVersionConfig: AppVersionConfig): string {
