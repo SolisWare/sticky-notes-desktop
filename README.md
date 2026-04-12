@@ -128,17 +128,23 @@ Build the app:
 ```bash
 npm run build
 ```
-> **Note:** This step will trigger automatically when running any of the `dist` targets.
+> **Important:** Run `npm run build` manually before running any `dist` target. The distribution commands do not build the app for you.
  
-### Distribute for macOS
+### Distribute for macOS (Apple Silicon)
 ```bash
-npm run dist-mac
+npm run dist-mac-arm64
+```
+Output: `dist/` — produces a `.dmg` installer.
+
+### Distribute for macOS (Intel)
+```bash
+npm run dist-mac-x64
 ```
 Output: `dist/` — produces a `.dmg` installer.
 
 ### Distribute for Windows
 ```bash
-npm run dist-win
+npm run dist-windows
 ```
 Output: `dist/` — produces an NSIS `.exe` installer.
 
