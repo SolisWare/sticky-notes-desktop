@@ -40,7 +40,7 @@
   },
   "scripts": {
     "clean": "rm -rf build dist",
-    "version-numbers": "tsc -p scripts/tsconfig.json && node build/scripts/app-version/AppVersionUpdater.js",
+    "version-numbers": "tsc -p scripts/tsconfig.json && node build/scripts/AppVersionUpdater.js",
     "start:web": "react-scripts start",
     "build:web": "PUBLIC_URL=./ react-scripts build",
     "build:desktop": "tsc -p electron/tsconfig.json",
