@@ -21,6 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       artifact_name_prefix: ${{ steps.resolve.outputs.artifact_name_prefix }}
+      build_version: ${{ steps.resolve.outputs.build_version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,6 +34,7 @@ jobs:
           app_name="$(node -p "require('./package.json').name.toLowerCase().replace(/[^a-z0-9]+/g, '')")"
           app_version="$(node -p "require('./package.json').version")"
           release_codename="$(node -p "(require('./app-version-config.json').releaseCodename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')")"
+          echo "build_version=${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
           echo "artifact_name_prefix=${publisher}-${app_name}-v${app_version}-b${GITHUB_RUN_NUMBER}-${release_codename}" >> "$GITHUB_OUTPUT"
 
   build:
@@ -50,6 +52,13 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
 
       - name: Build
         run: npm run build
@@ -78,6 +87,13 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
@@ -111,6 +127,13 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
@@ -142,6 +165,13 @@ jobs:
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
 
       - name: Download build artifact
         uses: actions/download-artifact@v4
