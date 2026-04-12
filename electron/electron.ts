@@ -8,7 +8,7 @@ import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
-import * as isDev from "electron-is-dev"
+import isDev from "electron-is-dev";
 import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
