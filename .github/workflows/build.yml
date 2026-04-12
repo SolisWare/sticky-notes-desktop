@@ -69,11 +69,13 @@ jobs:
       - name: Distribute macOS
         run: npm run dist-mac -- --publish never
 
-      - name: Upload macOS artifact
+      - name: Upload macOS artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: dist-mac
-          path: dist/*.dmg
+          name: dist-mac-installers
+          path: |
+            dist/*arm64.dmg
+            dist/*x64.dmg
           retention-days: 30
 
   dist-windows:
