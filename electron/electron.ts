@@ -9,7 +9,6 @@ import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
 import isDev from "electron-is-dev";
-import * as dotenv from "dotenv";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
@@ -27,7 +26,9 @@ if (!fs.existsSync(appDataDir)) {
 // Load variables from ".env" file and merge with "process.env"
 // FOR DEV MODE ONLY!
 if (isDev) {
-  dotenv.config();
+  // Load dotenv only in development so production packages do not require it.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  require("dotenv").config();
 }
 
 // Load index.html as the app entry point for production
