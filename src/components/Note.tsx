@@ -70,8 +70,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: 30,
     height: 30,
     color: AppColors.MAIN,
-    "&:hover": {
-      color: AppColors.ERROR
+    "&.MuiButton-root:hover": {
+      color: AppColors.ERROR,
+      backgroundColor: AppColors.ERROR_LIGHT_BACKGROUND
     }
   }
 }));

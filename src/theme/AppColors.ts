@@ -20,6 +20,7 @@ export const AppColors = {
   // App's error color.
   ERROR: "#E60000",
   ERROR_LIGHT: "#FF9999",
+  ERROR_LIGHT_BACKGROUND: "#FF999914",
   // Add New note Tile
   NEW_NOTE_BG: "#F2F7FF",
   // MISC
