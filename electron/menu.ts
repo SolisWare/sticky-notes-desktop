@@ -9,7 +9,7 @@ import { isMac } from "./utils/Platform";
 import { BrowserWindow } from "electron";
 
 const template: any = [
-  {
+  ...(isMac ? [{
     label: app.name,
     submenu: [
       { role: 'about' },
@@ -24,7 +24,7 @@ const template: any = [
       { type: 'separator' },
       { role: 'quit' },
     ]
-  },
+  }] : []),
   {
     label: 'File',
     submenu: [
