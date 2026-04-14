@@ -17,7 +17,28 @@ on:
   workflow_dispatch:
 
 jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    outputs:
+      artifact_name_prefix: ${{ steps.resolve.outputs.artifact_name_prefix }}
+      build_version: ${{ steps.resolve.outputs.build_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve artifact metadata
+        id: resolve
+        shell: bash
+        run: |
+          publisher="$(node -p "require('./package.json').author.name.toLowerCase().replace(/[^a-z0-9]+/g, '')")"
+          app_name="$(node -p "require('./package.json').name.toLowerCase().replace(/[^a-z0-9]+/g, '')")"
+          app_version="$(node -p "require('./package.json').version")"
+          release_codename="$(node -p "(require('./app-version-config.json').releaseCodename || '').toLowerCase().replace(/[^a-z0-9]+/g, '-')")"
+          echo "build_version=${GITHUB_RUN_NUMBER}" >> "$GITHUB_OUTPUT"
+          echo "artifact_name_prefix=${publisher}-${app_name}-v${app_version}-b${GITHUB_RUN_NUMBER}-${release_codename}" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: metadata
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,6 +53,13 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
       - name: Build
         run: npm run build
         env:
@@ -44,8 +72,8 @@ jobs:
           path: build/
           retention-days: 1
 
-  dist-mac:
-    needs: build
+  dist-mac-arm64:
+    needs: [metadata, build]
     runs-on: macos-latest
     steps:
       - name: Checkout
@@ -60,24 +88,70 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: build
           path: build/
 
-      - name: Distribute macOS
-        run: npm run dist-mac -- --publish never
+      - name: Distribute macOS arm64
+        run: npm run dist-mac-arm64 -- --publish never
 
-      - name: Upload macOS artifact
+      - name: Upload macOS arm64 artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist-mac
+          name: ${{ needs.metadata.outputs.artifact_name_prefix }}-macos-arm64
           path: dist/*.dmg
           retention-days: 30
 
-  dist-windows:
-    needs: build
+  dist-mac-x64:
+    needs: [metadata, build]
+    runs-on: macos-15-intel
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build/
+
+      - name: Distribute macOS x64
+        run: npm run dist-mac-x64 -- --publish never
+
+      - name: Upload macOS x64 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ needs.metadata.outputs.artifact_name_prefix }}-macos-x64
+          path: dist/*.dmg
+          retention-days: 30
+
+  dist-windows-x64:
+    needs: [metadata, build]
     runs-on: windows-latest
     steps:
       - name: Checkout
@@ -92,18 +166,64 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
       - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: build
           path: build/
 
-      - name: Distribute Windows
-        run: npm run dist-windows -- --publish never
+      - name: Distribute Windows x64
+        run: npm run dist-windows-x64 -- --publish never
 
-      - name: Upload Windows artifact
+      - name: Upload Windows x64 artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist-windows
+          name: ${{ needs.metadata.outputs.artifact_name_prefix }}-windows-x64
+          path: dist/*.exe
+          retention-days: 30
+
+  dist-windows-x86:
+    needs: [metadata, build]
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --legacy-peer-deps
+
+      - name: Stamp CI build version
+        run: |
+          node -e "const fs=require('fs'); const file='app-version-config.json'; const config=JSON.parse(fs.readFileSync(file,'utf8')); config.buildVersion=Number(process.env.BUILD_VERSION); fs.writeFileSync(file, JSON.stringify(config, null, 2) + '\n');"
+          npm run version-numbers
+        env:
+          BUILD_VERSION: ${{ needs.metadata.outputs.build_version }}
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+          path: build/
+
+      - name: Distribute Windows x86
+        run: npm run dist-windows-x86 -- --publish never
+
+      - name: Upload Windows x86 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ needs.metadata.outputs.artifact_name_prefix }}-windows-x86
           path: dist/*.exe
           retention-days: 30

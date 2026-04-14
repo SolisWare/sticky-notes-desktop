@@ -4,15 +4,12 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-html,
-body {
-  height: 100%;
-}
+import { NoteColors } from "../theme/NoteColors";
 
-.App {
-  text-align: center;
-}
-
-.App-link {
-  color: #61dafb;
-}
+export type NoteType = {
+  id: string;
+  bgcolor: NoteColors;
+  title?: string;
+  content: string;
+  date: Date;
+};

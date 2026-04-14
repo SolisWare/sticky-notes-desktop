@@ -4,15 +4,10 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-html,
-body {
-  height: 100%;
+declare module '@mui/material/Button' {
+  interface ButtonPropsVariantOverrides {
+    toolbar: true;
+  }
 }
 
-.App {
-  text-align: center;
-}
-
-.App-link {
-  color: #61dafb;
-}
+export {}

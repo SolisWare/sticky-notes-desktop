@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "outDir": "../build",
+    "baseUrl": ".",
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "paths": {
+      "*":["node_modules/*"]
+    }
+  },
+  "include": [
+    "**/*",
+    "../scripts/app-version/**/*",
+    "../config/**/*"
+  ]
+}

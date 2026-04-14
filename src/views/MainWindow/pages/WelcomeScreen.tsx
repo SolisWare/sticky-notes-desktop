@@ -4,15 +4,14 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-html,
-body {
-  height: 100%;
+type WelcomeProps = {
+  
 }
 
-.App {
-  text-align: center;
+function WelcomeScreen(props: WelcomeProps) {
+  return (
+    <p>Welcome!</p>
+  );
 }
 
-.App-link {
-  color: #61dafb;
-}
+export default WelcomeScreen;

@@ -4,15 +4,8 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-html,
-body {
-  height: 100%;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-link {
-  color: #61dafb;
-}
+ export enum TimeFormat {
+   Regular,
+   Military
+ }
+ 

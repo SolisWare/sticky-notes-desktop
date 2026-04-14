@@ -1,24 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
+/**
+ * Copyright (c) 2023-2026 SolisWare.
+ * 
+ * All rights reserved. Licensed under the MIT license.
+ * See the LICENSE.txt file in the project root directory for details.
+ */
 import './App.css';
+import { BrowserRouter, Routes, Route as WebRoute } from "react-router-dom";
+import { Router, Route } from 'electron-router-dom'
+import MainWindow from './views/MainWindow/MainWindow';
+import { UserAgent } from './utils/UserAgent';
+
+export enum AppView {
+  home = "/home",
+  welcome = "/welcome"
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React Now
-        </a>
-      </header>
+    <div className="App"> 
+      { UserAgent.isElectron ?
+        /* Router for an Electron "native" app */
+        <Router main={
+          <>
+            <Route path={AppView.home} element={
+              <MainWindow view={AppView.home} />
+            } />
+            <Route path={AppView.welcome} element={
+              <MainWindow view={AppView.welcome} />
+            } />
+            <Route path="/" element={
+              <MainWindow view={AppView.home} />
+            } />
+          </>
+        } />
+        :
+        /* Router for a React web app */
+        <BrowserRouter>
+          <Routes>
+            <WebRoute path={AppView.home} element={
+              <MainWindow view={AppView.home} />
+            } />
+            <WebRoute path={AppView.welcome} element={
+              <MainWindow view={AppView.welcome} />
+            } />
+            <WebRoute path="/" element={
+              <MainWindow view={AppView.home} />
+            } />
+          </Routes>
+        </BrowserRouter>
+      }
     </div>
   );
 }
