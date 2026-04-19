@@ -23,6 +23,11 @@ export const AppColors = {
   ERROR_LIGHT_BACKGROUND: "#FF999914",
   // Add New note Tile
   NEW_NOTE_BG: "#F2F7FF",
+  // Toolbar
+  TOOLBAR_BG: "#FEFEFE",
+  TOOLBAR_BORDER: "#E8EAED",
+  TOOLBAR_BORDER_LIGHTER:"#F1F3F5",
+  TOOLBAR_TEXT: "#1F2933",
   // MISC
   DISABLED_TEXT: "#B0B0B0"
 }
