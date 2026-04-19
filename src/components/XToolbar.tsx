@@ -23,11 +23,11 @@ type XToolbarProps = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   windowsToolbar: {
-    backgroundColor: AppColors.TOOLBAR_BG + "!important",
+    backgroundColor: AppColors.TOOLBAR_BACKGROUND + "!important",
     color: AppColors.TOOLBAR_TEXT + "!important",
     boxShadow: "none !important",
-    borderTop: "1px solid " + AppColors.TOOLBAR_BORDER_LIGHTER,
-    borderBottom: "1px solid " + AppColors.TOOLBAR_BORDER
+    borderTop: "1px solid " + AppColors.TOOLBAR_TOP_BORDER,
+    borderBottom: "1px solid " + AppColors.TOOLBAR_BOTTOM_BORDER
   },
   toolbar: {
     height: 20
@@ -44,14 +44,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     height: 32,
   },
   windowsToolbarBtn: {
-    backgroundColor: "#FFFFFF !important",
+    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
     color: AppColors.TOOLBAR_TEXT + "!important",
-    outline: "1px solid " + AppColors.TOOLBAR_BORDER + " !important",
+    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER + " !important",
     boxShadow: "none !important",
     '&:hover': {
-      backgroundColor: "#EFF8F2 !important",
-      color: "#14523B !important",
-      outline: "1px solid #BCDCCB !important"
+      backgroundColor: AppColors.TOOLBAR_BUTTON_HOVER_BACKGROUND + " !important",
+      color: AppColors.TOOLBAR_BUTTON_HOVER_TEXT + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_HOVER_BORDER + " !important"
     }
   },
   toolbarBtnDelete: {
@@ -61,19 +61,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     }
   },
   windowsToolbarBtnDelete: {
-    backgroundColor: "#FFFFFF !important",
+    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
     color: AppColors.TOOLBAR_TEXT + "!important",
-    outline: "1px solid " + AppColors.TOOLBAR_BORDER + " !important",
+    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER + " !important",
     boxShadow: "none !important",
     '&:hover': {
-      backgroundColor: "#FFF5F5 !important",
-      color: "#B42318 !important",
-      outline: "1px solid #F3C7C7 !important"
+      backgroundColor: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND + " !important",
+      color: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER + " !important"
     },
     '&.Mui-disabled': {
-      backgroundColor: "#FBFBFC !important",
-      color: "#B7BEC7 !important",
-      outline: "1px solid #E7EAEE !important"
+      backgroundColor: AppColors.TOOLBAR_BUTTON_DISABLED_BACKGROUND + " !important",
+      color: AppColors.TOOLBAR_BUTTON_DISABLED_TEXT + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_DISABLED_BORDER + " !important"
     }
   },
   toolbarBtnSpacer: {
