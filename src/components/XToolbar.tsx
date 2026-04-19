@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import clsx from "clsx";
 import { AppColors } from "../theme/AppColors";
 
 type XToolbarProps = {
@@ -110,8 +111,6 @@ function XToolbar(props: XToolbarProps) {
   const classes = useStyles();
   
   const isWindows = window.api.os.isWindows;
-  const addButtonClassName = isWindows ? `${classes.toolbarBtn} ${classes.windowsToolbarBtn}` : classes.toolbarBtn;
-  const deleteButtonClassName = isWindows ? `${classes.toolbarBtn} ${classes.windowsToolbarBtnDelete}` : `${classes.toolbarBtn} ${classes.toolbarBtnDelete}`;
   
   return (
     <AppBar position="sticky" className={isWindows ? classes.windowsToolbar : undefined}>
@@ -121,16 +120,26 @@ function XToolbar(props: XToolbarProps) {
           {props.title}
         </Typography>
         <Box className={classes.toolbarBtnsContainer}>
-          <Button className={addButtonClassName} variant="toolbar" color="primary" onClick={props.handleAddNoteButton}>
+          <Button
+            className={clsx(classes.toolbarBtn, isWindows && classes.windowsToolbarBtn)}
+            variant="toolbar"
+            color="primary"
+            onClick={props.handleAddNoteButton}
+          >
             <div className={classes.toolbarIconBtnInnerContainer}>
               <AddCircleOutlineIcon fontSize="small" />
-              <Typography className={isWindows ? classes.windowsToolbarBtnText : classes.toolbarBtnText} variant="body2">New Note</Typography>
+              <Typography className={clsx(classes.toolbarBtnText, isWindows && classes.windowsToolbarBtnText)} variant="body2">New Note</Typography>
             </div>
           </Button>
           <span className={classes.toolbarBtnSpacer}/>
-          <Button className={deleteButtonClassName} variant="toolbar" disabled={props.isDeleteAllButtonDisabled} onClick={props.handleDeleteAllNotesButton}>
+          <Button
+            className={clsx(classes.toolbarBtn, isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete)}
+            variant="toolbar"
+            disabled={props.isDeleteAllButtonDisabled}
+            onClick={props.handleDeleteAllNotesButton}
+          >
             <DeleteOutlineOutlinedIcon fontSize="small" />
-            <Typography className={isWindows ? classes.windowsToolbarBtnText : classes.toolbarBtnText} variant="body2">Delete All</Typography>
+            <Typography className={clsx(classes.toolbarBtnText, isWindows && classes.windowsToolbarBtnText)} variant="body2">Delete All</Typography>
           </Button>
         </Box>
         <div className={classes.toolbarGrow} />
