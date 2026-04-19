@@ -8,6 +8,7 @@ The format is inspired by Keep a Changelog, and this project uses release tags f
 - Adjusted the full Windows toolbar color scheme to better match the native Windows menu bar appearance
 - Updated the Windows toolbar background, text, borders, and button states for a more native look and feel
 - Removed the macOS-style application-name menu from Windows so the menu bar follows the more typical Windows structure
+- Removed redundant variables and imports as part of general code cleanup
 
 ## [v0.1.0-beta.1] - April 17, 2026 - Foundation
 - Initial public pre-release of SolisWare X-NoTES

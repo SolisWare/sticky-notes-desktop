@@ -6,8 +6,7 @@
  */
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ChangeEventHandler, FocusEventHandler } from "react";
-import { NoteType } from "../models/NoteType";
+import { ChangeEventHandler } from "react";
  
 type XTextareaProps = {
   placeholder: string;

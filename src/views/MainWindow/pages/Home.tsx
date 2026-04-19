@@ -19,8 +19,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function Home(props: HomeProps) {
-  const classes = useStyles();
-  
   return (
     <div>
       <NoteList notes={props.notes} handleDeleteNoteButton={props.handleDeleteNoteButton} />
