@@ -4,7 +4,7 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu, nativeTheme } from "electron";
 import * as path from "path";
 import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
@@ -14,6 +14,7 @@ import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
 import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
+import { resolveSystemTheme } from "./utils/SystemTheme";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
@@ -85,6 +86,10 @@ Menu.setApplicationMenu(menubar);
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
   createMainWindow();
+
+  ipcMain.handle("systemTheme.getTheme", () => {
+    return resolveSystemTheme(nativeTheme.shouldUseDarkColors);
+  });
   
   ipcMain.on('storage.setNote', (_, ...args: any[]) => {
     const note = args[0][0] as NoteType;

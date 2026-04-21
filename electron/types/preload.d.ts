@@ -22,7 +22,7 @@ interface IElectronAPI {
     getShortDisplayVersion: () => string;
   },
   systemTheme: {
-    theme: SystemTheme;
+    getTheme: () => Promise<SystemTheme>;
   },
   os: {
     isMac: boolean;

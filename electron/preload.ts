@@ -9,7 +9,7 @@ import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
 import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
-import { getSystemTheme } from "./utils/SystemTheme";
+import { SystemTheme } from "./utils/SystemTheme";
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
@@ -64,7 +64,9 @@ contextBridge.exposeInMainWorld('api', {
     }
   },
   systemTheme: {
-    theme: getSystemTheme()
+    getTheme: (): Promise<SystemTheme> => {
+      return receive("systemTheme.getTheme")
+    }
   },
   os: {
     isMac,
