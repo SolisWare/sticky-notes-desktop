@@ -5,6 +5,7 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { NoteType } from '../../src/models/NoteType';
+import { SystemTheme } from '../utils/SystemTheme';
 
 interface IElectronAPI {
   storage: {
@@ -19,6 +20,9 @@ interface IElectronAPI {
   },
   version: {
     getShortDisplayVersion: () => string;
+  },
+  systemTheme: {
+    theme: SystemTheme;
   },
   os: {
     isMac: boolean;
