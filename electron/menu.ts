@@ -5,7 +5,7 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { app, Menu } from "electron";
-import { isMac } from "./utils/Platform";
+import { isMac, isWindows } from "./utils/Platform";
 import { BrowserWindow } from "electron";
 
 const template: any = [
@@ -28,6 +28,10 @@ const template: any = [
   {
     label: 'File',
     submenu: [
+      ...(isWindows ? [
+        { role: 'about' as const },
+        { type: 'separator' as const }
+      ] : []),
       { 
         label: 'New Note...',
         accelerator: 'CmdOrCtrl+N',
