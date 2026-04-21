@@ -12,7 +12,9 @@ import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { AppColors } from "../theme/AppColors";
+import { SystemTheme } from "../theme/SystemTheme";
 
 type XToolbarProps = {
   title: string;
@@ -29,6 +31,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: "none !important",
     borderTop: "1px solid " + AppColors.TOOLBAR_TOP_BORDER,
     borderBottom: "1px solid " + AppColors.TOOLBAR_BOTTOM_BORDER
+  },
+  windowsToolbarDark: {
+    backgroundColor: AppColors.TOOLBAR_BACKGROUND_DARK + " !important",
+    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
+    boxShadow: "none !important",
+    borderTop: "1px solid " + AppColors.TOOLBAR_TOP_BORDER_DARK,
+    borderBottom: "1px solid " + AppColors.TOOLBAR_BOTTOM_BORDER_DARK
   },
   toolbar: {
     height: 20
@@ -55,6 +64,17 @@ const useStyles = makeStyles((theme: Theme) => ({
       outline: "1px solid " + AppColors.TOOLBAR_BUTTON_HOVER_BORDER + " !important"
     }
   },
+  windowsToolbarBtnDark: {
+    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND_DARK + " !important",
+    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
+    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER_DARK + " !important",
+    boxShadow: "none !important",
+    '&:hover': {
+      backgroundColor: AppColors.TOOLBAR_BUTTON_HOVER_BACKGROUND_DARK + " !important",
+      color: AppColors.TOOLBAR_BUTTON_HOVER_TEXT_DARK + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_HOVER_BORDER_DARK + " !important"
+    }
+  },
   toolbarBtnDelete: {
     '&:hover': {
       backgroundColor: AppColors.ERROR + "!important",
@@ -77,6 +97,22 @@ const useStyles = makeStyles((theme: Theme) => ({
       outline: "1px solid " + AppColors.TOOLBAR_BUTTON_DISABLED_BORDER + " !important"
     }
   },
+  windowsToolbarBtnDeleteDark: {
+    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND_DARK + " !important",
+    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
+    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER_DARK + " !important",
+    boxShadow: "none !important",
+    '&:hover': {
+      backgroundColor: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND_DARK + " !important",
+      color: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT_DARK + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER_DARK + " !important"
+    },
+    '&.Mui-disabled': {
+      backgroundColor: AppColors.TOOLBAR_BUTTON_DISABLED_BACKGROUND_DARK + " !important",
+      color: AppColors.TOOLBAR_BUTTON_DISABLED_TEXT_DARK + " !important",
+      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_DISABLED_BORDER_DARK + " !important"
+    }
+  },
   toolbarBtnSpacer: {
     marginRight: 15
   },
@@ -97,6 +133,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   windowsToolbarTitle: {
     color: AppColors.TOOLBAR_TEXT
   },
+  windowsToolbarTitleDark: {
+    color: AppColors.TOOLBAR_TEXT_DARK
+  },
   toolbarVersionText: {
     color: AppColors.MAIN_TEXT,
     opacity: 0.95
@@ -104,24 +143,58 @@ const useStyles = makeStyles((theme: Theme) => ({
   windowsToolbarVersionText: {
     color: AppColors.TOOLBAR_TEXT,
     opacity: 0.72
+  },
+  windowsToolbarVersionTextDark: {
+    color: AppColors.TOOLBAR_TEXT_DARK,
+    opacity: 0.72
   }
 }));
 
 function XToolbar(props: XToolbarProps) {
   const classes = useStyles();
-  
+
+  const [systemTheme, setSystemTheme] = useState<SystemTheme>(SystemTheme.LIGHT);
+
   const isWindows = window.api.os.isWindows;
+  const isWindowsDarkTheme = systemTheme === SystemTheme.DARK && isWindows;
+
+  useEffect(() => {
+    window.api.systemTheme.getTheme()
+      .then((theme) => {
+        setSystemTheme(theme);
+      })
+      .catch((error) => {
+        console.error("Failed to load Windows system theme", error);
+      });
+  }, []);
   
   return (
-    <AppBar position="sticky" className={isWindows ? classes.windowsToolbar : undefined}>
+    <AppBar
+      position="sticky"
+      className={clsx(
+        isWindows && classes.windowsToolbar,
+        isWindowsDarkTheme && classes.windowsToolbarDark
+      )}
+    >
       <Toolbar className={classes.toolbar}>
         {/* TODO: Add app icon. */}
-        <Typography variant="h6" fontWeight="bold" className={isWindows ? classes.windowsToolbarTitle : undefined}>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          className={clsx(
+            isWindows && classes.windowsToolbarTitle,
+            isWindowsDarkTheme && classes.windowsToolbarTitleDark
+          )}
+        >
           {props.title}
         </Typography>
         <Box className={classes.toolbarBtnsContainer}>
           <Button
-            className={clsx(classes.toolbarBtn, isWindows && classes.windowsToolbarBtn)}
+            className={clsx(
+              classes.toolbarBtn,
+              isWindows && classes.windowsToolbarBtn,
+              isWindowsDarkTheme && classes.windowsToolbarBtnDark
+            )}
             variant="toolbar"
             color="primary"
             onClick={props.handleAddNoteButton}
@@ -133,7 +206,11 @@ function XToolbar(props: XToolbarProps) {
           </Button>
           <span className={classes.toolbarBtnSpacer}/>
           <Button
-            className={clsx(classes.toolbarBtn, isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete)}
+            className={clsx(
+              classes.toolbarBtn,
+              isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete,
+              isWindowsDarkTheme && classes.windowsToolbarBtnDeleteDark
+            )}
             variant="toolbar"
             disabled={props.isDeleteAllButtonDisabled}
             onClick={props.handleDeleteAllNotesButton}
@@ -143,7 +220,14 @@ function XToolbar(props: XToolbarProps) {
           </Button>
         </Box>
         <div className={classes.toolbarGrow} />
-        <Typography className={isWindows ? classes.windowsToolbarVersionText : classes.toolbarVersionText} variant="body1" fontWeight={500}>
+        <Typography
+          className={clsx(
+            isWindows ? classes.windowsToolbarVersionText : classes.toolbarVersionText,
+            isWindowsDarkTheme && classes.windowsToolbarVersionTextDark
+          )}
+          variant="body1"
+          fontWeight={500}
+        >
           {props.versionLabel}
         </Typography>
       </Toolbar>

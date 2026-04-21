@@ -14,7 +14,7 @@ import * as fs from 'node:fs';
 import { NoteType } from "../src/models/NoteType";
 import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
-import { resolveSystemTheme } from "./utils/SystemTheme";
+import { resolveSystemTheme } from "../src/theme/SystemTheme";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');

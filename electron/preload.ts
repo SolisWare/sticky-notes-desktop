@@ -9,7 +9,7 @@ import { NoteType } from "../src/models/NoteType";
 import { isMac, isWindows } from './utils/Platform';
 import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
-import { SystemTheme } from "./utils/SystemTheme";
+import { SystemTheme } from "../src/theme/SystemTheme";
 
 // All Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.

@@ -5,7 +5,7 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { NoteType } from '../../src/models/NoteType';
-import { SystemTheme } from '../utils/SystemTheme';
+import { SystemTheme } from '../../src/theme/SystemTheme';
 
 interface IElectronAPI {
   storage: {
