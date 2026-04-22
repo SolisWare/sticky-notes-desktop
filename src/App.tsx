@@ -9,6 +9,8 @@ import { BrowserRouter, Routes, Route as WebRoute } from "react-router-dom";
 import { Router, Route } from 'electron-router-dom'
 import MainWindow from './views/MainWindow/MainWindow';
 import { UserAgent } from './utils/UserAgent';
+import { useEffect, useState } from 'react';
+import { SystemTheme } from './theme/SystemTheme';
 
 export enum AppView {
   home = "/home",
@@ -16,6 +18,18 @@ export enum AppView {
 }
 
 function App() {
+  const [systemTheme, setSystemTheme] = useState<SystemTheme>(SystemTheme.LIGHT);
+
+  useEffect(() => {
+    window.api.systemTheme.getTheme()
+      .then((theme) => {
+        setSystemTheme(theme);
+      })
+      .catch((error: Error) => {
+        console.error("Failed to load system theme:", error.message);
+      });
+  }, []);
+
   return (
     <div className="App"> 
       { UserAgent.isElectron ?
@@ -23,13 +37,13 @@ function App() {
         <Router main={
           <>
             <Route path={AppView.home} element={
-              <MainWindow view={AppView.home} />
+              <MainWindow view={AppView.home} theme={systemTheme} />
             } />
             <Route path={AppView.welcome} element={
-              <MainWindow view={AppView.welcome} />
+              <MainWindow view={AppView.welcome} theme={systemTheme} />
             } />
             <Route path="/" element={
-              <MainWindow view={AppView.home} />
+              <MainWindow view={AppView.home} theme={systemTheme} />
             } />
           </>
         } />
@@ -38,13 +52,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <WebRoute path={AppView.home} element={
-              <MainWindow view={AppView.home} />
+              <MainWindow view={AppView.home} theme={systemTheme} />
             } />
             <WebRoute path={AppView.welcome} element={
-              <MainWindow view={AppView.welcome} />
+              <MainWindow view={AppView.welcome} theme={systemTheme} />
             } />
             <WebRoute path="/" element={
-              <MainWindow view={AppView.home} />
+              <MainWindow view={AppView.home} theme={systemTheme} />
             } />
           </Routes>
         </BrowserRouter>

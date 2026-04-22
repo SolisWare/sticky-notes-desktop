@@ -9,18 +9,21 @@ import { makeStyles } from "@mui/styles";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
-import { AppColors } from "../theme/AppColors";
+import { AppColors, getAppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
+import { SystemTheme } from "../theme/SystemTheme";
 import { ChangeEvent, useRef, useState } from "react";
+import { AppColorStyleProps } from "../types/appColorTypes";
 
 type NoteProps = {
+  theme: SystemTheme;
   note: NoteType;
   handleDeleteNoteButton: (noteId: string) => void;
   handleNoteSave: (note: NoteType) => void;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   note: {
     width: "275px",
     height: "250px",
@@ -66,23 +69,36 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: "5px",
     fontStyle: "italic"
   },
+  noteFooterUtilBarDateDark: {
+    color: "#D2D8DE"
+  },
   noteFooterUtilBarDeleteBtn: {
     width: 30,
     height: 30,
-    color: AppColors.MAIN,
+    color: ({ appColors }) => appColors.MAIN,
     "&.MuiButton-root:hover": {
-      color: AppColors.ERROR,
-      backgroundColor: AppColors.ERROR_LIGHT_BACKGROUND
+      color: ({ appColors }) => appColors.ERROR,
+      backgroundColor: ({ appColors }) => appColors.ERROR_LIGHT_BACKGROUND
+    }
+  },
+  noteFooterUtilBarDeleteBtnDark: {
+    color: "#DCE7EF",
+    "&.MuiButton-root:hover": {
+      color: "#FFDCE2",
+      backgroundColor: "#5A303A"
     }
   }
 }));
 
 function Note(props: NoteProps) {
-  const classes = useStyles();
+  const appColors = getAppColors(props.theme);
+  const classes = useStyles({ appColors });
   
   const [note, setNote] = useState<NoteType>(props.note);
 
   const isDeleting = useRef(false);
+
+  const isDarkTheme = props.theme === SystemTheme.DARK;
   
   const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const updatedContent = event.target.value;
@@ -120,13 +136,13 @@ function Note(props: NoteProps) {
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
-              <Typography className={classes.noteFooterUtilBarDate} variant="body2">
+              <Typography className={isDarkTheme ? `${classes.noteFooterUtilBarDate} ${classes.noteFooterUtilBarDateDark}` : classes.noteFooterUtilBarDate} variant="body2">
                 <span>Last modified:&#160;</span>
                 <span>{Formatter.getFormattedDate(note.date)}</span>
                 <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(note.date)}</span>
               </Typography>
-              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
+              <Button className={isDarkTheme ? `${classes.noteFooterUtilBarDeleteBtn} ${classes.noteFooterUtilBarDeleteBtnDark}` : classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>

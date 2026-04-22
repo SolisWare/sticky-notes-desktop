@@ -12,11 +12,12 @@ import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { AppColors } from "../theme/AppColors";
+import { AppColors, getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
+import { AppColorStyleProps } from "../types/appColorTypes";
 
 type XToolbarProps = {
+  theme: SystemTheme;
   title: string;
   versionLabel: string;
   isDeleteAllButtonDisabled: boolean;
@@ -24,7 +25,7 @@ type XToolbarProps = {
   handleDeleteAllNotesButton: (event: React.MouseEvent<HTMLElement>) => void;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   windowsToolbar: {
     backgroundColor: AppColors.TOOLBAR_BACKGROUND + "!important",
     color: AppColors.TOOLBAR_TEXT + "!important",
@@ -77,8 +78,15 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   toolbarBtnDelete: {
     '&:hover': {
-      backgroundColor: AppColors.ERROR + "!important",
-      outline: "1px solid " + AppColors.ERROR_LIGHT + "!important"
+      backgroundColor: ({ appColors }) => appColors.ERROR + "!important",
+      outline: ({ appColors }) => "1px solid " + appColors.ERROR_LIGHT + "!important"
+    }
+  },
+  toolbarBtnDeleteDark: {
+    '&:hover': {
+      backgroundColor: ({ appColors }) => appColors.ERROR + "!important",
+      color: ({ appColors }) => appColors.MAIN_TEXT + "!important",
+      outline: ({ appColors }) => "1px solid " + appColors.ERROR_LIGHT + "!important"
     }
   },
   windowsToolbarBtnDelete: {
@@ -137,7 +145,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: AppColors.TOOLBAR_TEXT_DARK
   },
   toolbarVersionText: {
-    color: AppColors.MAIN_TEXT,
+    color: ({ appColors }) => appColors.MAIN_TEXT,
     opacity: 0.95
   },
   windowsToolbarVersionText: {
@@ -151,23 +159,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 function XToolbar(props: XToolbarProps) {
-  const classes = useStyles();
-
-  const [systemTheme, setSystemTheme] = useState<SystemTheme>(SystemTheme.LIGHT);
+  const appColors = getAppColors(props.theme);
+  const classes = useStyles({ appColors });
 
   const isWindows = window.api.os.isWindows;
-  const isWindowsDarkTheme = systemTheme === SystemTheme.DARK && isWindows;
+  const isDarkTheme = props.theme === SystemTheme.DARK;
+  const isWindowsDarkTheme = props.theme === SystemTheme.DARK && isWindows;
 
-  useEffect(() => {
-    window.api.systemTheme.getTheme()
-      .then((theme) => {
-        setSystemTheme(theme);
-      })
-      .catch((error) => {
-        console.error("Failed to load Windows system theme", error);
-      });
-  }, []);
-  
   return (
     <AppBar
       position="sticky"
@@ -209,6 +207,7 @@ function XToolbar(props: XToolbarProps) {
             className={clsx(
               classes.toolbarBtn,
               isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete,
+              !isWindows && isDarkTheme && classes.toolbarBtnDeleteDark,
               isWindowsDarkTheme && classes.windowsToolbarBtnDeleteDark
             )}
             variant="toolbar"

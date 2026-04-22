@@ -6,9 +6,12 @@
  */
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { AppColors } from "../theme/AppColors";
+import { AppColors, getAppColors } from "../theme/AppColors";
+import { SystemTheme } from "../theme/SystemTheme";
+import { AppColorStyleProps } from "../types/appColorTypes";
 
 type ConfirmationDialogProps = {
+  theme: SystemTheme;
   open: boolean;
   title: string;
   message: string;
@@ -18,14 +21,15 @@ type ConfirmationDialogProps = {
   onCancel: () => void;
 };
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   title: {
-    color: AppColors.MAIN,
+    color: ({ appColors }) => appColors.MAIN,
   },
 }));
 
 function ConfirmationDialog(props: ConfirmationDialogProps) {
-  const classes = useStyles();
+  const appColors = getAppColors(props.theme);
+  const classes = useStyles({ appColors });
 
   return(
     <Dialog open={props.open} onClose={props.onCancel}>

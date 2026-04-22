@@ -4,10 +4,14 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { AppColors } from './AppColors';
+import { AppColors, getAppColors } from './AppColors';
 import { createTheme } from "@mui/material/styles";
+import { SystemTheme } from './SystemTheme';
 
 export class AppTheme {
+
+  private static readonly LightColors = getAppColors(SystemTheme.LIGHT);
+  private static readonly DarkColors = getAppColors(SystemTheme.DARK);
 
   private static getSharedThemeConfig() {
     return {
@@ -64,19 +68,19 @@ export class AppTheme {
     palette: {
       mode: "light",
       primary: {
-        light: AppColors.MAIN_LIGHT,
-        main: AppColors.MAIN,
-        dark: AppColors.MAIN_DARK,
-        contrastText: AppColors.MAIN_TEXT
+        light: this.LightColors.MAIN_LIGHT,
+        main: this.LightColors.MAIN,
+        dark: this.LightColors.MAIN_DARK,
+        contrastText: this.LightColors.MAIN_TEXT
       },
       secondary: {
-        light: AppColors.SECONDARY_LIGHT,
-        main: AppColors.SECONDARY,
-        dark: AppColors.SECONDARY_DARK,
-        contrastText: AppColors.SECONDARY_TEXT
+        light: this.LightColors.SECONDARY_LIGHT,
+        main: this.LightColors.SECONDARY,
+        dark: this.LightColors.SECONDARY_DARK,
+        contrastText: this.LightColors.SECONDARY_TEXT
       },
       background: {
-        default: AppColors.ACCENT,
+        default: this.LightColors.ACCENT,
         paper: AppColors.NEW_NOTE_BG
       }
     },
@@ -100,12 +104,12 @@ export class AppTheme {
               variant: "toolbar"
             },
             style: {
-              backgroundColor: AppColors.MAIN,
+              backgroundColor: this.LightColors.MAIN,
               outline: "1px solid #FFFFFF",
               boxShadow: "none",
               '&:hover': {
-                backgroundColor: AppColors.SECONDARY,
-                outline: "1px solid " + AppColors.SECONDARY_LIGHT
+                backgroundColor: this.LightColors.SECONDARY,
+                outline: "1px solid " + this.LightColors.SECONDARY_LIGHT
               }
             }
           }
@@ -118,24 +122,24 @@ export class AppTheme {
     palette: {
       mode: "dark",
       primary: {
-        light: "#4AA3D1",
-        main: "#2A7CA5",
-        dark: "#1F5C79",
-        contrastText: "#F5F7FA"
+        light: this.DarkColors.MAIN_LIGHT,
+        main: this.DarkColors.MAIN,
+        dark: this.DarkColors.MAIN_DARK,
+        contrastText: this.DarkColors.MAIN_TEXT
       },
       secondary: {
-        light: "#4E8E76",
-        main: "#2F6C57",
-        dark: "#244F41",
-        contrastText: "#F5F7FA"
+        light: this.DarkColors.SECONDARY_LIGHT,
+        main: this.DarkColors.SECONDARY,
+        dark: this.DarkColors.SECONDARY_DARK,
+        contrastText: this.DarkColors.SECONDARY_TEXT
       },
       background: {
-        default: "#13181C",
-        paper: "#1C2329"
+        default: this.DarkColors.ACCENT,
+        paper: AppColors.NEW_NOTE_BG
       },
       text: {
-        primary: "#F5F7FA",
-        secondary: "#B7C0C9"
+        primary: this.DarkColors.MAIN_TEXT,
+        secondary: this.DarkColors.SECONDARY_TEXT
       }
     },
     ...AppTheme.getSharedThemeConfig(),

@@ -11,17 +11,16 @@ import { AppTheme } from "../../theme/AppTheme";
 import { makeStyles } from "@mui/styles";
 import { AppView } from "../../App";
 import Home from "./pages/Home";
-import { AppColors } from "../../theme/AppColors";
+import { SystemTheme } from "../../theme/SystemTheme";
 import { useEffect, useState } from "react";
 import { NoteType } from "../../models/NoteType";
 import { getRandomNoteColor } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 
-const appTheme = AppTheme.Theme;
-
 type MainWindowProps = {
   view: AppView;
+  theme: SystemTheme;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -30,8 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     minHeight: "100vh",
     width: "100%",
     height: "100%",
-    zIndex: 1,
-    backgroundColor: AppColors.ACCENT
+    zIndex: 1
   },
   app: {
     
@@ -48,7 +46,9 @@ function MainWindow(props: MainWindowProps) {
   const [isDeleteAllNotesDialogOpen, setDeleteAllNotesDialogOpen] = useState(false);
   const [versionLabel, setVersionLabel] = useState("");
   
+  
   const isDeleteAllButtonDisabled = notes.length === 0;
+  const appTheme = props.theme === SystemTheme.DARK ? AppTheme.DarkTheme : AppTheme.LightTheme;
 
   useEffect(() => {
     window.api.storage.getNotes()
@@ -95,17 +95,18 @@ function MainWindow(props: MainWindowProps) {
   let page = <></>;
   switch (props.view) {
     case AppView.home:
-      page = <Home notes={notes} handleDeleteNoteButton={handleDeleteNote} />
+      page = <Home theme={props.theme} notes={notes} handleDeleteNoteButton={handleDeleteNote} />
       break;
     default:
-      page = <Home notes={notes} handleDeleteNoteButton={handleDeleteNote} />
+      page = <Home theme={props.theme} notes={notes} handleDeleteNoteButton={handleDeleteNote} />
   }
   
   return (
     <ThemeProvider theme={appTheme}>
-      <div className={classes.root}>
+      <div className={classes.root} style={{ backgroundColor: appTheme.palette.background.default }}>
         <CssBaseline/>
-        <ConfirmationDialog open={isDeleteAllNotesDialogOpen}
+        <ConfirmationDialog theme={props.theme}
+                            open={isDeleteAllNotesDialogOpen}
                             title="Delete All Notes"
                             message="Are you sure you want to delete all notes? This action cannot be undone."
                             confirmLabel="Delete All"
@@ -115,8 +116,8 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <XToolbar title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote} isDeleteAllButtonDisabled={isDeleteAllButtonDisabled}
-                    handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
+          <XToolbar theme={props.theme} title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote}
+                    isDeleteAllButtonDisabled={isDeleteAllButtonDisabled} handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
           <main>
             { page }
           </main>

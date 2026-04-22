@@ -6,16 +6,18 @@
  */
 import NoteList from "../../../components/NoteList";
 import { NoteType } from "../../../models/NoteType";
+import { SystemTheme } from "../../../theme/SystemTheme";
 
 type HomeProps = {
   notes: NoteType[];
+  theme: SystemTheme;
   handleDeleteNoteButton: (noteId: string) => void;
 }
 
 function Home(props: HomeProps) {
   return (
     <div>
-      <NoteList notes={props.notes} handleDeleteNoteButton={props.handleDeleteNoteButton} />
+      <NoteList theme={props.theme} notes={props.notes} handleDeleteNoteButton={props.handleDeleteNoteButton} />
     </div>
   );
 }

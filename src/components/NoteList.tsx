@@ -9,8 +9,10 @@ import { makeStyles } from "@mui/styles";
 import Note from "./Note";
 import EmptyNoteList from "./EmptyNoteList";
 import { NoteType } from "../models/NoteType";
+import { SystemTheme } from "../theme/SystemTheme";
 
 type NoteListProps = {
+  theme: SystemTheme;
   notes: NoteType[];
   handleDeleteNoteButton: (noteId: string) => void;
 }
@@ -43,7 +45,7 @@ function NoteList (props: NoteListProps) {
         :
         <>
           {notes.map((note) => (
-            <Note key={note.id} note={note} handleNoteSave={handleSaveNote} handleDeleteNoteButton={props.handleDeleteNoteButton} />
+            <Note key={note.id} theme={props.theme} note={note} handleNoteSave={handleSaveNote} handleDeleteNoteButton={props.handleDeleteNoteButton} />
             ))
           }
         </>
