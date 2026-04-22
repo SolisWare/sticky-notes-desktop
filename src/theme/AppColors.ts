@@ -1,3 +1,7 @@
+import { DarkAppColors } from "./DarkAppColors";
+import { LightAppColors } from "./LightAppColors";
+import { SystemTheme } from "./SystemTheme";
+
 /**
  * Copyright (c) 2023-2026 SolisWare.
  * 
@@ -5,22 +9,10 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 export const AppColors = {
-  // App's Primary color palette.
-  MAIN_LIGHT:      "#3CBBEB",
-  MAIN:            "#138EC7",
-  MAIN_DARK:       "#127DB3",
-  MAIN_TEXT:       "#FFFFFF",
-  // App's Secondary color palette.
-  SECONDARY_LIGHT:  "#52BE8F",
-  SECONDARY:        "#00A362",
-  SECONDARY_DARK:   "#009557",
-  SECONDARY_TEXT:   "#FFFFFF",
-  // App's accent color.
-  ACCENT: "#F0F7FA",
-  // App's error color.
-  ERROR: "#E60000",
-  ERROR_LIGHT: "#FF9999",
-  ERROR_LIGHT_BACKGROUND: "#FF999914",
+  LIGHT: LightAppColors,
+  DARK: DarkAppColors,
+
+  
   // Add New note Tile
   NEW_NOTE_BG: "#F2F7FF",
   // Toolbar
@@ -57,4 +49,8 @@ export const AppColors = {
   TOOLBAR_DELETE_BUTTON_HOVER_BORDER_DARK: "#8A4C54",
   // MISC
   DISABLED_TEXT: "#B0B0B0"
+}
+
+export const getAppColors = (theme: SystemTheme) => {
+  return theme === SystemTheme.DARK ? AppColors.DARK : AppColors.LIGHT;
 }
