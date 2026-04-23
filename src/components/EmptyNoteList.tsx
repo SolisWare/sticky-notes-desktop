@@ -24,7 +24,6 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   text: {
     paddingBottom: 7,
     color: ({ appColors }) => appColors.DISABLED_TEXT
-    
   },
   text2: {
     fontStyle: "italic"
@@ -39,8 +38,8 @@ function EmptyNoteList(props: EmptyNoteListProps) {
   
   return (
     <div className={classes.wrapper}>
-      <Typography className={classes.text} fontSize="large">You don't have any notes yet!</Typography>
-      <Typography className={clsx(classes.text, classes.text2)}>Press {platform}+N to add your first note</Typography>
+      <Typography className={classes.text} style={{ color: appColors.DISABLED_TEXT }} fontSize="large">You don't have any notes yet!</Typography>
+      <Typography className={clsx(classes.text, classes.text2)} style={{ color: appColors.DISABLED_TEXT }}>Press {platform}+N to add your first note</Typography>
     </div>
   );
 }

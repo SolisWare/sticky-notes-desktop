@@ -74,11 +74,6 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   noteFooterUtilBarDeleteBtn: {
     width: 30,
     height: 30,
-    color: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_COLOR,
-    "&.MuiButton-root:hover": {
-      color: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_HOVER_TEXT,
-      backgroundColor: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_HOVER_BACKGROUND
-    }
   }
 }));
 
@@ -145,7 +140,17 @@ function Note(props: NoteProps) {
                 <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(note.date)}</span>
               </Typography>
-              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
+              <Button
+                className={classes.noteFooterUtilBarDeleteBtn}
+                onClick={handleDeleteNote}
+                sx={{
+                  color: appColors.NOTE_DELETE_BUTTON_COLOR,
+                  "&:hover": {
+                    color: appColors.NOTE_DELETE_BUTTON_HOVER_TEXT,
+                    backgroundColor: appColors.NOTE_DELETE_BUTTON_HOVER_BACKGROUND
+                  }
+                }}
+              >
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>
