@@ -68,25 +68,16 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   },
   noteFooterUtilBarDate: {
     paddingTop: "5px",
-    fontStyle: "italic"
-  },
-  noteFooterUtilBarDateDark: {
-    color: "#D2D8DE"
+    fontStyle: "italic",
+    color: ({ appColors }) => appColors.NOTE_FOOTER_TEXT
   },
   noteFooterUtilBarDeleteBtn: {
     width: 30,
     height: 30,
-    color: ({ appColors }) => appColors.MAIN,
+    color: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_COLOR,
     "&.MuiButton-root:hover": {
-      color: ({ appColors }) => appColors.ERROR,
-      backgroundColor: ({ appColors }) => appColors.ERROR_LIGHT_BACKGROUND
-    }
-  },
-  noteFooterUtilBarDeleteBtnDark: {
-    color: "#DCE7EF",
-    "&.MuiButton-root:hover": {
-      color: "#FFDCE2",
-      backgroundColor: "#5A303A"
+      color: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_HOVER_TEXT,
+      backgroundColor: ({ appColors }) => appColors.NOTE_DELETE_BUTTON_HOVER_BACKGROUND
     }
   }
 }));
@@ -148,13 +139,13 @@ function Note(props: NoteProps) {
           <div className={classes.noteFooter}>
             <Divider />
             <div className={classes.noteFooterUtilBar}>
-              <Typography className={isDarkTheme ? `${classes.noteFooterUtilBarDate} ${classes.noteFooterUtilBarDateDark}` : classes.noteFooterUtilBarDate} variant="body2">
+              <Typography className={classes.noteFooterUtilBarDate} variant="body2">
                 <span>Last modified:&#160;</span>
                 <span>{Formatter.getFormattedDate(note.date)}</span>
                 <span>&#160;at&#160;</span>
                 <span>{Formatter.getFormattedTimestamp(note.date)}</span>
               </Typography>
-              <Button className={isDarkTheme ? `${classes.noteFooterUtilBarDeleteBtn} ${classes.noteFooterUtilBarDeleteBtnDark}` : classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
+              <Button className={classes.noteFooterUtilBarDeleteBtn} onClick={handleDeleteNote}>
                 <DeleteForeverOutlinedIcon />
               </Button>
             </div>

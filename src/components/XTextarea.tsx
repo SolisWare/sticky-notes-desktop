@@ -7,8 +7,9 @@
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { ChangeEventHandler } from "react";
-import clsx from "clsx";
+import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
+import { AppColorStyleProps } from "../types/appColorTypes";
  
 type XTextareaProps = {
   theme?: SystemTheme;
@@ -17,7 +18,7 @@ type XTextareaProps = {
   onChange?: ChangeEventHandler<HTMLTextAreaElement>;
 }
  
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   xTextarea: {
     width: "100%",
     height: "100%",
@@ -26,23 +27,21 @@ const useStyles = makeStyles((theme: Theme) => ({
     outline: "none",
     border: "none",
     resize: "none",
-    fontSize: 14
-  },
-  xTextareaDark: {
-    color: "#F7FAFC",
+    fontSize: 14,
+    color: ({ appColors }) => appColors.NOTE_TEXT,
     '&::placeholder': {
-      color: "#E8EEF3",
+      color: ({ appColors }) => appColors.NOTE_PLACEHOLDER_TEXT,
       opacity: 1
     }
   }
 }));
  
 function XTextarea(props: XTextareaProps) {
-  const classes = useStyles();
-  const isDarkTheme = props.theme === SystemTheme.DARK;
+  const appColors = getAppColors(props.theme ?? SystemTheme.LIGHT);
+  const classes = useStyles({ appColors });
    
   return (
-    <textarea className={clsx(classes.xTextarea, isDarkTheme && classes.xTextareaDark)}
+    <textarea className={classes.xTextarea}
               placeholder={props.placeholder}
               defaultValue={props.content}
               onChange={props.onChange} />
