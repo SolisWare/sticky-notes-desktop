@@ -81,7 +81,7 @@ export class AppTheme {
       },
       background: {
         default: this.LightColors.ACCENT,
-        paper: AppColors.NEW_NOTE_BG
+        paper: this.LightColors.NEW_NOTE_BG
       }
     },
     ...AppTheme.getSharedThemeConfig(),
@@ -93,8 +93,8 @@ export class AppTheme {
           root: {
             minWidth: 0,
             "&.MuiButton-toolbar.Mui-disabled": {
-              color: AppColors.DISABLED_TEXT,
-              outline: "1px solid " + AppColors.DISABLED_TEXT
+              color: this.LightColors.DISABLED_TEXT,
+              outline: "1px solid " + this.LightColors.DISABLED_TEXT
             }
           }
         },
@@ -105,11 +105,11 @@ export class AppTheme {
             },
             style: {
               backgroundColor: this.LightColors.MAIN,
-              outline: "1px solid #FFFFFF",
+              outline: "1px solid " + this.LightColors.TOOLBAR_VARIANT_OUTLINE,
               boxShadow: "none",
               '&:hover': {
-                backgroundColor: this.LightColors.SECONDARY,
-                outline: "1px solid " + this.LightColors.SECONDARY_LIGHT
+                backgroundColor: this.LightColors.TOOLBAR_VARIANT_HOVER_BACKGROUND,
+                outline: "1px solid " + this.LightColors.TOOLBAR_VARIANT_HOVER_OUTLINE
               }
             }
           }
@@ -135,7 +135,7 @@ export class AppTheme {
       },
       background: {
         default: this.DarkColors.ACCENT,
-        paper: AppColors.NEW_NOTE_BG
+        paper: this.DarkColors.NEW_NOTE_BG
       },
       text: {
         primary: this.DarkColors.MAIN_TEXT,
@@ -151,8 +151,8 @@ export class AppTheme {
         },
         styleOverrides: {
           colorPrimary: {
-            backgroundColor: "#1E4256",
-            color: "#F5F7FA"
+            backgroundColor: this.DarkColors.APPBAR_BACKGROUND,
+            color: this.DarkColors.APPBAR_TEXT
           }
         }
       },
@@ -162,8 +162,8 @@ export class AppTheme {
           root: {
             minWidth: 0,
             "&.MuiButton-toolbar.Mui-disabled": {
-              color: "#7E8892",
-              outline: "1px solid #4A535C"
+              color: this.DarkColors.DISABLED_TEXT,
+              outline: "1px solid " + this.DarkColors.DISABLED_TEXT
             }
           }
         },
@@ -174,12 +174,12 @@ export class AppTheme {
             },
             style: {
               backgroundColor: "transparent",
-              color: "#F5F7FA",
-              outline: "1px solid #44667A",
+              color: this.DarkColors.MAIN_TEXT,
+              outline: "1px solid " + this.DarkColors.TOOLBAR_VARIANT_OUTLINE,
               boxShadow: "none",
               '&:hover': {
-                backgroundColor: "#234F3F",
-                outline: "1px solid #4D7B69"
+                backgroundColor: this.DarkColors.TOOLBAR_VARIANT_HOVER_BACKGROUND,
+                outline: "1px solid " + this.DarkColors.TOOLBAR_VARIANT_HOVER_OUTLINE
               }
             }
           }

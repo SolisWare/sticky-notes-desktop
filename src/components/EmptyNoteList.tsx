@@ -7,17 +7,23 @@
 import { Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from 'clsx';
-import { AppColors } from "../theme/AppColors";
+import { getAppColors } from "../theme/AppColors";
+import { SystemTheme } from "../theme/SystemTheme";
+import { AppColorStyleProps } from "../types/appColorTypes";
 import { UserAgent } from "../utils/UserAgent";
 
-const useStyles = makeStyles((theme: Theme) => ({
+type EmptyNoteListProps = {
+  theme: SystemTheme;
+}
+
+const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   wrapper: {
     position: "fixed",
     width: "95%"
   },
   text: {
     paddingBottom: 7,
-    color: AppColors.DISABLED_TEXT
+    color: ({ appColors }) => appColors.DISABLED_TEXT
     
   },
   text2: {
@@ -25,8 +31,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
  
-function EmptyNoteList() {
-  const classes = useStyles();
+function EmptyNoteList(props: EmptyNoteListProps) {
+  const appColors = getAppColors(props.theme);
+  const classes = useStyles({ appColors });
   const isMac = UserAgent.isElectron ? window.api.os.isMac : UserAgent.isMac;
   const platform = isMac ? "Cmd" : "Ctrl";
   

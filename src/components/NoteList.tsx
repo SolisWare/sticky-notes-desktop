@@ -40,7 +40,7 @@ function NoteList (props: NoteListProps) {
     <div className={classes.wrapper}>
       {isNoteListEmpty ?
         <>
-          <EmptyNoteList />
+          <EmptyNoteList theme={props.theme} />
         </>
         :
         <>
