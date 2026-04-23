@@ -6,7 +6,7 @@
  */
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { AppColors, getAppColors } from "../theme/AppColors";
+import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
 import { AppColorStyleProps } from "../types/appColorTypes";
 

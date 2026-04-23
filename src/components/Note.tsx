@@ -9,12 +9,13 @@ import { makeStyles } from "@mui/styles";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
 import XTextarea from "./XTextarea";
-import { AppColors, getAppColors } from "../theme/AppColors";
+import { getAppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
 import { SystemTheme } from "../theme/SystemTheme";
 import { ChangeEvent, useRef, useState } from "react";
 import { AppColorStyleProps } from "../types/appColorTypes";
+import { getNoteColor } from "../theme/NoteColors";
 
 type NoteProps = {
   theme: SystemTheme;
@@ -99,6 +100,7 @@ function Note(props: NoteProps) {
   const isDeleting = useRef(false);
 
   const isDarkTheme = props.theme === SystemTheme.DARK;
+  const color = getNoteColor(note.bgcolor, props.theme);
   
   const handleNoteChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const updatedContent = event.target.value;
@@ -119,14 +121,24 @@ function Note(props: NoteProps) {
   };
   
   return (
-    <Paper elevation={4} className={classes.note}>
-      <div className={classes.noteInnerContainer} style={{backgroundColor: note.bgcolor}}>
+    <Paper
+      elevation={4}
+      className={classes.note}
+      style={isDarkTheme ? {
+        boxShadow: [
+          "0px 2px 4px -1px rgba(118, 137, 156, 0.2)",
+          "0px 4px 5px 0px rgba(118, 137, 156, 0.14)",
+          "0px 1px 10px 0px rgba(118, 137, 156, 0.12)"
+        ].join(",")
+      } : undefined}
+    >
+      <div className={classes.noteInnerContainer} style={{backgroundColor: color}}>
         <div className={classes.noteContentWrapper}>
           <div className={classes.noteBody}>
             <div className={classes.noteTitleWrapper}>
               {/* TODO: Add editable title section */}
             </div>
-            <XTextarea placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
+            <XTextarea theme={props.theme} placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
             <Autosave data={note} onSave={(note) => {
               if (!isDeleting.current) {
                 props.handleNoteSave(note);

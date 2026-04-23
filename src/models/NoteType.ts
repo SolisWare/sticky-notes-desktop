@@ -4,11 +4,11 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { NoteColors } from "../theme/NoteColors";
+import { NoteColorKey } from "../theme/NoteColors";
 
 export type NoteType = {
   id: string;
-  bgcolor: NoteColors;
+  bgcolor: NoteColorKey;
   title?: string;
   content: string;
   date: Date;

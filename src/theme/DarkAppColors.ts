@@ -16,7 +16,7 @@ export const DarkAppColors = {
   SECONDARY_DARK: "#244F41",
   SECONDARY_TEXT: "#F5F7FA",
   // App's accent color.
-  ACCENT: "#13181C",
+  ACCENT: "#182129",
   // App's error color.
   ERROR: "#C84B5A",
   ERROR_LIGHT: "#E58A97",
