@@ -12,7 +12,7 @@ import { Box, Button, Theme } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import clsx from "clsx";
-import { AppColors, getAppColors } from "../theme/AppColors";
+import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
 import { AppColorStyleProps } from "../types/appColorTypes";
 
@@ -27,18 +27,11 @@ type XToolbarProps = {
 
 const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   windowsToolbar: {
-    backgroundColor: AppColors.TOOLBAR_BACKGROUND + "!important",
-    color: AppColors.TOOLBAR_TEXT + "!important",
+    backgroundColor: ({ appColors }) => appColors.TOOLBAR_BACKGROUND + "!important",
+    color: ({ appColors }) => appColors.TOOLBAR_TEXT + "!important",
     boxShadow: "none !important",
-    borderTop: "1px solid " + AppColors.TOOLBAR_TOP_BORDER,
-    borderBottom: "1px solid " + AppColors.TOOLBAR_BOTTOM_BORDER
-  },
-  windowsToolbarDark: {
-    backgroundColor: AppColors.TOOLBAR_BACKGROUND_DARK + " !important",
-    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
-    boxShadow: "none !important",
-    borderTop: "1px solid " + AppColors.TOOLBAR_TOP_BORDER_DARK,
-    borderBottom: "1px solid " + AppColors.TOOLBAR_BOTTOM_BORDER_DARK
+    borderTop: ({ appColors }) => "1px solid " + appColors.TOOLBAR_TOP_BORDER,
+    borderBottom: ({ appColors }) => "1px solid " + appColors.TOOLBAR_BOTTOM_BORDER
   },
   toolbar: {
     height: 20
@@ -55,34 +48,17 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
     height: 32,
   },
   windowsToolbarBtn: {
-    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
-    color: AppColors.TOOLBAR_TEXT + "!important",
-    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER + " !important",
+    backgroundColor: ({ appColors }) => appColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
+    color: ({ appColors }) => appColors.TOOLBAR_TEXT + "!important",
+    outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_BUTTON_BORDER + " !important",
     boxShadow: "none !important",
     '&:hover': {
-      backgroundColor: AppColors.TOOLBAR_BUTTON_HOVER_BACKGROUND + " !important",
-      color: AppColors.TOOLBAR_BUTTON_HOVER_TEXT + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_HOVER_BORDER + " !important"
-    }
-  },
-  windowsToolbarBtnDark: {
-    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND_DARK + " !important",
-    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
-    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER_DARK + " !important",
-    boxShadow: "none !important",
-    '&:hover': {
-      backgroundColor: AppColors.TOOLBAR_BUTTON_HOVER_BACKGROUND_DARK + " !important",
-      color: AppColors.TOOLBAR_BUTTON_HOVER_TEXT_DARK + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_HOVER_BORDER_DARK + " !important"
+      backgroundColor: ({ appColors }) => appColors.TOOLBAR_BUTTON_HOVER_BACKGROUND + " !important",
+      color: ({ appColors }) => appColors.TOOLBAR_BUTTON_HOVER_TEXT + " !important",
+      outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_BUTTON_HOVER_BORDER + " !important"
     }
   },
   toolbarBtnDelete: {
-    '&:hover': {
-      backgroundColor: ({ appColors }) => appColors.ERROR + "!important",
-      outline: ({ appColors }) => "1px solid " + appColors.ERROR_LIGHT + "!important"
-    }
-  },
-  toolbarBtnDeleteDark: {
     '&:hover': {
       backgroundColor: ({ appColors }) => appColors.ERROR + "!important",
       color: ({ appColors }) => appColors.MAIN_TEXT + "!important",
@@ -90,35 +66,19 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
     }
   },
   windowsToolbarBtnDelete: {
-    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
-    color: AppColors.TOOLBAR_TEXT + "!important",
-    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER + " !important",
+    backgroundColor: ({ appColors }) => appColors.TOOLBAR_BUTTON_BACKGROUND + " !important",
+    color: ({ appColors }) => appColors.TOOLBAR_TEXT + "!important",
+    outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_BUTTON_BORDER + " !important",
     boxShadow: "none !important",
     '&:hover': {
-      backgroundColor: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND + " !important",
-      color: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER + " !important"
+      backgroundColor: ({ appColors }) => appColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND + " !important",
+      color: ({ appColors }) => appColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT + " !important",
+      outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER + " !important"
     },
     '&.Mui-disabled': {
-      backgroundColor: AppColors.TOOLBAR_BUTTON_DISABLED_BACKGROUND + " !important",
-      color: AppColors.TOOLBAR_BUTTON_DISABLED_TEXT + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_DISABLED_BORDER + " !important"
-    }
-  },
-  windowsToolbarBtnDeleteDark: {
-    backgroundColor: AppColors.TOOLBAR_BUTTON_BACKGROUND_DARK + " !important",
-    color: AppColors.TOOLBAR_TEXT_DARK + " !important",
-    outline: "1px solid " + AppColors.TOOLBAR_BUTTON_BORDER_DARK + " !important",
-    boxShadow: "none !important",
-    '&:hover': {
-      backgroundColor: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND_DARK + " !important",
-      color: AppColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT_DARK + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER_DARK + " !important"
-    },
-    '&.Mui-disabled': {
-      backgroundColor: AppColors.TOOLBAR_BUTTON_DISABLED_BACKGROUND_DARK + " !important",
-      color: AppColors.TOOLBAR_BUTTON_DISABLED_TEXT_DARK + " !important",
-      outline: "1px solid " + AppColors.TOOLBAR_BUTTON_DISABLED_BORDER_DARK + " !important"
+      backgroundColor: ({ appColors }) => appColors.TOOLBAR_BUTTON_DISABLED_BACKGROUND + " !important",
+      color: ({ appColors }) => appColors.TOOLBAR_BUTTON_DISABLED_TEXT + " !important",
+      outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_BUTTON_DISABLED_BORDER + " !important"
     }
   },
   toolbarBtnSpacer: {
@@ -139,21 +99,14 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
     color: "inherit"
   },
   windowsToolbarTitle: {
-    color: AppColors.TOOLBAR_TEXT
-  },
-  windowsToolbarTitleDark: {
-    color: AppColors.TOOLBAR_TEXT_DARK
+    color: ({ appColors }) => appColors.TOOLBAR_TEXT
   },
   toolbarVersionText: {
     color: ({ appColors }) => appColors.MAIN_TEXT,
     opacity: 0.95
   },
   windowsToolbarVersionText: {
-    color: AppColors.TOOLBAR_TEXT,
-    opacity: 0.72
-  },
-  windowsToolbarVersionTextDark: {
-    color: AppColors.TOOLBAR_TEXT_DARK,
+    color: ({ appColors }) => appColors.TOOLBAR_TEXT,
     opacity: 0.72
   }
 }));
@@ -163,26 +116,18 @@ function XToolbar(props: XToolbarProps) {
   const classes = useStyles({ appColors });
 
   const isWindows = window.api.os.isWindows;
-  const isDarkTheme = props.theme === SystemTheme.DARK;
-  const isWindowsDarkTheme = props.theme === SystemTheme.DARK && isWindows;
 
   return (
     <AppBar
       position="sticky"
-      className={clsx(
-        isWindows && classes.windowsToolbar,
-        isWindowsDarkTheme && classes.windowsToolbarDark
-      )}
+      className={clsx(isWindows && classes.windowsToolbar)}
     >
       <Toolbar className={classes.toolbar}>
         {/* TODO: Add app icon. */}
         <Typography
           variant="h6"
           fontWeight="bold"
-          className={clsx(
-            isWindows && classes.windowsToolbarTitle,
-            isWindowsDarkTheme && classes.windowsToolbarTitleDark
-          )}
+          className={clsx(isWindows && classes.windowsToolbarTitle)}
         >
           {props.title}
         </Typography>
@@ -190,8 +135,7 @@ function XToolbar(props: XToolbarProps) {
           <Button
             className={clsx(
               classes.toolbarBtn,
-              isWindows && classes.windowsToolbarBtn,
-              isWindowsDarkTheme && classes.windowsToolbarBtnDark
+              isWindows && classes.windowsToolbarBtn
             )}
             variant="toolbar"
             color="primary"
@@ -206,9 +150,7 @@ function XToolbar(props: XToolbarProps) {
           <Button
             className={clsx(
               classes.toolbarBtn,
-              isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete,
-              !isWindows && isDarkTheme && classes.toolbarBtnDeleteDark,
-              isWindowsDarkTheme && classes.windowsToolbarBtnDeleteDark
+              isWindows ? classes.windowsToolbarBtnDelete : classes.toolbarBtnDelete
             )}
             variant="toolbar"
             disabled={props.isDeleteAllButtonDisabled}
@@ -221,8 +163,7 @@ function XToolbar(props: XToolbarProps) {
         <div className={classes.toolbarGrow} />
         <Typography
           className={clsx(
-            isWindows ? classes.windowsToolbarVersionText : classes.toolbarVersionText,
-            isWindowsDarkTheme && classes.windowsToolbarVersionTextDark
+            isWindows ? classes.windowsToolbarVersionText : classes.toolbarVersionText
           )}
           variant="body1"
           fontWeight={500}
