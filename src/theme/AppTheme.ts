@@ -4,7 +4,7 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { AppColors, getAppColors } from './AppColors';
+import { getAppColors } from './AppColors';
 import { createTheme } from "@mui/material/styles";
 import { SystemTheme } from './SystemTheme';
 
@@ -56,6 +56,14 @@ export class AppTheme {
               style: {
                 boxShadow: "none"
               }
+            },
+            {
+              props: {
+                variant: "toolbarDelete"
+              },
+              style: {
+                boxShadow: "none"
+              }
             }
           ]
         }
@@ -92,7 +100,7 @@ export class AppTheme {
         styleOverrides: {
           root: {
             minWidth: 0,
-            "&.MuiButton-toolbar.Mui-disabled": {
+            "&.MuiButton-toolbar.Mui-disabled, &.MuiButton-toolbarDelete.Mui-disabled": {
               color: this.LightColors.DISABLED_TEXT,
               outline: "1px solid " + this.LightColors.DISABLED_TEXT
             }
@@ -110,6 +118,22 @@ export class AppTheme {
               '&:hover': {
                 backgroundColor: this.LightColors.TOOLBAR_VARIANT_HOVER_BACKGROUND,
                 outline: "1px solid " + this.LightColors.TOOLBAR_VARIANT_HOVER_OUTLINE
+              }
+            }
+          },
+          {
+            props: {
+              variant: "toolbarDelete"
+            },
+            style: {
+              backgroundColor: this.LightColors.MAIN,
+              color: this.LightColors.MAIN_TEXT,
+              outline: "1px solid " + this.LightColors.TOOLBAR_VARIANT_OUTLINE,
+              boxShadow: "none",
+              '&:hover': {
+                backgroundColor: this.LightColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND,
+                color: this.LightColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT,
+                outline: "1px solid " + this.LightColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER
               }
             }
           }
@@ -161,7 +185,7 @@ export class AppTheme {
         styleOverrides: {
           root: {
             minWidth: 0,
-            "&.MuiButton-toolbar.Mui-disabled": {
+            "&.MuiButton-toolbar.Mui-disabled, &.MuiButton-toolbarDelete.Mui-disabled": {
               color: this.DarkColors.DISABLED_TEXT,
               outline: "1px solid " + this.DarkColors.DISABLED_TEXT
             }
@@ -180,6 +204,22 @@ export class AppTheme {
               '&:hover': {
                 backgroundColor: this.DarkColors.TOOLBAR_VARIANT_HOVER_BACKGROUND,
                 outline: "1px solid " + this.DarkColors.TOOLBAR_VARIANT_HOVER_OUTLINE
+              }
+            }
+          },
+          {
+            props: {
+              variant: "toolbarDelete"
+            },
+            style: {
+              backgroundColor: "transparent",
+              color: this.DarkColors.MAIN_TEXT,
+              outline: "1px solid " + this.DarkColors.TOOLBAR_VARIANT_OUTLINE,
+              boxShadow: "none",
+              '&:hover': {
+                backgroundColor: this.DarkColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND,
+                color: this.DarkColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT,
+                outline: "1px solid " + this.DarkColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER
               }
             }
           }
