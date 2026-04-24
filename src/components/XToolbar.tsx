@@ -60,9 +60,9 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   },
   toolbarBtnDelete: {
     '&:hover': {
-      backgroundColor: ({ appColors }) => appColors.ERROR + "!important",
-      color: ({ appColors }) => appColors.MAIN_TEXT + "!important",
-      outline: ({ appColors }) => "1px solid " + appColors.ERROR_LIGHT + "!important"
+      backgroundColor: ({ appColors }) => appColors.TOOLBAR_DELETE_BUTTON_HOVER_BACKGROUND + "!important",
+      color: ({ appColors }) => appColors.TOOLBAR_DELETE_BUTTON_HOVER_TEXT + "!important",
+      outline: ({ appColors }) => "1px solid " + appColors.TOOLBAR_DELETE_BUTTON_HOVER_BORDER + "!important"
     }
   },
   windowsToolbarBtnDelete: {
