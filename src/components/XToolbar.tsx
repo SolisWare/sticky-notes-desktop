@@ -111,7 +111,7 @@ function XToolbar(props: XToolbarProps) {
   return (
     <AppBar
       position="sticky"
-      className={isWindows ? classes.windowsToolbar : classes.toolbar}
+      className={clsx(isWindows && classes.windowsToolbar)}
     >
       <Toolbar className={isWindows ? classes.windowsToolbar : classes.toolbar}>
         {/* TODO: Add app icon. */}
