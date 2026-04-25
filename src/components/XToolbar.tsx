@@ -29,9 +29,7 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   windowsToolbar: {
     backgroundColor: ({ appColors }) => appColors.WINDOWS_TOOLBAR_BACKGROUND + "!important",
     color: ({ appColors }) => appColors.WINDOWS_TOOLBAR_TEXT + "!important",
-    boxShadow: "none !important",
-    borderTop: ({ appColors }) => "1px solid " + appColors.WINDOWS_TOOLBAR_TOP_BORDER,
-    borderBottom: ({ appColors }) => "1px solid " + appColors.WINDOWS_TOOLBAR_BOTTOM_BORDER
+    borderTop: ({ appColors }) => "1px solid " + appColors.WINDOWS_TOOLBAR_TOP_BORDER
   },
   toolbar: {
     height: 20
@@ -113,9 +111,9 @@ function XToolbar(props: XToolbarProps) {
   return (
     <AppBar
       position="sticky"
-      className={clsx(isWindows && classes.windowsToolbar)}
+      className={isWindows ? classes.windowsToolbar : classes.toolbar}
     >
-      <Toolbar className={classes.toolbar}>
+      <Toolbar className={isWindows ? classes.windowsToolbar : classes.toolbar}>
         {/* TODO: Add app icon. */}
         <Typography
           variant="h6"

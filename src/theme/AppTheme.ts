@@ -95,6 +95,14 @@ export class AppTheme {
     ...AppTheme.getSharedThemeConfig(),
     components: {
       ...AppTheme.getSharedThemeConfig().components,
+      MuiAppBar: {
+        styleOverrides: {
+          colorPrimary: {
+            backgroundColor: this.LightColors.APPBAR_BACKGROUND,
+            color: this.LightColors.APPBAR_TEXT
+          }
+        }
+      },
       MuiButton: {
         ...AppTheme.getSharedThemeConfig().components.MuiButton,
         styleOverrides: {
