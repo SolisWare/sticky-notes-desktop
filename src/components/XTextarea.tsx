@@ -28,7 +28,8 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
     border: "none",
     resize: "none",
     fontSize: 14,
-    color: ({ appColors }) => appColors.NOTE_TEXT,
+    color: ({ appColors }) => appColors.NOTE_TEXT + " !important",
+    caretColor: ({ appColors }) => appColors.NOTE_TEXT,
     '&::placeholder': {
       color: ({ appColors }) => appColors.NOTE_PLACEHOLDER_TEXT,
       opacity: 1

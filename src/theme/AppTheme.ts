@@ -95,6 +95,20 @@ export class AppTheme {
     ...AppTheme.getSharedThemeConfig(),
     components: {
       ...AppTheme.getSharedThemeConfig().components,
+      MuiCssBaseline: {
+        styleOverrides: {
+          textarea: {
+            color: this.LightColors.NOTE_TEXT + " !important",
+            caretColor: this.LightColors.NOTE_TEXT,
+            WebkitTextFillColor: this.LightColors.NOTE_TEXT + " !important"
+          },
+          "textarea::placeholder": {
+            color: this.LightColors.NOTE_PLACEHOLDER_TEXT,
+            WebkitTextFillColor: this.LightColors.NOTE_PLACEHOLDER_TEXT,
+            opacity: 1
+          }
+        }
+      },
       MuiAppBar: {
         styleOverrides: {
           colorPrimary: {
@@ -177,6 +191,20 @@ export class AppTheme {
     ...AppTheme.getSharedThemeConfig(),
     components: {
       ...AppTheme.getSharedThemeConfig().components,
+      MuiCssBaseline: {
+        styleOverrides: {
+          textarea: {
+            color: this.DarkColors.NOTE_TEXT + " !important",
+            caretColor: this.DarkColors.NOTE_TEXT,
+            WebkitTextFillColor: this.DarkColors.NOTE_TEXT + " !important"
+          },
+          "textarea::placeholder": {
+            color: this.DarkColors.NOTE_PLACEHOLDER_TEXT,
+            WebkitTextFillColor: this.DarkColors.NOTE_PLACEHOLDER_TEXT,
+            opacity: 1
+          }
+        }
+      },
       MuiAppBar: {
         defaultProps: {
           enableColorOnDark: true
