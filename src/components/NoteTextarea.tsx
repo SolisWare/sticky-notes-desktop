@@ -11,7 +11,7 @@ import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
 import { AppColorStyleProps } from "../types/appColorTypes";
  
-type XTextareaProps = {
+type NoteTextareaProps = {
   theme?: SystemTheme;
   placeholder: string;
   content: string;
@@ -19,7 +19,7 @@ type XTextareaProps = {
 }
  
 const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
-  xTextarea: {
+  noteTextarea: {
     width: "100%",
     height: "100%",
     minHeight: "100%",
@@ -37,17 +37,17 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   }
 }));
  
-function XTextarea(props: XTextareaProps) {
+function NoteTextarea(props: NoteTextareaProps) {
   const appColors = getAppColors(props.theme ?? SystemTheme.LIGHT);
   const classes = useStyles({ appColors });
    
   return (
-    <textarea className={classes.xTextarea}
+    <textarea className={classes.noteTextarea}
               placeholder={props.placeholder}
               defaultValue={props.content}
               onChange={props.onChange} />
   );
 }
  
-export default XTextarea;
+export default NoteTextarea;
  

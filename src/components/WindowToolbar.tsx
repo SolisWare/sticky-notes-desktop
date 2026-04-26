@@ -16,7 +16,7 @@ import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
 import { AppColorStyleProps } from "../types/appColorTypes";
 
-type XToolbarProps = {
+type WindowToolbarProps = {
   theme: SystemTheme;
   title: string;
   versionLabel: string;
@@ -102,7 +102,7 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
   }
 }));
 
-function XToolbar(props: XToolbarProps) {
+function WindowToolbar(props: WindowToolbarProps) {
   const appColors = getAppColors(props.theme);
   const classes = useStyles({ appColors });
 
@@ -166,4 +166,4 @@ function XToolbar(props: XToolbarProps) {
   );
 }
 
-export default XToolbar;
+export default WindowToolbar;

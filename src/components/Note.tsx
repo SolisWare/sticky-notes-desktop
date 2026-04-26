@@ -8,7 +8,7 @@ import { Button, Divider, Paper, Theme, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
 import { Formatter } from "../utils/dt-formatter/Formatter";
-import XTextarea from "./XTextarea";
+import NoteTextarea from "./NoteTextarea";
 import { getAppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
@@ -124,7 +124,7 @@ function Note(props: NoteProps) {
             <div className={classes.noteTitleWrapper}>
               {/* TODO: Add editable title section */}
             </div>
-            <XTextarea theme={props.theme} placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
+            <NoteTextarea theme={props.theme} placeholder="Type here..." content={note.content} onChange={handleNoteChange} />
             <Autosave data={note} onSave={(note) => {
               if (!isDeleting.current) {
                 props.handleNoteSave(note);
