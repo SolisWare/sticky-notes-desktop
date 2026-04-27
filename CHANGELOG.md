@@ -11,6 +11,8 @@ The format is inspired by Keep a Changelog, and this project uses release tags f
 - Tuned the Windows dark toolbar colors, button states, and bottom border to better align with the native menu bar appearance
 - Added full dark mode support across macOS and Windows
 - Refined ConfirmationDialog dark mode styling for improved theme contrast
+- Renamed components that followed the old X-SiGMA naming convention
+- Reduced reported dependency vulnerabilities from 74 to 36 through targeted package updates as part of ongoing security maintenance
 
 ## [v0.1.0-beta.2] - April 20, 2026 - Blueprint
 - Refined the Windows desktop experience with toolbar and menu presentation updates

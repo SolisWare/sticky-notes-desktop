@@ -1,7 +1,7 @@
 # X-NoTES
 
 ![Last Modified](https://img.shields.io/badge/last%20modified-April%202026-blue)
-![Version](https://img.shields.io/badge/version-0.1--beta.2-green)
+![Version](https://img.shields.io/badge/version-0.1--beta.3-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 ![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows-lightgray)
 
@@ -19,6 +19,8 @@ Download the latest prebuilt release for your platform from the [Releases](https
 > ```bash
 > xattr -cr /Applications/X-NoTES.app
 > ```
+>
+> **Windows users:** If you see a *"Windows protected your PC"* warning after downloading, this is Microsoft Defender SmartScreen blocking the installer because it is new or not yet widely recognized. The app itself is fine. Click **More info**, then click **Run anyway** to continue the installation.
 
 ---
 
