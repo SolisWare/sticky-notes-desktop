@@ -6,6 +6,7 @@
     "noImplicitAny": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "paths": {
       "*":["node_modules/*"]
