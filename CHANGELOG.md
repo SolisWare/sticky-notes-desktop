@@ -3,7 +3,7 @@ All changes to the SolisWare X-NoTES will be documented in this file.
 
 The format is inspired by Keep a Changelog, and this project uses release tags for version tracking.
 
-## [v0.1.0-beta.3] - Unreleased - Final Draft
+## [v0.1.0-beta.3] - April 27, 2026 - Final Draft
 - Added system theme detection support with typed Light and Dark theme values
 - Exposed the current system theme to the renderer through the Electron preload API
 - Added a Windows-only About entry to the File menu
