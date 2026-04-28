@@ -6,7 +6,7 @@
  */
 import { Theme } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { ChangeEventHandler } from "react";
+import { ChangeEvent, ChangeEventHandler, useCallback, useEffect, useRef } from "react";
 import { getAppColors } from "../theme/AppColors";
 import { SystemTheme } from "../theme/SystemTheme";
 import { AppColorStyleProps } from "../types/appColorTypes";
@@ -19,20 +19,36 @@ type NoteTextareaProps = {
 }
  
 const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
-  noteTextarea: {
+  wrapper: {
     width: "100%",
     height: "100%",
     minHeight: "100%",
+    overflowY: "auto",
+    cursor: "default",
+    '&::-webkit-scrollbar, &::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb': {
+      cursor: "default !important"
+    }
+  },
+  noteTextarea: {
+    display: "block",
+    width: "100%",
+    minHeight: "100%",
+    height: "auto",
+    boxSizing: "border-box",
     background: "transparent",
     outline: "none",
     border: "none",
     resize: "none",
+    overflow: "hidden",
     fontSize: 14,
     color: ({ appColors }) => appColors.NOTE_TEXT + " !important",
     caretColor: ({ appColors }) => appColors.NOTE_TEXT,
     '&::placeholder': {
       color: ({ appColors }) => appColors.NOTE_PLACEHOLDER_TEXT,
       opacity: 1
+    },
+    '&::-webkit-scrollbar, &::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb': {
+      cursor: "default !important"
     }
   }
 }));
@@ -40,12 +56,36 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
 function NoteTextarea(props: NoteTextareaProps) {
   const appColors = getAppColors(props.theme ?? SystemTheme.LIGHT);
   const classes = useStyles({ appColors });
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const resizeTextarea = useCallback(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) {
+      return;
+    }
+
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }, []);
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [props.content, resizeTextarea]);
+
+  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    resizeTextarea();
+    props.onChange?.(event);
+  };
    
   return (
-    <textarea className={classes.noteTextarea}
-              placeholder={props.placeholder}
-              defaultValue={props.content}
-              onChange={props.onChange} />
+    <div className={classes.wrapper}>
+      <textarea ref={textareaRef}
+                className={classes.noteTextarea}
+                placeholder={props.placeholder}
+                defaultValue={props.content}
+                onChange={handleChange} />
+    </div>
   );
 }
  
