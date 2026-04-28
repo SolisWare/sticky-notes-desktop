@@ -7,6 +7,7 @@ The format is inspired by Keep a Changelog, and this project uses release tags f
 - Centered the note grid so fixed-width notes keep more balanced left and right spacing when the available window width leaves extra room
 - Moved scrolling into the main content area so the toolbar remains a fixed app control
 - Added slim, semi-transparent app-wide scrollbars styled after the macOS default appearance for all platforms
+- Added a dedicated note creation timestamp and renamed the modified timestamp field so notes can be ordered by creation time
 
 ## [v0.1.0-beta.3] - April 27, 2026 - Final Draft
 - Added system theme detection support with typed Light and Dark theme values
