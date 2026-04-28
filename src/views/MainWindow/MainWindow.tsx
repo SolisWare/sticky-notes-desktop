@@ -28,11 +28,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     minWidth: "100%",
     minHeight: "100vh",
     width: "100%",
-    height: "100%",
-    zIndex: 1
+    height: "100vh",
+    zIndex: 1,
+    overflow: "hidden"
   },
   app: {
-    
+    display: "flex",
+    flexDirection: "column",
+    height: "100%"
+  },
+  content: {
+    flex: 1,
+    minHeight: 0,
+    overflowY: "auto"
   },
   menu: {
     
@@ -118,7 +126,7 @@ function MainWindow(props: MainWindowProps) {
         <div className={classes.app}>
           <WindowToolbar theme={props.theme} title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote}
                          isDeleteAllButtonDisabled={isDeleteAllButtonDisabled} handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
-          <main>
+          <main className={classes.content}>
             { page }
           </main>
         </div>
