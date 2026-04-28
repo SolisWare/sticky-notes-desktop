@@ -115,7 +115,8 @@ app.on("ready", () => {
 
           return {
             ...parsed,
-            date: new Date(parsed.date)
+            createdOn: new Date(parsed.createdOn),
+            lastModifiedOn: new Date(parsed.lastModifiedOn)
           };
         } catch (err) {
           console.warn(`Skipping corrupt note file: ${file}`);
@@ -126,7 +127,7 @@ app.on("ready", () => {
     );
     return notes
       .filter((note): note is NoteType => note !== null)
-      .sort((oldestNote, latestNote) => new Date(oldestNote.date).getTime() - new Date(latestNote.date).getTime());
+      .sort((oldestNote, latestNote) => oldestNote.createdOn.getTime() - latestNote.createdOn.getTime());
   });
 
   ipcMain.on('storage.deleteNote', (_, ...args: any[]) => {

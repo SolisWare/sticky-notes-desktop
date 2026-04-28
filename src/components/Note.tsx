@@ -95,7 +95,8 @@ function Note(props: NoteProps) {
       bgcolor: props.note.bgcolor,
       title: props.note.title,
       content: updatedContent,
-      date: new Date()
+      createdOn: props.note.createdOn,
+      lastModifiedOn: new Date()
     };
     
     setNote(updatedNote);
@@ -136,9 +137,9 @@ function Note(props: NoteProps) {
             <div className={classes.noteFooterUtilBar}>
               <Typography className={classes.noteFooterUtilBarDate} variant="body2">
                 <span>Last modified:&#160;</span>
-                <span>{Formatter.getFormattedDate(note.date)}</span>
+                <span>{Formatter.getFormattedDate(note.lastModifiedOn)}</span>
                 <span>&#160;at&#160;</span>
-                <span>{Formatter.getFormattedTimestamp(note.date)}</span>
+                <span>{Formatter.getFormattedTimestamp(note.lastModifiedOn)}</span>
               </Typography>
               <Button
                 className={classes.noteFooterUtilBarDeleteBtn}

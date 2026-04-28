@@ -80,7 +80,8 @@ function MainWindow(props: MainWindowProps) {
         id: nanoid(),
         bgcolor: getRandomNoteColor(),
         content: "",
-        date: new Date()
+        createdOn: new Date(),
+        lastModifiedOn: new Date()
       },
     ]);
   }

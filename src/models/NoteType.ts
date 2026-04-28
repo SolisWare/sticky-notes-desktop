@@ -11,5 +11,6 @@ export type NoteType = {
   bgcolor: NoteColorKey;
   title?: string;
   content: string;
-  date: Date;
+  createdOn: Date;
+  lastModifiedOn: Date;
 };
