@@ -21,13 +21,7 @@ function App() {
   const [systemTheme, setSystemTheme] = useState<SystemTheme>(SystemTheme.LIGHT);
 
   useEffect(() => {
-    window.api.systemTheme.getTheme()
-      .then((theme) => {
-        setSystemTheme(theme);
-      })
-      .catch((error: Error) => {
-        console.error("Failed to load system theme:", error.message);
-      });
+    return window.api.systemTheme.onThemeChange(setSystemTheme);
   }, []);
 
   return (

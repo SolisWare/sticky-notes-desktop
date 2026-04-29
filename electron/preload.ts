@@ -64,8 +64,22 @@ contextBridge.exposeInMainWorld('api', {
     }
   },
   systemTheme: {
-    getTheme: (): Promise<SystemTheme> => {
-      return receive("systemTheme.getTheme")
+    onThemeChange: (callback: (theme: SystemTheme) => void) => {
+      receive("systemTheme.onThemeChange")
+        .then(callback)
+        .catch((error: Error) => {
+          console.error("Failed to load system theme:", error.message);
+        });
+
+      const listener = (_event: Electron.IpcRendererEvent, theme: SystemTheme) => {
+        callback(theme);
+      };
+
+      on("systemTheme.onThemeChange", listener);
+
+      return () => {
+        off("systemTheme.onThemeChange", listener);
+      };
     }
   },
   os: {

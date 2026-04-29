@@ -18,6 +18,7 @@ import { resolveSystemTheme } from "../src/theme/SystemTheme";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
+const systemThemeSubscribers = new Set<number>();
 
 // Create the 'data' directory if it doesn't exist.
 if (!fs.existsSync(appDataDir)) {
@@ -87,9 +88,8 @@ Menu.setApplicationMenu(menubar);
 app.on("ready", () => {
   createMainWindow();
 
-  ipcMain.handle("systemTheme.getTheme", () => {
-    return resolveSystemTheme(nativeTheme.shouldUseDarkColors);
-  });
+  nativeTheme.on("updated", () => handleSystemTheme());
+  ipcMain.handle("systemTheme.onThemeChange", handleSystemTheme);
   
   ipcMain.on('storage.setNote', (_, ...args: any[]) => {
     const note = args[0][0] as NoteType;
@@ -184,3 +184,25 @@ app.setAboutPanelOptions({
   ],
   copyright: "Copyright © 2023-2026 SolisWare.\nAll rights reserved."
 });
+
+function handleSystemTheme(event?: Electron.IpcMainInvokeEvent) {
+  const systemTheme = resolveSystemTheme(nativeTheme.shouldUseDarkColors);
+
+  if (event) {
+    systemThemeSubscribers.add(event.sender.id);
+
+    event.sender.once("destroyed", () => {
+      systemThemeSubscribers.delete(event.sender.id);
+    });
+
+    return systemTheme;
+  }
+
+  BrowserWindow.getAllWindows().forEach((window) => {
+    const webContents = window.webContents;
+
+    if (systemThemeSubscribers.has(webContents.id) && !webContents.isDestroyed()) {
+      webContents.send("systemTheme.onThemeChange", systemTheme);
+    }
+  });
+}
