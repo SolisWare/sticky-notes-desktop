@@ -52,7 +52,7 @@ const production = (handle: string): [string, LoadFileOptions] => {
 const createMainWindow = () => {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1235,
+    width: 1250,
     height: 800,
     minWidth: 335,
     minHeight: 250,
