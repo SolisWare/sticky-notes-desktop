@@ -48,19 +48,15 @@ const useStyles = makeStyles<Theme, AppColorStyleProps>((theme: Theme) => ({
     }
   },
   brandMark: {
-    width: 76,
-    height: 76,
-    borderRadius: 8,
+    width: 48,
+    height: 48,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 36,
-    backgroundColor: ({ appColors }) => appColors.MAIN,
-    color: ({ appColors }) => appColors.MAIN_TEXT,
-    boxShadow: ({ appColors }) => "0 14px 32px " + appColors.WELCOME_BRAND_MARK_SHADOW
+    marginBottom: 36
   },
   title: {
-    color: ({ appColors }) => appColors.MAIN_DARK,
+    color: ({ appColors }) => appColors.MAIN,
     marginBottom: "14px !important",
     lineHeight: "1.05 !important",
     whiteSpace: "nowrap",
@@ -181,9 +177,14 @@ function WelcomeScreen(props: WelcomeProps) {
       <div className={classes.content}>
         <div>
           <div className={classes.brandMark}>
-            <PushPinOutlinedIcon fontSize="large" />
+            <PushPinOutlinedIcon fontSize="large" htmlColor={appColors.NOTE_FOOTER_TEXT} />
           </div>
-          <Typography className={classes.title} variant="h2" fontWeight="bold">
+          <Typography
+            className={classes.title}
+            variant="h2"
+            fontWeight="bold"
+            style={{ color: appColors.MAIN }}
+          >
             Welcome to X-NoTES
           </Typography>
           <Typography className={classes.intro} variant="body1">
