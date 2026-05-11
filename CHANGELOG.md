@@ -3,6 +3,10 @@ All changes to the SolisWare X-NoTES will be documented in this file.
 
 The format is inspired by Keep a Changelog, and this project uses release tags for version tracking.
 
+## [v0.1.0] - Unreleased - Groundwork
+- Increased the main window width so notes do not wrap too early when scrollbars appear
+- Added a new welcome screen with a Get Started action, first-run layout, and a "do not show again" checkbox ready for future settings persistence
+
 ## [v0.1.0-beta.4] - May 9, 2026 - Stakeout
 - Centered the note grid so fixed-width notes keep more balanced left and right spacing when the available window width leaves extra room
 - Moved scrolling into the main content area so the toolbar remains a fixed app control
