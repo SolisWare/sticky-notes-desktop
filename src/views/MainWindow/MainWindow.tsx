@@ -57,9 +57,9 @@ function MainWindow(props: MainWindowProps) {
   const [isDeleteAllNotesDialogOpen, setDeleteAllNotesDialogOpen] = useState(false);
   const [versionLabel, setVersionLabel] = useState("");
   const [hideWelcomeOnNextLaunch, setHideWelcomeOnNextLaunch] = useState(false);
-  
-  
+    
   const isDeleteAllButtonDisabled = notes.length === 0;
+  const shouldShowToolbar = props.view !== AppView.welcome;
   const appTheme = props.theme === SystemTheme.DARK ? AppTheme.DarkTheme : AppTheme.LightTheme;
 
   useEffect(() => {
@@ -140,8 +140,10 @@ function MainWindow(props: MainWindowProps) {
           {/* In-app menu goes here. */}
         </nav>
         <div className={classes.app}>
-          <WindowToolbar theme={props.theme} title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote}
-                         isDeleteAllButtonDisabled={isDeleteAllButtonDisabled} handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
+          {shouldShowToolbar &&
+            <WindowToolbar theme={props.theme} title="X-NoTES" versionLabel={versionLabel} handleAddNoteButton={handleAddNote}
+                           isDeleteAllButtonDisabled={isDeleteAllButtonDisabled} handleDeleteAllNotesButton={() => setDeleteAllNotesDialogOpen(true)} />
+          }
           <main className={classes.content}>
             { page }
           </main>
