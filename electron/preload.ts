@@ -42,7 +42,7 @@ contextBridge.exposeInMainWorld('api', {
           console.log(`Loaded ${notes.length} notes`);
           return notes;
         })
-        .catch((err: Error) => {
+        .catch((err: Error): NoteType[] => {
           console.error('Failed to load notes:', err.message);
           return [] as NoteType[];
         });
