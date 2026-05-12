@@ -5,8 +5,8 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 export type AppWindowBounds = {
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
   width: number;
   height: number;
 };

@@ -11,6 +11,8 @@ import MainWindow from './views/MainWindow/MainWindow';
 import { UserAgent } from './utils/UserAgent';
 import { useEffect, useState } from 'react';
 import { SystemTheme } from './theme/SystemTheme';
+import { AppSettings } from './settings/AppSettings';
+import { DefaultAppSettings } from './settings/DefaultAppSettings';
 
 export enum AppView {
   home = "/home",
@@ -19,8 +21,19 @@ export enum AppView {
 
 function App() {
   const [systemTheme, setSystemTheme] = useState<SystemTheme>(SystemTheme.LIGHT);
+  const [appSettings, setAppSettings] = useState<AppSettings>(DefaultAppSettings);
+
+  const defaultMainWindowPage = appSettings.showWelcomeScreenOnLaunch ? AppView.welcome : AppView.home;
 
   useEffect(() => {
+    window.api.settings.getSettings()
+      .then((settings) => {
+        setAppSettings(settings ?? DefaultAppSettings);
+      })
+      .catch((err: Error) => {
+        console.error('Failed to load app settings:', err.message);
+      });
+
     return window.api.systemTheme.onThemeChange(setSystemTheme);
   }, []);
 
@@ -31,13 +44,13 @@ function App() {
         <Router main={
           <>
             <Route path={AppView.home} element={
-              <MainWindow view={AppView.home} theme={systemTheme} />
+              <MainWindow view={AppView.home} theme={systemTheme} appSettings={appSettings} />
             } />
             <Route path={AppView.welcome} element={
-              <MainWindow view={AppView.welcome} theme={systemTheme} />
+              <MainWindow view={AppView.welcome} theme={systemTheme} appSettings={appSettings} />
             } />
             <Route path="/" element={
-              <MainWindow view={AppView.welcome} theme={systemTheme} />
+              <MainWindow view={defaultMainWindowPage} theme={systemTheme} appSettings={appSettings} />
             } />
           </>
         } />
@@ -46,13 +59,13 @@ function App() {
         <BrowserRouter>
           <Routes>
             <WebRoute path={AppView.home} element={
-              <MainWindow view={AppView.home} theme={systemTheme} />
+              <MainWindow view={AppView.home} theme={systemTheme} appSettings={appSettings} />
             } />
             <WebRoute path={AppView.welcome} element={
-              <MainWindow view={AppView.welcome} theme={systemTheme} />
+              <MainWindow view={AppView.welcome} theme={systemTheme} appSettings={appSettings} />
             } />
             <WebRoute path="/" element={
-              <MainWindow view={AppView.home} theme={systemTheme} />
+              <MainWindow view={defaultMainWindowPage} theme={systemTheme} appSettings={appSettings} />
             } />
           </Routes>
         </BrowserRouter>

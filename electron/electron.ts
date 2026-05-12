@@ -181,17 +181,13 @@ app.on("ready", () => {
       });
   });
 
-  ipcMain.handle('settings.setSettings', (_, ...args: any[]) => {
+  ipcMain.on('settings.setSettings', (_, ...args: any[]) => {
     const settings = args[0][0] as AppSettings;
     const serializedSettings = JSON.stringify(settings, null, 2);
 
-    return fs.promises.writeFile(appSettingsFilePath, serializedSettings)
-      .then((): boolean => {
-        return true;
-      })
-      .catch((err): boolean => {
+    fs.promises.writeFile(appSettingsFilePath, serializedSettings)
+      .catch((err) => {
         console.warn('Failed to write app settings:', err);
-        return false;
       });
   });
 });

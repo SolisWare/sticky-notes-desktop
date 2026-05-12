@@ -5,10 +5,13 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { SystemTheme } from "../theme/SystemTheme";
-import { AppWindowBounds } from "./AppWindowBounds";
+import { AppSettings } from "./AppSettings";
 
-export type AppSettings = {
-  showWelcomeScreenOnLaunch: boolean;
-  theme: SystemTheme;
-  mainWindowBounds: AppWindowBounds;
+export const DefaultAppSettings: AppSettings = {
+  showWelcomeScreenOnLaunch: true,
+  theme: SystemTheme.LIGHT,
+  mainWindowBounds: {
+    width: 1250,
+    height: 800
+  }
 };

@@ -19,10 +19,12 @@ import { getRandomNoteColor } from "../../theme/NoteColors";
 import { nanoid } from "nanoid";
 import ConfirmationDialog from "../../components/ConfirmationDialog";
 import { useNavigate } from "react-router-dom";
+import { AppSettings } from "../../settings/AppSettings";
 
 type MainWindowProps = {
   view: AppView;
   theme: SystemTheme;
+  appSettings: AppSettings;
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -61,6 +63,7 @@ function MainWindow(props: MainWindowProps) {
   const isDeleteAllButtonDisabled = notes.length === 0;
   const shouldShowToolbar = props.view !== AppView.welcome;
   const appTheme = props.theme === SystemTheme.DARK ? AppTheme.DarkTheme : AppTheme.LightTheme;
+  const appSettings = props.appSettings;
 
   useEffect(() => {
     window.api.storage.getNotes()
@@ -107,7 +110,10 @@ function MainWindow(props: MainWindowProps) {
 
   function handleGetStarted() {
     if (hideWelcomeOnNextLaunch) {
-      // TODO: Persist this preference once app settings storage is available.
+      window.api.settings.setSettings({
+        ...appSettings,
+        showWelcomeScreenOnLaunch: false
+      });
     }
 
     navigate(AppView.home);
