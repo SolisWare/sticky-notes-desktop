@@ -19,7 +19,7 @@ import { AppSettings } from "../src/settings/AppSettings";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
-const appSettingsDir = path.join(appDir, 'data');
+const appSettingsDir = path.join(appDir, 'settings');
 const appSettingsFilePath = path.join(appSettingsDir, 'app-settings.json');
 
 const systemThemeSubscribers = new Set<number>();
@@ -27,6 +27,10 @@ const systemThemeSubscribers = new Set<number>();
 // Create the 'data' directory if it doesn't exist.
 if (!fs.existsSync(appDataDir)) {
   fs.mkdirSync(appDataDir, { recursive: true });
+}
+// Create the 'settings' directory if it doesn't exist.
+if (!fs.existsSync(appSettingsDir)) {
+  fs.mkdirSync(appSettingsDir, { recursive: true });
 }
 
 // Load variables from ".env" file and merge with "process.env"
@@ -174,6 +178,20 @@ app.on("ready", () => {
         }
         console.warn('Failed to read app settings:', err);
         return undefined;
+      });
+  });
+
+  ipcMain.handle('settings.setSettings', (_, ...args: any[]) => {
+    const settings = args[0][0] as AppSettings;
+    const serializedSettings = JSON.stringify(settings, null, 2);
+
+    return fs.promises.writeFile(appSettingsFilePath, serializedSettings)
+      .then((): boolean => {
+        return true;
+      })
+      .catch((err): boolean => {
+        console.warn('Failed to write app settings:', err);
+        return false;
       });
   });
 });

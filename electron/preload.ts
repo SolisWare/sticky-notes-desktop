@@ -66,6 +66,9 @@ contextBridge.exposeInMainWorld('api', {
           console.error('Failed to load app settings:', err.message);
           return undefined;
         });
+    },
+    setSettings: (settings: AppSettings) => {
+      send('settings.setSettings', settings);
     }
   },
   version: {
