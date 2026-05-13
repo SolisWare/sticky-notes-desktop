@@ -13,7 +13,7 @@ import { getAppColors } from "../theme/AppColors";
 import { NoteType } from "../models/NoteType";
 import { Autosave } from "react-autosave";
 import { SystemTheme } from "../theme/SystemTheme";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { AppColorStyleProps } from "../types/appColorTypes";
 import { getNoteColor } from "../theme/NoteColors";
 
@@ -84,6 +84,8 @@ function Note(props: NoteProps) {
   const [note, setNote] = useState<NoteType>(props.note);
 
   const isDeleting = useRef(false);
+  const latestNote = useRef<NoteType>(props.note);
+  const hasUnsavedChanges = useRef(false);
 
   const isDarkTheme = props.theme === SystemTheme.DARK;
   const color = getNoteColor(note.bgcolor, props.theme);
@@ -99,8 +101,26 @@ function Note(props: NoteProps) {
       lastModifiedOn: new Date()
     };
     
+    latestNote.current = updatedNote;
+    hasUnsavedChanges.current = true;
     setNote(updatedNote);
   };
+
+  useEffect(() => {
+    const flushUnsavedNote = () => {
+      if (!isDeleting.current && hasUnsavedChanges.current) {
+        props.handleNoteSave(latestNote.current);
+        hasUnsavedChanges.current = false;
+      }
+    };
+
+    window.addEventListener("beforeunload", flushUnsavedNote);
+
+    return () => {
+      window.removeEventListener("beforeunload", flushUnsavedNote);
+      flushUnsavedNote();
+    };
+  }, [props]);
 
   const handleDeleteNote = () => {
     isDeleting.current = true;
@@ -129,6 +149,7 @@ function Note(props: NoteProps) {
             <Autosave data={note} onSave={(note) => {
               if (!isDeleting.current) {
                 props.handleNoteSave(note);
+                hasUnsavedChanges.current = false;
               }
             }} />
           </div>
