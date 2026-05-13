@@ -56,12 +56,27 @@ export class AppVersionUpdater {
   private syncReadme(version: string): void {
     const readme = fs.readFileSync(this.readmePath, "utf-8");
     const versionBadge = `![Version](https://img.shields.io/badge/version-${this.toShieldsValue(this.getBadgeVersion(version))}-green)`;
-    const updatedReadme = readme.replace(
-      /!\[Version\]\(https:\/\/img\.shields\.io\/badge\/version-[^)]+\)/,
-      versionBadge
-    );
+    const lastModifiedBadge = `![Last Modified](https://img.shields.io/badge/last%20modified-${this.getLastModifiedBadgeValue()}-blue)`;
+    const updatedReadme = readme
+      .replace(
+        /!\[Last Modified\]\(https:\/\/img\.shields\.io\/badge\/last%20modified-[^)]+\)/,
+        lastModifiedBadge
+      )
+      .replace(
+        /!\[Version\]\(https:\/\/img\.shields\.io\/badge\/version-[^)]+\)/,
+        versionBadge
+      );
 
     fs.writeFileSync(this.readmePath, updatedReadme);
+  }
+
+  private getLastModifiedBadgeValue(): string {
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      month: "long",
+      year: "numeric"
+    });
+
+    return formatter.format(new Date()).replace(/ /g, "%20");
   }
 
   private toShieldsValue(version: string): string {
