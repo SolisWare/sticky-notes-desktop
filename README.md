@@ -9,6 +9,13 @@ A cross-platform sticky notes desktop app built with ReactJS and Electron by Sol
 
 ---
 
+### Early release notice
+> SolisWare X-NoTES is currently pre-1.0 software. Features, storage formats, settings, and app behavior may change between releases, and backward compatibility is not guaranteed until a stable 1.0 release.
+>
+> When updating between early releases, locally stored notes or settings may not always migrate cleanly. Please keep a backup of anything important before installing a new version.
+
+---
+
 ## Getting Started
 
 ### Download & Install
