@@ -16,6 +16,8 @@ import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 import { resolveSystemTheme } from "../src/theme/SystemTheme";
 import { AppSettings } from "../src/settings/AppSettings";
+import { defaultMainWindowBounds } from "../src/settings/defaultSettings";
+import { AppWindowBounds } from "../src/settings/AppWindowBounds";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
@@ -59,10 +61,11 @@ const production = (handle: string): [string, LoadFileOptions] => {
 };
 
 const createMainWindow = () => {
+  const mainWindowBounds = readMainWindowBounds();
+
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1250,
-    height: 800,
+    ...mainWindowBounds,
     minWidth: 335,
     minHeight: 250,
     show: false,
@@ -251,4 +254,23 @@ function saveMainWindowBoundsOnClose(window: BrowserWindow): void {
   const currentBounds = window.getBounds();
 
   fs.writeFileSync(mainWindowBoundsFilePath, `${JSON.stringify(currentBounds, null, 2)}\n`);
+}
+
+function readMainWindowBounds(): AppWindowBounds {
+  try {
+    const content = fs.readFileSync(mainWindowBoundsFilePath, 'utf-8');
+
+    if (!content.trim()) {
+      return defaultMainWindowBounds;
+    }
+
+    return JSON.parse(content) as AppWindowBounds;
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      return defaultMainWindowBounds;
+    }
+
+    console.warn('Failed to read main window bounds:', err);
+    return defaultMainWindowBounds;
+  }
 }
