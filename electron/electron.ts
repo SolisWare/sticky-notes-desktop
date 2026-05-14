@@ -4,9 +4,8 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { app, BrowserWindow, ipcMain, LoadFileOptions, Menu, nativeTheme, screen } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeTheme } from "electron";
 import * as path from "path";
-import { createFileRoute, createURLRoute } from 'electron-router-dom'
 import menubar from "./menu";
 import isDev from "electron-is-dev";
 import { isMac } from './utils/Platform';
@@ -16,9 +15,7 @@ import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 import { resolveSystemTheme } from "../src/theme/SystemTheme";
 import { AppSettings } from "../src/settings/AppSettings";
-import { defaultMainWindowBounds } from "../src/settings/defaultSettings";
-import { AppWindowBounds } from "../src/settings/AppWindowBounds";
-import { AppWindowState } from "../src/settings/AppWindowState";
+import { createMainWindow } from "./windows/createMainWindow";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
@@ -45,62 +42,6 @@ if (isDev) {
   require("dotenv").config();
 }
 
-// Load index.html as the app entry point for production
-// and listen on "http://localhost:3000" in 'dev' mode.
-const dev = (handle: string): string => {
-  return createURLRoute(
-    "http://localhost:3000",
-    handle
-  ).toString();
-};
-
-const production = (handle: string): [string, LoadFileOptions] => {
-  return createFileRoute(
-    path.join(__dirname, "/../index.html"),
-    handle
-  );
-};
-
-const createMainWindow = () => {
-  const mainWindowState = readMainWindowState();
-  const mainWindowBounds = getMainWindowLaunchBounds(mainWindowState);
-
-  // Create the browser window.
-  const win = new BrowserWindow({
-    ...mainWindowBounds,
-    minWidth: 335,
-    minHeight: 250,
-    show: false,
-    webPreferences: {
-      webSecurity: false,
-      nodeIntegration: true,
-      contextIsolation: true,
-      preload: path.join(__dirname, "preload.js")
-    }
-  });
-
-  if (mainWindowState.isMaximized) {
-    win.maximize();
-  }
-
-  win.once('ready-to-show', () => {
-    win.show();
-  });
-
-  win.on('close', () => {
-    saveMainWindowStateOnClose(win);
-  });
-  
-  if (isDev) {
-    // Load the URL for the main window
-    win.loadURL(dev("main"));
-    // Open DevTools when running in dev mode
-    win.webContents.openDevTools({ mode: "detach" });
-  } else {
-    win.loadFile(...production("main"));
-  }
-};
-
 // Load the menubar items
 Menu.setApplicationMenu(menubar);
 
@@ -108,7 +49,7 @@ Menu.setApplicationMenu(menubar);
 // and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  createMainWindow();
+  createMainWindow({ mainWindowStateFilePath });
 
   nativeTheme.on("updated", () => handleSystemTheme());
   ipcMain.handle("systemTheme.onThemeChange", handleSystemTheme);
@@ -228,7 +169,7 @@ app.on('window-all-closed', () => {
 // when the dock icon is clicked and there are no other windows opened.
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createMainWindow();
+    createMainWindow({ mainWindowStateFilePath });
   }
 });
 
@@ -262,66 +203,5 @@ function handleSystemTheme(event?: Electron.IpcMainInvokeEvent) {
     if (systemThemeSubscribers.has(webContents.id) && !webContents.isDestroyed()) {
       webContents.send("systemTheme.onThemeChange", systemTheme);
     }
-  });
-}
-
-function saveMainWindowStateOnClose(window: BrowserWindow): void {
-  const currentWindowState: AppWindowState = {
-    bounds: window.isMaximized() || window.isFullScreen() ? window.getNormalBounds() : window.getBounds(),
-    isMaximized: window.isMaximized()
-  };
-
-  fs.writeFileSync(mainWindowStateFilePath, `${JSON.stringify(currentWindowState, null, 2)}\n`);
-}
-
-function readMainWindowState(): AppWindowState {
-  try {
-    const content = fs.readFileSync(mainWindowStateFilePath, 'utf-8');
-
-    if (!content.trim()) {
-      return getDefaultMainWindowState();
-    }
-
-    return JSON.parse(content) as AppWindowState;
-  } catch (err) {
-    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-      return getDefaultMainWindowState();
-    }
-
-    console.warn('Failed to read main window state:', err);
-    return getDefaultMainWindowState();
-  }
-}
-
-function getDefaultMainWindowState(): AppWindowState {
-  return {
-    bounds: defaultMainWindowBounds,
-    isMaximized: false,
-  };
-}
-
-function getMainWindowLaunchBounds(windowState: AppWindowState): AppWindowBounds {
-  return getVisibleMainWindowBounds(windowState.bounds);
-}
-
-function getVisibleMainWindowBounds(bounds: AppWindowBounds): AppWindowBounds {
-  if (bounds.x === undefined || bounds.y === undefined || isWindowVisibleOnAnyDisplay(bounds)) {
-    return bounds;
-  }
-
-  return {
-    width: bounds.width,
-    height: bounds.height
-  };
-}
-
-function isWindowVisibleOnAnyDisplay(bounds: AppWindowBounds): boolean {
-  return screen.getAllDisplays().some((display) => {
-    const displayBounds = display.bounds;
-
-    return bounds.x! < displayBounds.x + displayBounds.width
-      && bounds.x! + bounds.width > displayBounds.x
-      && bounds.y! < displayBounds.y + displayBounds.height
-      && bounds.y! + bounds.height > displayBounds.y;
   });
 }
