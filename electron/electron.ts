@@ -10,12 +10,12 @@ import menubar from "./menu";
 import isDev from "electron-is-dev";
 import { isMac } from './utils/Platform';
 import * as fs from 'node:fs';
-import { NoteType } from "../src/models/NoteType";
 import appVersionConfig from "../app-version-config.json";
 import { AppVersionResolver } from "../scripts/app-version/AppVersionResolver";
 import { resolveSystemTheme } from "../src/theme/SystemTheme";
-import { AppSettings } from "../src/settings/AppSettings";
 import { createMainWindow } from "./windows/createMainWindow";
+import { deleteAllNotes, deleteNote, getNotes, setNote } from "./storage/noteStorage";
+import { getSettings, setSettings } from "./storage/appSettingsStorage";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
@@ -55,68 +55,19 @@ app.on("ready", () => {
   ipcMain.handle("systemTheme.onThemeChange", handleSystemTheme);
   
   ipcMain.on('storage.setNote', (_, ...args: any[]) => {
-    const note = args[0][0] as NoteType;
-    const filePath = path.join(appDataDir, `${note.id}.json`);
-    const serializedNote = JSON.stringify(note);
-
-    fs.writeFile(filePath, serializedNote, (err) => {
-      if (err) {
-        console.error(err);
-        // TODO: Throw an exception and send callback to the renderer.
-      }
-    });
+    setNote(appDataDir, args[0][0]);
   });
   
   ipcMain.handle('storage.getNotes', async () => {
-    const files = await fs.promises.readdir(appDataDir);
-    const notes = await Promise.all(
-      files.map(async (file): Promise<NoteType | null> => {
-        try {
-          const filePath = path.join(appDataDir, file);
-          const content = await fs.promises.readFile(filePath, 'utf-8');
-          const parsed = JSON.parse(content) as NoteType;
-
-          return {
-            ...parsed,
-            createdOn: new Date(parsed.createdOn),
-            lastModifiedOn: new Date(parsed.lastModifiedOn)
-          };
-        } catch (err) {
-          console.warn(`Skipping corrupt note file: ${file}`);
-          // TODO: We might want to consider an exception so a warning can be displayed.
-          return null;
-        }
-      })
-    );
-    return notes
-      .filter((note): note is NoteType => note !== null)
-      .sort((oldestNote, latestNote) => oldestNote.createdOn.getTime() - latestNote.createdOn.getTime());
+    return getNotes(appDataDir);
   });
 
   ipcMain.on('storage.deleteNote', (_, ...args: any[]) => {
-    const noteId = args[0][0];
-    const filePath = path.join(appDataDir, `${noteId}.json`);
-
-    console.log('Deleting:', filePath);
-    fs.unlink(filePath, (err) => {
-      if (err) {
-        console.log(err);
-        // TODO: Error handling
-      }
-    });
+    deleteNote(appDataDir, args[0][0]);
   });
 
   ipcMain.on('storage.deleteAllNotes', (_, ...args: any[]) => {
-    console.log('Deleting all files in :', appDataDir);
-    fs.promises.readdir(appDataDir)
-      .then((files) => Promise.all(
-        files
-          .map((file) => fs.promises.unlink(path.join(appDataDir, file)))
-      ))
-      .catch((err) => {
-        console.log(err);
-        // TODO: Error handling
-      });
+    deleteAllNotes(appDataDir);
   });
 
   ipcMain.on('menu.setDeleteAllNotesEnabled', (_, ...args: any[]) => {
@@ -129,30 +80,11 @@ app.on("ready", () => {
   });
 
   ipcMain.handle('settings.getSettings', async () => {
-    return fs.promises.readFile(appSettingsFilePath, 'utf-8')
-      .then((content): AppSettings | undefined => {
-        if (!content.trim()) {
-          return undefined;
-        }
-        return JSON.parse(content) as AppSettings;
-      })
-      .catch((err): AppSettings | undefined => {
-        if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-          return undefined;
-        }
-        console.warn('Failed to read app settings:', err);
-        return undefined;
-      });
+    return getSettings(appSettingsFilePath);
   });
 
   ipcMain.on('settings.setSettings', (_, ...args: any[]) => {
-    const settings = args[0][0] as AppSettings;
-    const serializedSettings = JSON.stringify(settings, null, 2);
-
-    fs.promises.writeFile(appSettingsFilePath, serializedSettings)
-      .catch((err) => {
-        console.warn('Failed to write app settings:', err);
-      });
+    setSettings(appSettingsFilePath, args[0][0]);
   });
 });
 
