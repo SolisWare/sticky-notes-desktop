@@ -1,0 +1,18 @@
+/**
+ * Copyright (c) 2026 SolisWare.
+ *
+ * All rights reserved. Licensed under the MIT license.
+ * See the LICENSE.txt file in the project root directory for details.
+ */
+import { ipcMain, Menu } from "electron";
+
+export function registerMenuIpc(): void {
+  ipcMain.on("menu.setDeleteAllNotesEnabled", (_, ...args: any[]) => {
+    const enabled = args[0][0] as boolean;
+    const deleteAllNotesMenuItem = Menu.getApplicationMenu()?.getMenuItemById("deleteAllNotes");
+
+    if (deleteAllNotesMenuItem) {
+      deleteAllNotesMenuItem.enabled = enabled;
+    }
+  });
+}
