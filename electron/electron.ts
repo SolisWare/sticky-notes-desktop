@@ -18,12 +18,13 @@ import { resolveSystemTheme } from "../src/theme/SystemTheme";
 import { AppSettings } from "../src/settings/AppSettings";
 import { defaultMainWindowBounds } from "../src/settings/defaultSettings";
 import { AppWindowBounds } from "../src/settings/AppWindowBounds";
+import { AppWindowState } from "../src/settings/AppWindowState";
 
 const appDir = path.join(app.getPath("userData"));
 const appDataDir = path.join(appDir, 'data');
 const appSettingsDir = path.join(appDir, 'settings');
 const appSettingsFilePath = path.join(appSettingsDir, 'app-settings.json');
-const mainWindowBoundsFilePath = path.join(appSettingsDir, 'main-window-bounds.json');
+const mainWindowStateFilePath = path.join(appSettingsDir, 'main-window-state.json');
 
 const systemThemeSubscribers = new Set<number>();
 
@@ -61,7 +62,8 @@ const production = (handle: string): [string, LoadFileOptions] => {
 };
 
 const createMainWindow = () => {
-  const mainWindowBounds = readMainWindowBounds();
+  const mainWindowState = readMainWindowState();
+  const mainWindowBounds = getMainWindowLaunchBounds(mainWindowState);
 
   // Create the browser window.
   const win = new BrowserWindow({
@@ -77,12 +79,16 @@ const createMainWindow = () => {
     }
   });
 
+  if (mainWindowState.isMaximized) {
+    win.maximize();
+  }
+
   win.once('ready-to-show', () => {
     win.show();
   });
 
   win.on('close', () => {
-    saveMainWindowBoundsOnClose(win);
+    saveMainWindowStateOnClose(win);
   });
   
   if (isDev) {
@@ -250,29 +256,43 @@ function handleSystemTheme(event?: Electron.IpcMainInvokeEvent) {
   });
 }
 
-function saveMainWindowBoundsOnClose(window: BrowserWindow): void {
-  const currentBounds = window.getBounds();
+function saveMainWindowStateOnClose(window: BrowserWindow): void {
+  const currentWindowState: AppWindowState = {
+    bounds: window.isMaximized() || window.isFullScreen() ? window.getNormalBounds() : window.getBounds(),
+    isMaximized: window.isMaximized()
+  };
 
-  fs.writeFileSync(mainWindowBoundsFilePath, `${JSON.stringify(currentBounds, null, 2)}\n`);
+  fs.writeFileSync(mainWindowStateFilePath, `${JSON.stringify(currentWindowState, null, 2)}\n`);
 }
 
-function readMainWindowBounds(): AppWindowBounds {
+function readMainWindowState(): AppWindowState {
   try {
-    const content = fs.readFileSync(mainWindowBoundsFilePath, 'utf-8');
+    const content = fs.readFileSync(mainWindowStateFilePath, 'utf-8');
 
     if (!content.trim()) {
-      return defaultMainWindowBounds;
+      return getDefaultMainWindowState();
     }
 
-    return getVisibleMainWindowBounds(JSON.parse(content) as AppWindowBounds);
+    return JSON.parse(content) as AppWindowState;
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
-      return defaultMainWindowBounds;
+      return getDefaultMainWindowState();
     }
 
-    console.warn('Failed to read main window bounds:', err);
-    return defaultMainWindowBounds;
+    console.warn('Failed to read main window state:', err);
+    return getDefaultMainWindowState();
   }
+}
+
+function getDefaultMainWindowState(): AppWindowState {
+  return {
+    bounds: defaultMainWindowBounds,
+    isMaximized: false,
+  };
+}
+
+function getMainWindowLaunchBounds(windowState: AppWindowState): AppWindowBounds {
+  return getVisibleMainWindowBounds(windowState.bounds);
 }
 
 function getVisibleMainWindowBounds(bounds: AppWindowBounds): AppWindowBounds {
