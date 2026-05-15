@@ -11,6 +11,8 @@ The format is inspired by Keep a Changelog, and this project uses release tags f
 - Added restoration for main window state, including maximized windows and safe handling for disconnected displays
 - Prevented the welcome screen from briefly flashing before the saved launch preference is loaded
 - Saved pending note edits when a note unmounts or the app window closes
+- Fixed TypeScript compiler configuration issues
+- Refactored Electron desktop code
 
 ## [v0.1.0-beta.4] - May 9, 2026 - Stakeout
 - Centered the note grid so fixed-width notes keep more balanced left and right spacing when the available window width leaves extra room

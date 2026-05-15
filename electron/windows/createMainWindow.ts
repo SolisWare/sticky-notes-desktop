@@ -27,7 +27,7 @@ export function createMainWindow(options: MainWindowOptions): BrowserWindow {
       webSecurity: false,
       nodeIntegration: true,
       contextIsolation: true,
-      preload: path.join(__dirname, "../preload.js")
+      preload: path.join(__dirname, "../preload/preload.js")
     }
   });
 
