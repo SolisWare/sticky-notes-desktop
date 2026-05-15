@@ -7,6 +7,7 @@
 import { app, Menu } from "electron";
 import { isMac, isWindows } from "./utils/Platform";
 import { BrowserWindow } from "electron";
+import { channels } from "./ipc/channels";
 
 const template: any = [
   ...(isMac ? [{
@@ -36,7 +37,7 @@ const template: any = [
         label: 'New Note...',
         accelerator: 'CmdOrCtrl+N',
         click: () => {
-          BrowserWindow.getFocusedWindow()?.webContents.send('menu.newNote');
+          BrowserWindow.getFocusedWindow()?.webContents.send(channels.menu.newNote);
         }
       },
       { type: 'separator' },
@@ -60,7 +61,7 @@ const template: any = [
         label: 'Delete All Notes...',
         enabled: false,
         click: () => {
-          BrowserWindow.getFocusedWindow()?.webContents.send('menu.deleteAllNotes');
+          BrowserWindow.getFocusedWindow()?.webContents.send(channels.menu.deleteAllNotes);
         }
       }
     ]

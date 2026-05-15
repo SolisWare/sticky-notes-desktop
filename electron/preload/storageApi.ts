@@ -5,17 +5,18 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { NoteType } from "../../src/models/NoteType";
+import { channels } from "../ipc/channels";
 import { receive, send } from "./ipcHelpers";
 
 export const storageApi = {
 
   setNote: (note: NoteType) => {
-    send('storage.setNote', note);
+    send(channels.storage.setNote, note);
   },
 
   getNotes: async (): Promise<NoteType[]> => {
     try {
-      const notes = await receive<NoteType[]>('storage.getNotes');
+      const notes = await receive<NoteType[]>(channels.storage.getNotes);
       console.log(`Loaded ${notes.length} notes`);
       return notes;
     } catch (err) {
@@ -25,10 +26,10 @@ export const storageApi = {
   },
 
   deleteNote: (noteId: string) => {
-    send('storage.deleteNote', noteId);
+    send(channels.storage.deleteNote, noteId);
   },
   
   deleteAllNotes: () => {
-    send('storage.deleteAllNotes');
+    send(channels.storage.deleteAllNotes);
   }
 };

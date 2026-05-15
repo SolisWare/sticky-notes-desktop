@@ -5,9 +5,10 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { ipcMain, Menu } from "electron";
+import { channels } from "./channels";
 
 export function registerMenuIpc(): void {
-  ipcMain.on("menu.setDeleteAllNotesEnabled", (_, enabled: boolean) => {
+  ipcMain.on(channels.menu.setDeleteAllNotesEnabled, (_, enabled: boolean) => {
     const deleteAllNotesMenuItem = Menu.getApplicationMenu()?.getMenuItemById("deleteAllNotes");
 
     if (deleteAllNotesMenuItem) {

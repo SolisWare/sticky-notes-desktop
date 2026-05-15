@@ -6,6 +6,7 @@
  */
 import { ipcMain } from "electron";
 import { AppSettings } from "../../src/settings/AppSettings";
+import { channels } from "./channels";
 import { getSettings, setSettings } from "../storage/appSettingsStorage";
 
 type SettingsIpcOptions = {
@@ -13,11 +14,11 @@ type SettingsIpcOptions = {
 };
 
 export function registerSettingsIpc(options: SettingsIpcOptions): void {
-  ipcMain.handle("settings.getSettings", async () => {
+  ipcMain.handle(channels.settings.getSettings, async () => {
     return getSettings(options.appSettingsFilePath);
   });
 
-  ipcMain.on("settings.setSettings", (_, settings: AppSettings) => {
+  ipcMain.on(channels.settings.setSettings, (_, settings: AppSettings) => {
     setSettings(options.appSettingsFilePath, settings);
   });
 }

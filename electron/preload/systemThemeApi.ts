@@ -5,12 +5,13 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { SystemTheme } from "../../src/theme/SystemTheme";
+import { channels } from "../ipc/channels";
 import { off, on, receive } from "./ipcHelpers";
 
 export const systemThemeApi = {
   
   onThemeChange: (callback: (theme: SystemTheme) => void) => {
-    receive<SystemTheme>("systemTheme.onThemeChange")
+    receive<SystemTheme>(channels.systemTheme.onThemeChange)
       .then(callback)
       .catch((error: Error) => {
         console.error("Failed to load system theme:", error.message);
@@ -20,10 +21,10 @@ export const systemThemeApi = {
       callback(theme);
     };
 
-    on("systemTheme.onThemeChange", listener);
+    on(channels.systemTheme.onThemeChange, listener);
 
     return () => {
-      off("systemTheme.onThemeChange", listener);
+      off(channels.systemTheme.onThemeChange, listener);
     };
   }
 };

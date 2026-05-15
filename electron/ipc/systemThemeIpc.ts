@@ -6,12 +6,13 @@
  */
 import { BrowserWindow, ipcMain, nativeTheme } from "electron";
 import { resolveSystemTheme } from "../../src/theme/SystemTheme";
+import { channels } from "./channels";
 
 const systemThemeSubscribers = new Set<number>();
 
 export function registerSystemThemeIpc(): void {
   nativeTheme.on("updated", () => handleSystemTheme());
-  ipcMain.handle("systemTheme.onThemeChange", handleSystemTheme);
+  ipcMain.handle(channels.systemTheme.onThemeChange, handleSystemTheme);
 }
 
 function handleSystemTheme(event?: Electron.IpcMainInvokeEvent) {
@@ -31,7 +32,7 @@ function handleSystemTheme(event?: Electron.IpcMainInvokeEvent) {
     const webContents = window.webContents;
 
     if (systemThemeSubscribers.has(webContents.id) && !webContents.isDestroyed()) {
-      webContents.send("systemTheme.onThemeChange", systemTheme);
+      webContents.send(channels.systemTheme.onThemeChange, systemTheme);
     }
   });
 }
