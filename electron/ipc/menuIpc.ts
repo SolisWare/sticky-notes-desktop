@@ -7,8 +7,7 @@
 import { ipcMain, Menu } from "electron";
 
 export function registerMenuIpc(): void {
-  ipcMain.on("menu.setDeleteAllNotesEnabled", (_, ...args: any[]) => {
-    const enabled = args[0][0] as boolean;
+  ipcMain.on("menu.setDeleteAllNotesEnabled", (_, enabled: boolean) => {
     const deleteAllNotesMenuItem = Menu.getApplicationMenu()?.getMenuItemById("deleteAllNotes");
 
     if (deleteAllNotesMenuItem) {

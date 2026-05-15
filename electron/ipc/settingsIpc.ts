@@ -5,6 +5,7 @@
  * See the LICENSE.txt file in the project root directory for details.
  */
 import { ipcMain } from "electron";
+import { AppSettings } from "../../src/settings/AppSettings";
 import { getSettings, setSettings } from "../storage/appSettingsStorage";
 
 type SettingsIpcOptions = {
@@ -16,7 +17,7 @@ export function registerSettingsIpc(options: SettingsIpcOptions): void {
     return getSettings(options.appSettingsFilePath);
   });
 
-  ipcMain.on("settings.setSettings", (_, ...args: any[]) => {
-    setSettings(options.appSettingsFilePath, args[0][0]);
+  ipcMain.on("settings.setSettings", (_, settings: AppSettings) => {
+    setSettings(options.appSettingsFilePath, settings);
   });
 }

@@ -6,18 +6,20 @@
  */
 import { ipcRenderer } from "electron";
 
-export const send = (channel: string, ...data: any[]): void => {
-  ipcRenderer.send(channel, data);
+type IpcRendererListener<Args extends unknown[] = unknown[]> = (event: Electron.IpcRendererEvent, ...args: Args) => void;
+
+export const send = (channel: string, ...data: unknown[]): void => {
+  ipcRenderer.send(channel, ...data);
 };
 
-export const receive = async (channel: string): Promise<any> => {
+export const receive = async <Response>(channel: string): Promise<Response> => {
   return ipcRenderer.invoke(channel);
 };
 
-export const on = (channel: string, callback: (...args: any[]) => void): void => {
+export const on = <Args extends unknown[]>(channel: string, callback: IpcRendererListener<Args>): void => {
   ipcRenderer.on(channel, callback);
 };
 
-export const off = (channel: string, callback: (...args: any[]) => void): void => {
+export const off = <Args extends unknown[]>(channel: string, callback: IpcRendererListener<Args>): void => {
   ipcRenderer.removeListener(channel, callback);
 };

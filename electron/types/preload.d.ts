@@ -10,7 +10,6 @@ import { AppSettings } from '../../src/settings/AppSettings';
 
 interface IElectronAPI {
   storage: {
-    getDataDir: () => Promise<string>;
     getNotes: () => Promise<NoteType[]>;
     setNote: (note: NoteType) => void;
     deleteNote: (noteId: string) => void;
@@ -29,7 +28,7 @@ interface IElectronAPI {
     getShortDisplayVersion: () => string;
   },
   systemTheme: {
-    onThemeChange: (callback: (theme: SystemTheme) => void) => void;
+    onThemeChange: (callback: (theme: SystemTheme) => void) => () => void;
   },
   os: {
     isMac: boolean;
