@@ -65,7 +65,6 @@ git clone https://github.com/solisware/sticky-notes-desktop.git
 cd x-notes
 npm install
 ```
-> **Note:** `--legacy-peer-deps` is required due to peer dependency conflicts between some packages and React 18. This is a known compatibility issue and does not affect the app's functionality.
 
 ### Run in Development Mode
 ```bash
@@ -73,12 +72,13 @@ npm run electron:dev
 ```
 
 This starts the React dev server and Electron concurrently. The app will reload automatically on code changes.
-> **Note:** Changes to `electron/electron.ts` or `electron/preload.ts` require a full restart of the dev process to take effect.
+> **Note:** Changes to any files inside `electron` directory require a full restart of the dev process to take effect.
 
 ### Project Structure
 ```
 x-notes/
 ├── electron/          # Electron main process, preload, and menu
+├── scripts/           # Build and release helper scripts
 ├── src/               # React renderer (components, pages, theme, models)
 ├── assets/            # App icons and installer assets
 ├── build/             # Compiled output (generated, do not edit or commit)
