@@ -104,7 +104,9 @@
     "wait-on": "^7.0.1"
   },
   "overrides": {
+    "@tootallnate/once": "^3.0.1",
     "nth-check": "^2.1.1",
+    "resolve-url-loader": "^5.0.0",
     "serialize-javascript": "^7.0.5",
     "underscore": "^1.13.8"
   }
