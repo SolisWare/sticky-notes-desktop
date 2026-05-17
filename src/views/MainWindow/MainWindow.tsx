@@ -78,8 +78,9 @@ function MainWindow(props: MainWindowProps) {
 
     // menu
     window.api.menu.onMenuNewNote(handleAddNote);
+    window.api.menu.onMenuShowWelcome(() => navigate(AppView.welcome));
     window.api.menu.onMenuDeleteAllNotes(() => setDeleteAllNotesDialogOpen(true));
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     window.api.menu.setDeleteAllNotesEnabled(notes.length > 0);

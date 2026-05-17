@@ -13,6 +13,10 @@ export const menuApi = {
     on(channels.menu.newNote, callback);
   },
 
+  onMenuShowWelcome: (callback: () => void) => {
+    on(channels.menu.showWelcome, callback);
+  },
+
   onMenuDeleteAllNotes: (callback: () => void) => {
     on(channels.menu.deleteAllNotes, callback);
   },

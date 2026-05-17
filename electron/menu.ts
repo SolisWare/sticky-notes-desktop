@@ -4,9 +4,8 @@
  * All rights reserved. Licensed under the MIT license.
  * See the LICENSE.txt file in the project root directory for details.
  */
-import { app, Menu } from "electron";
+import { app, BrowserWindow, Menu, shell } from "electron";
 import { isMac, isWindows } from "./utils/Platform";
-import { BrowserWindow } from "electron";
 import { channels } from "./ipc/channels";
 
 const template: any = [
@@ -62,6 +61,50 @@ const template: any = [
         enabled: false,
         click: () => {
           BrowserWindow.getFocusedWindow()?.webContents.send(channels.menu.deleteAllNotes);
+        }
+      }
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { type: 'separator' },
+      { role: 'resetZoom' },
+      { role: 'zoomIn' },
+      { role: 'zoomOut' },
+      { type: 'separator' },
+      {
+        label: 'Toggle Full Screen',
+        accelerator: isMac ? 'Ctrl+Command+F' : 'F11',
+        click: () => {
+          const focusedWindow = BrowserWindow.getFocusedWindow();
+          focusedWindow?.setFullScreen(!focusedWindow.isFullScreen());
+        }
+      }
+    ]
+  },
+  { role: 'windowMenu' },
+  {
+    role: 'help',
+    submenu: [
+      {
+        label: 'Welcome',
+        click: () => {
+          BrowserWindow.getFocusedWindow()?.webContents.send(channels.menu.showWelcome);
+        }
+      },
+      { type: 'separator' },
+      {
+        label: 'View License',
+        click: () => {
+          shell.openExternal('https://github.com/SolisWare/sticky-notes-desktop/blob/master/LICENSE.txt');
+        }
+      },
+      {
+        label: 'Website',
+        click: () => {
+          shell.openExternal('https://solisware.com');
         }
       }
     ]
