@@ -9,32 +9,40 @@ import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider } from "@mui/material/styles";
 import { ComponentProps } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import WelcomeScreen from "../../../../src/views/MainWindow/pages/WelcomeScreen";
 import { AppTheme } from "../../../../src/theme/AppTheme";
 import { SystemTheme } from "../../../../src/theme/SystemTheme";
 
+const { translate } = vi.hoisted(() => {
+  const translations: Record<string, string> = {
+    "mainWindow.welcome.title": "Welcome to Axion Notes",
+    "mainWindow.welcome.intro": "Keep quick thoughts close, tidy, and ready whenever you need them.",
+    "mainWindow.welcome.getStarted": "Get Started",
+    "mainWindow.welcome.doNotShowAgain": "Do not show this welcome screen again",
+    "mainWindow.welcome.preview.today": "Today",
+    "mainWindow.welcome.preview.freshWorkspace": "Fresh workspace",
+    "mainWindow.welcome.preview.ideas": "Ideas",
+    "mainWindow.welcome.preview.colorfulNotes": "Colorful notes",
+    "mainWindow.welcome.preview.next": "Next"
+  };
+
+  return {
+    translate: vi.fn((key: string) => translations[key] ?? key)
+  };
+});
+
 vi.mock("react-i18next", () => ({
   useTranslation: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        "mainWindow.welcome.title": "Welcome to Axion Notes",
-        "mainWindow.welcome.intro": "Keep quick thoughts close, tidy, and ready whenever you need them.",
-        "mainWindow.welcome.getStarted": "Get Started",
-        "mainWindow.welcome.doNotShowAgain": "Do not show this welcome screen again",
-        "mainWindow.welcome.preview.today": "Today",
-        "mainWindow.welcome.preview.freshWorkspace": "Fresh workspace",
-        "mainWindow.welcome.preview.ideas": "Ideas",
-        "mainWindow.welcome.preview.colorfulNotes": "Colorful notes",
-        "mainWindow.welcome.preview.next": "Next"
-      };
-
-      return translations[key] ?? key;
-    }
+    t: translate
   })
 }));
 
 describe("WelcomeScreen", () => {
+  beforeEach(() => {
+    translate.mockClear();
+  });
+
   describe("basic rendering", () => {
     it("renders the welcome content", () => {
       renderWelcomeScreen();
@@ -148,6 +156,22 @@ describe("WelcomeScreen", () => {
 
       expect(screen.getByRole("heading", { name: "Welcome to Axion Notes" })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: /get started/i })).toBeInTheDocument();
+    });
+  });
+
+  describe("localization", () => {
+    it("requests the expected welcome translation keys", () => {
+      renderWelcomeScreen();
+
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.title");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.intro");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.getStarted");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.doNotShowAgain");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.today");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.freshWorkspace");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.ideas");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.colorfulNotes");
+      expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.next");
     });
   });
 });
