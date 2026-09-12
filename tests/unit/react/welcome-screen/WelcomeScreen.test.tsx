@@ -174,6 +174,45 @@ describe("WelcomeScreen", () => {
       expect(translate).toHaveBeenCalledWith("mainWindow.welcome.preview.next");
     });
   });
+
+  describe("accessibility", () => {
+    it("renders a single accessible welcome heading", () => {
+      renderWelcomeScreen();
+
+      expect(screen.getByRole("heading", {
+        level: 2,
+        name: "Welcome to Axion Notes"
+      })).toBeInTheDocument();
+      expect(screen.getAllByRole("heading")).toHaveLength(1);
+    });
+
+    it("gives interactive controls accessible names", () => {
+      renderWelcomeScreen();
+
+      expect(screen.getByRole("button", { name: /get started/i })).toBeInTheDocument();
+      expect(screen.getByRole("checkbox", { name: "Do not show this welcome screen again" })).toBeInTheDocument();
+    });
+
+    it("allows keyboard focus to reach the welcome actions", async () => {
+      const user = userEvent.setup();
+
+      renderWelcomeScreen();
+
+      await user.tab();
+      expect(screen.getByRole("button", { name: /get started/i })).toHaveFocus();
+
+      await user.tab();
+      expect(screen.getByRole("checkbox", { name: "Do not show this welcome screen again" })).toHaveFocus();
+    });
+
+    it("marks the note preview as decorative", () => {
+      renderWelcomeScreen();
+
+      expect(screen.getByText("Today").closest("[aria-hidden='true']")).not.toBeNull();
+      expect(screen.getByText("Ideas").closest("[aria-hidden='true']")).not.toBeNull();
+      expect(screen.getByText("Next").closest("[aria-hidden='true']")).not.toBeNull();
+    });
+  });
 });
 
 function renderWelcomeScreen(props?: Partial<ComponentProps<typeof WelcomeScreen>>) {
