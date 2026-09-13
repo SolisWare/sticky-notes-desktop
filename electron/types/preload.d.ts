@@ -19,7 +19,7 @@ import { LockState } from '../../src/models/LockState';
 import { UnlockResult } from '../../src/models/UnlockResult';
 import { EncryptionProgressEvent } from '../../src/models/EncryptionProgressEvent';
 
-interface IElectronAPI {
+export interface IElectronAPI {
   appWindow: {
     close: () => void;
     readyToShow: () => void;

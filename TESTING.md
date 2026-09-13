@@ -37,7 +37,7 @@ tests/
     settings/
     security/
 
-  helpers/
+  utils/
 ```
 
 ## Unit tests
@@ -156,9 +156,9 @@ tests/fixtures/
 
 Tests should copy fixtures into a temporary app-data directory before modifying them. Fixture files should not be changed in place during a test run.
 
-## Helpers
+## Utils
 
-Helpers are shared test utilities.
+Utils are shared test utilities.
 
 Examples:
 
@@ -172,7 +172,7 @@ Examples:
 Suggested location:
 
 ```text
-tests/helpers/
+tests/utils/
 ```
 
 ## Tooling direction
