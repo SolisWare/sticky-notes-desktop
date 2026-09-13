@@ -271,7 +271,10 @@ async function expectWithoutDesktopApiAccess(action: () => void | Promise<void>)
     if (originalDesktopApiDescriptor) {
       Object.defineProperty(window, "api", originalDesktopApiDescriptor);
     } else {
-      delete (window as Window & { api?: unknown }).api;
+      Object.defineProperty(window, "api", {
+        configurable: true,
+        value: undefined
+      });
     }
   }
 }
@@ -279,7 +282,10 @@ async function expectWithoutDesktopApiAccess(action: () => void | Promise<void>)
 function withoutDesktopApi(action: () => void) {
   const originalDesktopApiDescriptor = Object.getOwnPropertyDescriptor(window, "api");
 
-  delete (window as Window & { api?: unknown }).api;
+  Object.defineProperty(window, "api", {
+    configurable: true,
+    value: undefined
+  });
 
   try {
     action();
@@ -304,7 +310,10 @@ function withDesktopApi(action: () => void) {
     if (originalDesktopApiDescriptor) {
       Object.defineProperty(window, "api", originalDesktopApiDescriptor);
     } else {
-      delete (window as Window & { api?: unknown }).api;
+      Object.defineProperty(window, "api", {
+        configurable: true,
+        value: undefined
+      });
     }
   }
 }
