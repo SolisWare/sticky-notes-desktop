@@ -213,10 +213,37 @@ describe("WelcomeScreen", () => {
       expect(screen.getByText("Next").closest("[aria-hidden='true']")).not.toBeNull();
     });
   });
+
+  describe("layout and style contract", () => {
+    it("renders the welcome screen as a section with a content container", () => {
+      const { container } = renderWelcomeScreen();
+      const root = container.querySelector("section");
+
+      expect(root).not.toBeNull();
+      expect(root?.firstElementChild).not.toBeNull();
+    });
+
+    it("renders the primary action as a contained branded button", () => {
+      renderWelcomeScreen();
+
+      expect(screen.getByRole("button", { name: /get started/i })).toHaveClass("MuiButton-contained");
+    });
+
+    it("keeps the note preview separate from the main welcome copy", () => {
+      renderWelcomeScreen();
+
+      const preview = screen.getByText("Today").closest("[aria-hidden='true']");
+
+      expect(preview).not.toBeNull();
+      expect(preview).toContainElement(screen.getByText("Fresh workspace"));
+      expect(preview).toContainElement(screen.getByText("Ideas"));
+      expect(preview).toContainElement(screen.getByText("Next"));
+    });
+  });
 });
 
 function renderWelcomeScreen(props?: Partial<ComponentProps<typeof WelcomeScreen>>) {
-  render(
+  return render(
     <ThemeProvider theme={AppTheme.LightTheme}>
       <WelcomeScreen
         theme={SystemTheme.LIGHT}
